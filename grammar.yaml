@@ -98,7 +98,8 @@ changelog: |
     - [ ] Tables
     - [ ] Headings and subheadings
   - Rework inline "Markdown" syntax. Refer to Texy, Textile, AsciiDoc and cousins.
-  - Plan and add Trinity's standard library, then integrate it into the grammar.
+  - Plan and implement all the built-in objects, constants and
+    functions for Protea's standard library.
     This would all be done in a separate PR and once the grammar is completely
     finished.
     - A handful of built-in properties and constants are part of this grammar
@@ -734,7 +735,7 @@ repository:
     end: \b
     name: meta.number.protea
     patterns:
-      - comment: hexadecimal integers
+      - comment: hexadecimal integer literal
         name: constant.numeric.hexadecimal.protea
         match: |
           (?ix) \b
@@ -756,7 +757,29 @@ repository:
           4: {name: keyword.operator.exponent.sign.protea}
           5: {name: constant.numeric.decimal.exponent.mantissa.protea}
           6: {name: keyword.other.unit.protea}
-      - comment: octal integers
+      - comment: duodecimal integer literal
+        name: constant.numeric.duodecimal.protea
+        match: |
+          (?ix) \b
+            (0z) # prefix
+            [\dabetx\u218a\u218b] [\dabetx\u218a\u218b_]* # integer part
+            (\.)? # decimal point
+            [\dabetx\u218a\u218b_]* # fractional part
+            (?: # exponent part
+              (p) # delimiter
+              ([+-])? # sign
+              ([\d_]+) # mantissa
+            )?
+            ([\p{Pc}\p{L}]\w*)? # type suffix
+          \b
+        captures:
+          1: {name: storage.type.numeric.protea}
+          2: {name: keyword.other.unit.protea}
+          3: {name: keyword.operator.expression.exponent.protea}
+          4: {name: keyword.operator.exponent.sign.protea}
+          5: {name: constant.numeric.decimal.exponent.mantissa.protea}
+          6: {name: keyword.other.unit.protea}
+      - comment: octal integer literal
         name: constant.numeric.octal.protea
         match: |
           (?ix) \b
@@ -778,7 +801,7 @@ repository:
           4: {name: keyword.operator.exponent.sign.protea}
           5: {name: constant.numeric.decimal.exponent.mantissa.protea}
           6: {name: keyword.other.unit.protea}
-      - comment: binary 0b
+      - comment: binary integer literal
         name: constant.numeric.binary.protea
         match: |
           (?ix) \b
@@ -1078,12 +1101,12 @@ repository:
             name: constant.character.escape.binary.protea
           - include: "#illegal"
 
-      - comment: Octal escape sequences (0 to 417777)
+      - comment: Octal escape sequences (0 to 4177777)
         match: |
           (?x)
           \\o # prefix
             0* # leading zeroes
-          (?: # numbers leading to 417777
+          (?: # numbers leading to 4177777
               4[01][0-7]{4}
             | [1-3][0-7]{5}
             | [1-7][0-7]{1,4}
@@ -1091,7 +1114,7 @@ repository:
           )
             (?![0-7])
         name: constant.character.escape.octal.protea
-      - comment: Decimal escape sequences
+      - comment: Octal escape sequences
         match: |
           (?x)
           \\o # prefix
@@ -1107,7 +1130,7 @@ repository:
               (?x)
                 \b
               0* # leading zeroes
-              ( # numbers up to 417777
+              ( # numbers up to 4177777
                   4[01][0-7]{4}
                 | [1-3][0-7]{5}
                 | [1-7][0-7]{1,4}
@@ -1115,6 +1138,49 @@ repository:
               )
                 (?![0-7])
             name: constant.character.escape.octal.protea
+          - include: "#illegal"
+
+      - comment: Duodecimal escapes (0 to 4588A7)
+        match: |
+          (?x)
+          \\z # prefix
+            0* # leading zeroes
+          (?: # numbers leading to 4588A7
+              [0-3]?[\d\u218a\u218babetx]{0,5}
+            | 4[0-4]?[\d\u218a\u218babetx]0,4}
+            | 45[0-7]?[\d\u218a\u218babetx]{0,3}
+            | 458[0-7]?[\d\u218a\u218babetx]{0,2}
+            | 4588[\d\u218aatx]?[\d\u218a\u218babetx]?
+            | 4588[\u218aatx][0-7]?
+          )
+            (?![\d\u218a\u218babetx])
+        name: constant.character.escape.duodecimal.protea
+      - comment: Duodecimal escape sequences
+        match: |
+          (?x)
+          \\z # prefix
+            [\d\u218a\u218babetx]+
+            (?![\d\u218a\u218babetx])
+        name: invalid.illegal.escape.duodecimal.protea
+      - begin: \\z{
+        end: \s*}
+        name: constant.character.escape.duodecimal.protea
+        patterns:
+          - include: "#punctuation"
+          - match: |
+              (?x)
+                \b
+              0* # leading zeroes
+              (?: # numbers up to 1114111
+                  [0-3]?[\d\u218a\u218babetx]{0,5}
+                | 4[0-4]?[\d\u218a\u218babetx]0,4}
+                | 45[0-7]?[\d\u218a\u218babetx]{0,3}
+                | 458[0-7]?[\d\u218a\u218babetx]{0,2}
+                | 4588[\d\u218aatx]?[\d\u218a\u218babetx]?
+                | 4588[\u218aatx][0-7]?
+              )
+                (?![\d\u218a\u218babetx])
+            name: constant.character.escape.duodecimal.protea
           - include: "#illegal"
 
       - comment: Decimal escapes (0 to 1114111)
@@ -3954,344 +4020,354 @@ repository:
           - include: $self
 
   infix-operators:
-    patterns:
-      - name: keyword.operator.infix.protea
-        match: |
-          (?xi)
-          (?<=^|[\s({\[]) # opening
-          (?:
-            ( # 1: compound assignment operators
-              # all operators except ~ < = > . : !
-              [\p{S}\p{P}&&[^~<=>.,:;!'"`({\[)}\]\p{Pc}]]
-              # operator character
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]*
-              = # ending equal sign
-            ) |
-            ( # 2: arithmetic operator
-              \+ | - | \*{1,3} | //? | %%?
-            ) |
-            ( # 3: string / regex
-              \+\+ | --
-            ) |
-            ( # 4: logical operator
-              \&\& | \|\| | \^\^ | ! | /\\ | \\/
-            ) |
-            ( # 5: bitwise and set
-              \& | \| | \^ | ~
-            ) |
-            ( # 6: bitwise shift
-              <<<? | >>>?
-            ) |
-            ( # 7: pipeline
-              <\|{1,3} | \|{1,3}>
-            ) |
-            ( # 8: composition
-              <\+ | \+>
-            ) |
-            ( # 9: membership
-              [<>][:!] | [:!][<>]
-            ) |
-            ( # 10: comparison
-              < | > | <= | >= | <> | <=>
-            ) |
-            ( # 11: equality
-              == | != | === | !==
-            ) |
-            ( # 12: similarity
-              ~[=!] | [=!]~ | =<
-            ) |
-            ( # 13: functional
-              <[/*|+$:]> | [/*|+$:]> | <[/*|+$:]
-            ) |
-            ( # 14: null coalescing
-              \?+
-            ) |
-            ( # 15: non null coalescing
-              !+
-            ) |
-            ( # 16: falsy coalescing
-              \?:
-            ) |
-            ( # 17: truthy coalescing
-              !:
-            ) |
-            ( # 18: function application
-              [.$]
-            ) |
-            ( # 19: assignment
-              :?=
-            ) |
-            ( # 20: range
-              [>.]\.[.<] | \.\. | [=.]\.[.=]
-            ) |
-            ( # 21: fat arrow
-                [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]* => # right side
-              | <= [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]* # left side
-            ) |
-            ( # 22: skinny arrow
-                [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]* -> # right side
-              | <- [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]* # left side
-            ) |
-            ( # 23: wavy arrow
-                [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]* ~> # right side
-              | <~ [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]* # left side
-            ) |
-            ( # 24: custom logical
-              [&|^~] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 25: custom arithmetic
-              [-+*/%] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 26: custom prototype
-              [@:] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 27: custom accessor
-              [.] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 28: custom comparison
-              [=!] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 29: custom relational
-              [<>] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 30: custom private
-              [?\#] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 31: custom math
-              \p{Sm} # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 32: custom currency
-              \p{Sc} # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 33: custom ascii
-              [\p{S}\p{P}&&[\x80-\xFF]] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 34: catch all
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            )
-          )
-          (?=$|[)}\]\s]) # closing
-        captures:
-          1: {name: keyword.operator.assignment.augmented.protea}
-          2: {name: keyword.operator.arithmetic.protea}
-          3: {name: keyword.operator.successor.protea}
-          4: {name: keyword.operator.logical.protea}
-          5: {name: keyword.operator.bitwise.protea}
-          6: {name: keyword.operator.bitwise.shift.protea}
-          7: {name: keyword.operator.pipeline.protea}
-          8: {name: keyword.operator.compose.protea}
-          9: {name: keyword.operator.class.protea}
-          10: {name: keyword.operator.relational.protea}
-          11: {name: keyword.operator.comparison.protea}
-          12: {name: keyword.operator.similarity.protea}
-          13: {name: keyword.operator.function.protea}
-          14: {name: keyword.operator.null-coalescing.protea}
-          15: {name: keyword.operator.coalescing.protea}
-          16: {name: keyword.operator.conditional.protea}
-          17: {name: keyword.operator.ternary.protea}
-          18: {name: keyword.operator.macro.protea}
-          19: {name: keyword.operator.assignment.protea}
-          20: {name: keyword.operator.range.protea}
-          21: {name: keyword.operator.arrow.fat.protea}
-          22: {name: keyword.operator.arrow.skinny.protea}
-          23: {name: keyword.operator.arrow.wavy.protea}
-          24: {name: keyword.operator.logical.custom.protea}
-          25: {name: keyword.operator.arithmetic.custom.protea}
-          26: {name: keyword.operator.prototype.custom.protea}
-          27: {name: keyword.operator.accessor.custom.protea}
-          28: {name: keyword.operator.comparison.custom.protea}
-          29: {name: keyword.operator.relational.custom.protea}
-          30: {name: keyword.operator.private.custom.protea}
-          31: {name: keyword.operator.math.custom.protea}
-          32: {name: keyword.operator.currency.custom.protea}
-          33: {name: keyword.operator.ascii.custom.protea}
-          34: {name: keyword.operator.infix.protea}
+    name: keyword.operator.infix.protea
+    match: |
+      (?xi)
+      (?<=^|[\s({\[]) # opening
+      (?:
+        ( # 1: optional accessor
+        \?[.:]=?
+        ) |
+        ( # 2: assertion/call operator
+          ![.:]=?
+        ) |
+        ( # 3: accessor operator
+          (?:::|\.)=?
+        ) |
+        ( # 4: compound assignment operators
+          # all operators except ~ < = > . : !
+          [\p{S}\p{P}&&[^~<=>.,:;!'"`({\[)}\]\p{Pc}]]
+          # operator character
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]*
+          = # ending equal sign
+        ) |
+        ( # 5: arithmetic operator
+          [+-][\%\|]? | \*{1,3}[\%\|]? | ~?/ | %%?
+        ) |
+        ( # 6: string/regex/array/set
+          \+\+ | \-\-
+        ) |
+        ( # 7: logical operator
+          \&\& | \|\| | \^\^ | ! | /\\ | \\/
+        ) |
+        ( # 8: bitwise and set
+          \& | \| | \^ | ~
+        ) |
+        ( # 9: bitwise shift
+          <<<? | >>>?
+        ) |
+        ( # 10: pipeline
+          <\|+ | \|+>
+        ) |
+        ( # 11: composition
+          <\+ | \+>
+        ) |
+        ( # 12: membership
+          [<>][:!] | [:!][<>]
+        ) |
+        ( # 13: comparison
+          < | > | <= | >= | <> | <=>
+        ) |
+        ( # 14: equality
+          == | != | === | !==
+        ) |
+        ( # 15: similarity
+          ~[=!] | [=!]~ | =<
+        ) |
+        ( # 16: functional
+          <[/*|+$:]> | [/*|+$:]> | <[/*|+$:]
+        ) |
+        ( # 17: null coalescing
+          \?+
+        ) |
+        ( # 18: non null coalescing
+          !+
+        ) |
+        ( # 19: falsy coalescing
+          \?:
+        ) |
+        ( # 20: truthy coalescing
+          !:
+        ) |
+        ( # 21: function application
+          [.$]
+        ) |
+        ( # 22: assignment
+          :?=
+        ) |
+        ( # 23: range
+          [>.]\.[.<] | \.\. | [=.]\.[.=]
+        ) |
+        ( # 24: fat arrow
+            =+> # right side
+          | <=+ # left side
+        ) |
+        ( # 25: skinny arrow
+            -+> # right side
+          | <-+ # left side
+        ) |
+        ( # 26: wavy arrow
+            ~+> # right side
+          | <~+ # left side
+        ) |
+        ( # 27: custom logical
+          [&|^~] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 28: custom arithmetic
+          [-+*/%] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 29: custom prototype
+          [@:] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 30: custom accessor
+          [.] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 31: custom comparison
+          [=!] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 32: custom relational
+          [<>] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 33: custom private
+          [?\#] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 34: custom math
+          \p{Sm} # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 35: custom currency
+          \p{Sc} # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 36: custom ascii
+          [\p{S}\p{P}&&[\x80-\xFF]] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 37: catch all
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        )
+      )
+      (?=$|[)}\]\s]) # closing
+    captures:
+      1: {name: keyword.operator.optional.protea}
+      2: {name: keyword.operator.assert.protea}
+      3: {name: keyword.operator.accessor.protea}
+      4: {name: keyword.operator.assignment.augmented.protea}
+      5: {name: keyword.operator.arithmetic.protea}
+      6: {name: keyword.operator.successor.protea}
+      7: {name: keyword.operator.logical.protea}
+      8: {name: keyword.operator.bitwise.protea}
+      9: {name: keyword.operator.bitwise.shift.protea}
+      10: {name: keyword.operator.pipeline.protea}
+      11: {name: keyword.operator.compose.protea}
+      12: {name: keyword.operator.class.protea}
+      13: {name: keyword.operator.relational.protea}
+      14: {name: keyword.operator.comparison.protea}
+      15: {name: keyword.operator.similarity.protea}
+      16: {name: keyword.operator.function.protea}
+      17: {name: keyword.operator.null-coalescing.protea}
+      18: {name: keyword.operator.coalescing.protea}
+      19: {name: keyword.operator.conditional.protea}
+      20: {name: keyword.operator.ternary.protea}
+      21: {name: keyword.operator.macro.protea}
+      22: {name: keyword.operator.assignment.protea}
+      23: {name: keyword.operator.range.protea}
+      24: {name: keyword.operator.arrow.fat.protea}
+      25: {name: keyword.operator.arrow.skinny.protea}
+      26: {name: keyword.operator.arrow.wavy.protea}
+      27: {name: keyword.operator.logical.custom.protea}
+      28: {name: keyword.operator.arithmetic.custom.protea}
+      29: {name: keyword.operator.prototype.custom.protea}
+      30: {name: keyword.operator.accessor.custom.protea}
+      31: {name: keyword.operator.comparison.custom.protea}
+      32: {name: keyword.operator.relational.custom.protea}
+      33: {name: keyword.operator.private.custom.protea}
+      34: {name: keyword.operator.math.custom.protea}
+      35: {name: keyword.operator.currency.custom.protea}
+      36: {name: keyword.operator.ascii.custom.protea}
+      37: {name: keyword.operator.primary.protea}
 
   primary-operators:
-    patterns:
-      - name: keyword.operator.primary.protea
-        match: |
-          (?x)
-          (?<=['"`)}\]\w]|\\.) # closing
-          (?:
-            ( # 1: optional accessor
-            \?[.:]=?
-            ) |
-            ( # 2: assertion/call operator
-              ![.:]=?
-            ) |
-            ( # 3: accessor operator
-              (?:::|\.)=?
-            ) |
-            ( # 4: compound assignment operators
-              # all operators except ~ < = > . : !
-              [\p{S}\p{P}&&[^~<=>.,:;!'"`({\[)}\]\p{Pc}]]
-              # operator character
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]*
-              = # ending equal sign
-            ) |
-            ( # 5: arithmetic operator
-              \+ | - | \*{1,3} | //? | %%?
-            ) |
-            ( # 6: string / regex
-              \+\+ | --
-            ) |
-            ( # 7: logical operator
-              \&\& | \|\| | \^\^ | ! | /\\ | \\/
-            ) |
-            ( # 8: bitwise and set
-              \& | \| | \^ | ~
-            ) |
-            ( # 9: bitwise shift
-              <<<? | >>>?
-            ) |
-            ( # 10: pipeline
-              <\|{1,3} | \|{1,3}>
-            ) |
-            ( # 11: composition
-              <\+ | \+>
-            ) |
-            ( # 12: membership
-              [<>][:!] | [:!][<>]
-            ) |
-            ( # 13: comparison
-              < | > | <= | >= | <> | <=>
-            ) |
-            ( # 14: equality
-              == | != | === | !==
-            ) |
-            ( # 15: similarity
-              ~[=!] | [=!]~ | =<
-            ) |
-            ( # 16: functional
-              <[/*|+$:]> | [/*|+$:]> | <[/*|+$:]
-            ) |
-            ( # 17: null coalescing
-              \?+
-            ) |
-            ( # 18: non null coalescing
-              !+
-            ) |
-            ( # 19: falsy coalescing
-              \?:
-            ) |
-            ( # 20: truthy coalescing
-              !:
-            ) |
-            ( # 21: function application
-              [.$]
-            ) |
-            ( # 22: assignment
-              :?=
-            ) |
-            ( # 23: range
-              [>.]\.[.<] | \.\. | [=.]\.[.=]
-            ) |
-            ( # 24: fat arrow
-                [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]* => # right side
-              | <= [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]* # left side
-            ) |
-            ( # 25: skinny arrow
-                [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]* -> # right side
-              | <- [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]* # left side
-            ) |
-            ( # 26: wavy arrow
-                [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]* ~> # right side
-              | <~ [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]* # left side
-            ) |
-            ( # 27: custom logical
-              [&|^~] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 28: custom arithmetic
-              [-+*/%] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 29: custom prototype
-              [@:] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 30: custom accessor
-              [.] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 31: custom comparison
-              [=!] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 32: custom relational
-              [<>] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 33: custom private
-              [?\#] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 34: custom math
-              \p{Sm} # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 35: custom currency
-              \p{Sc} # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 36: custom ascii
-              [\p{S}\p{P}&&[\x80-\xFF]] # leading chars
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            ) |
-            ( # 37: catch all
-              [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
-            )
-          )
-          (?=['"`({\[\w]) # opening
-        captures:
-          1: {name: keyword.operator.optional.protea}
-          2: {name: keyword.operator.assert.protea}
-          3: {name: keyword.operator.accessor.protea}
-          4: {name: keyword.operator.assignment.augmented.protea}
-          5: {name: keyword.operator.arithmetic.protea}
-          6: {name: keyword.operator.successor.protea}
-          7: {name: keyword.operator.logical.protea}
-          8: {name: keyword.operator.bitwise.protea}
-          9: {name: keyword.operator.bitwise.shift.protea}
-          10: {name: keyword.operator.pipeline.protea}
-          11: {name: keyword.operator.compose.protea}
-          12: {name: keyword.operator.class.protea}
-          13: {name: keyword.operator.relational.protea}
-          14: {name: keyword.operator.comparison.protea}
-          15: {name: keyword.operator.similarity.protea}
-          16: {name: keyword.operator.function.protea}
-          17: {name: keyword.operator.null-coalescing.protea}
-          18: {name: keyword.operator.coalescing.protea}
-          19: {name: keyword.operator.conditional.protea}
-          20: {name: keyword.operator.ternary.protea}
-          21: {name: keyword.operator.macro.protea}
-          22: {name: keyword.operator.assignment.protea}
-          23: {name: keyword.operator.range.protea}
-          24: {name: keyword.operator.arrow.fat.protea}
-          25: {name: keyword.operator.arrow.skinny.protea}
-          26: {name: keyword.operator.arrow.wavy.protea}
-          27: {name: keyword.operator.logical.custom.protea}
-          28: {name: keyword.operator.arithmetic.custom.protea}
-          29: {name: keyword.operator.prototype.custom.protea}
-          30: {name: keyword.operator.accessor.custom.protea}
-          31: {name: keyword.operator.comparison.custom.protea}
-          32: {name: keyword.operator.relational.custom.protea}
-          33: {name: keyword.operator.private.custom.protea}
-          34: {name: keyword.operator.math.custom.protea}
-          35: {name: keyword.operator.currency.custom.protea}
-          36: {name: keyword.operator.ascii.custom.protea}
-          37: {name: keyword.operator.primary.protea}
+    name: keyword.operator.primary.protea
+    match: |
+      (?x)
+      (?<=['"`)}\]\w]|\\.) # closing
+      (?:
+        ( # 1: optional accessor
+        \?[.:]=?
+        ) |
+        ( # 2: assertion/call operator
+          ![.:]=?
+        ) |
+        ( # 3: accessor operator
+          (?:::|\.)=?
+        ) |
+        ( # 4: compound assignment operators
+          # all operators except ~ < = > . : !
+          [\p{S}\p{P}&&[^~<=>.,:;!'"`({\[)}\]\p{Pc}]]
+          # operator character
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]*
+          = # ending equal sign
+        ) |
+        ( # 5: arithmetic operator
+          [+-][\%\|]? | \*{1,3}[\%\|]? | ~?/ | %%?
+        ) |
+        ( # 6: string/regex/array/set
+          \+\+ | \-\-
+        ) |
+        ( # 7: logical operator
+          \&\& | \|\| | \^\^ | ! | /\\ | \\/
+        ) |
+        ( # 8: bitwise and set
+          \& | \| | \^ | ~
+        ) |
+        ( # 9: bitwise shift
+          <<<? | >>>?
+        ) |
+        ( # 10: pipeline
+          <\|+ | \|+>
+        ) |
+        ( # 11: composition
+          <\+ | \+>
+        ) |
+        ( # 12: membership
+          [<>][:!] | [:!][<>]
+        ) |
+        ( # 13: comparison
+          < | > | <= | >= | <> | <=>
+        ) |
+        ( # 14: equality
+          == | != | === | !==
+        ) |
+        ( # 15: similarity
+          ~[=!] | [=!]~ | =<
+        ) |
+        ( # 16: functional
+          <[/*|+$:]> | [/*|+$:]> | <[/*|+$:]
+        ) |
+        ( # 17: null coalescing
+          \?+
+        ) |
+        ( # 18: non null coalescing
+          !+
+        ) |
+        ( # 19: falsy coalescing
+          \?:
+        ) |
+        ( # 20: truthy coalescing
+          !:
+        ) |
+        ( # 21: function application
+          [.$]
+        ) |
+        ( # 22: assignment
+          :?=
+        ) |
+        ( # 23: range
+          [>.]\.[.<] | \.\. | [=.]\.[.=]
+        ) |
+        ( # 24: fat arrow
+            =+> # right side
+          | <=+ # left side
+        ) |
+        ( # 25: skinny arrow
+            -+> # right side
+          | <-+ # left side
+        ) |
+        ( # 26: wavy arrow
+            ~+> # right side
+          | <~+ # left side
+        ) |
+        ( # 27: custom logical
+          [&|^~] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 28: custom arithmetic
+          [-+*/%] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 29: custom prototype
+          [@:] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 30: custom accessor
+          [.] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 31: custom comparison
+          [=!] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 32: custom relational
+          [<>] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 33: custom private
+          [?\#] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 34: custom math
+          \p{Sm} # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 35: custom currency
+          \p{Sc} # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 36: custom ascii
+          [\p{S}\p{P}&&[\x80-\xFF]] # leading chars
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        ) |
+        ( # 37: catch all
+          [\p{S}\p{P}&&[^,;'"`({\[)}\]\p{Pc}]]+
+        )
+      )
+      (?=['"`({\[\w]) # opening
+    captures:
+      1: {name: keyword.operator.optional.protea}
+      2: {name: keyword.operator.assert.protea}
+      3: {name: keyword.operator.accessor.protea}
+      4: {name: keyword.operator.assignment.augmented.protea}
+      5: {name: keyword.operator.arithmetic.protea}
+      6: {name: keyword.operator.successor.protea}
+      7: {name: keyword.operator.logical.protea}
+      8: {name: keyword.operator.bitwise.protea}
+      9: {name: keyword.operator.bitwise.shift.protea}
+      10: {name: keyword.operator.pipeline.protea}
+      11: {name: keyword.operator.compose.protea}
+      12: {name: keyword.operator.class.protea}
+      13: {name: keyword.operator.relational.protea}
+      14: {name: keyword.operator.comparison.protea}
+      15: {name: keyword.operator.similarity.protea}
+      16: {name: keyword.operator.function.protea}
+      17: {name: keyword.operator.null-coalescing.protea}
+      18: {name: keyword.operator.coalescing.protea}
+      19: {name: keyword.operator.conditional.protea}
+      20: {name: keyword.operator.ternary.protea}
+      21: {name: keyword.operator.macro.protea}
+      22: {name: keyword.operator.assignment.protea}
+      23: {name: keyword.operator.range.protea}
+      24: {name: keyword.operator.arrow.fat.protea}
+      25: {name: keyword.operator.arrow.skinny.protea}
+      26: {name: keyword.operator.arrow.wavy.protea}
+      27: {name: keyword.operator.logical.custom.protea}
+      28: {name: keyword.operator.arithmetic.custom.protea}
+      29: {name: keyword.operator.prototype.custom.protea}
+      30: {name: keyword.operator.accessor.custom.protea}
+      31: {name: keyword.operator.comparison.custom.protea}
+      32: {name: keyword.operator.relational.custom.protea}
+      33: {name: keyword.operator.private.custom.protea}
+      34: {name: keyword.operator.math.custom.protea}
+      35: {name: keyword.operator.currency.custom.protea}
+      36: {name: keyword.operator.ascii.custom.protea}
+      37: {name: keyword.operator.primary.protea}
 
   prefix-operators:
     comment: Prefix operators
@@ -5660,12 +5736,18 @@ repository:
       - include: $self
 
   object-value:
-    match: (?<=^|{|;|,)\s*\b[\p{Pc}\p{L}]\w*\b\s*(?=,|;|}|=['"`({\[\w\s]|$)
-    name: variable.other.constant.protea
+    patterns:
+      - match: (?<=(?:^|{|;|,)\s*)\b[\p{Pc}\p{L}]\w*\b(?=\s*(?:,|;|}|=['"`({\[\w\s]|$))
+        name: variable.other.constant.protea
+      - match: (?<=^|{|;|,)\s*\b[\p{Pc}\p{L}]\w*\b\s*(?=,|;|}|=['"`({\[\w\s]|$)
+        name: variable.other.constant.protea
 
   object-argument:
-    match: (?<=^|{|;|,)\s*\b[\p{Pc}\p{L}]\w*\b\s*(?=,|;|}|=['"`({\[\w\s]|$)
-    name: variable.parameter.named.protea
+    patterns:
+      - match: (?<=(?:^|{|;|,)\s*)\b[\p{Pc}\p{L}]\w*\b(?=\s*(?:,|;|}|=['"`({\[\w\s]|$))
+        name: variable.parameter.named.protea
+      - match: (?<=^|{|;|,)\s*\b[\p{Pc}\p{L}]\w*\b\s*(?=,|;|}|=['"`({\[\w\s]|$)
+        name: variable.parameter.named.protea
 
   as-keyword:
     match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(as)\b\s*
