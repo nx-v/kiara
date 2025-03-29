@@ -762,9 +762,9 @@ repository:
         match: |
           (?ix) \b
             (0z) # prefix
-            [\dabetx\u218a\u218b] [\dabetx\u218a\u218b_]* # integer part
+            [\d\u218a\u218babetx] [\d\u218a\u218babetx_]* # integer part
             (\.)? # decimal point
-            [\dabetx\u218a\u218b_]* # fractional part
+            [\d\u218a\u218babetx_]* # fractional part
             (?: # exponent part
               (p) # delimiter
               ([+-])? # sign
@@ -1146,12 +1146,12 @@ repository:
           \\z # prefix
             0* # leading zeroes
           (?: # numbers leading to 4588A7
-              [0-3]?[\d\u218a\u218babetx]{0,5}
-            | 4[0-4]?[\d\u218a\u218babetx]0,4}
-            | 45[0-7]?[\d\u218a\u218babetx]{0,3}
-            | 458[0-7]?[\d\u218a\u218babetx]{0,2}
-            | 4588[\d\u218aatx]?[\d\u218a\u218babetx]?
-            | 4588[\u218aatx][0-7]?
+              [0-3]?              [\d\u218a\u218babetx]{0,5}
+            | 4    [0-4]?         [\d\u218a\u218babetx]{0,4}
+            | 45   [0-7]?         [\d\u218a\u218babetx]{0,3}
+            | 458  [0-7]?         [\d\u218a\u218babetx]{0,2}
+            | 4588 [\d\u218aatx]? [\d\u218a\u218babetx]?
+            | 4588 [\u218aatx]    [0-7]?
           )
             (?![\d\u218a\u218babetx])
         name: constant.character.escape.duodecimal.protea
@@ -1171,13 +1171,13 @@ repository:
               (?x)
                 \b
               0* # leading zeroes
-              (?: # numbers up to 1114111
-                  [0-3]?[\d\u218a\u218babetx]{0,5}
-                | 4[0-4]?[\d\u218a\u218babetx]0,4}
-                | 45[0-7]?[\d\u218a\u218babetx]{0,3}
-                | 458[0-7]?[\d\u218a\u218babetx]{0,2}
-                | 4588[\d\u218aatx]?[\d\u218a\u218babetx]?
-                | 4588[\u218aatx][0-7]?
+              (?: # numbers up to 4588A7
+                  [0-3]?              [\d\u218a\u218babetx]{0,5}
+                | 4    [0-4]?         [\d\u218a\u218babetx]{0,4}
+                | 45   [0-7]?         [\d\u218a\u218babetx]{0,3}
+                | 458  [0-7]?         [\d\u218a\u218babetx]{0,2}
+                | 4588 [\d\u218aatx]? [\d\u218a\u218babetx]?
+                | 4588 [\u218aatx]    [0-7]?
               )
                 (?![\d\u218a\u218babetx])
             name: constant.character.escape.duodecimal.protea
