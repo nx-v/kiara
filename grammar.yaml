@@ -4,10 +4,9 @@ fileTypes: [protea, pta, spwn]
 patterns: [include: "#core"]
 
 informationForContributors: |
-  This is the grammar for Protea, a programming language and framework for
-  building modern applications with ease. It is designed to fix JavaScript's
-  shortcomings and pitfalls, and introducing new paradigms to an already
-  familiar syntax.
+  This is the grammar for Protea, a personal programming language project
+  for building applications for the web, and introducing new paradigms
+  and sugar to an already familiar JS (and Rust)-inspired syntax.
 
   The grammar is still nearing completion but may need to be thoroughly
   refactored and reorganized. There also are some bugfixes that have to be
@@ -18,6 +17,9 @@ informationForContributors: |
   will be very happy to receive it/them.
 
 changelog: |
+  A major rewrite is underway. This language's syntax would be terser 
+  and thus inspired by Rust, Zig and D.
+
   New changes:
 
   - Syntax now closely resembles JavaScript's. This includes keywords, comments,
@@ -41,8 +43,8 @@ changelog: |
     - [x] LINQ, inline SQL and constraint syntax (more to come later)
   - Numbers and escape sequences have been reworked, and will no longer accept
     integers bigger than decimal 1114111 which now are highlighted as an error.
-  - Bases 4, 6, and 12 have been scrapped, though a multi-base generic numeric
-    literal is still in the works.
+  - Base 12 (0z, \z) is added back, and bases 4 and 6 have been removed, though a
+    multi-base generic numeric literal is still in the works.
   - Interpolation and formatting syntax have been reworked and fixed, and can now
     span multiple lines and beyond 20 nested layers thanks to applyEndPatternLast.
     Because of this, spacing around most of the patterns here have also been removed;
@@ -85,7 +87,7 @@ changelog: |
   - Added Scala's 'given'/'using' syntax to function arguments
   - Match unquoted globs in routes
   - Fix syntax for JavaScript ES5 module import and export statements
-  - Revamp Markdown syntax with these extensions:
+  - Reimplement Markdown syntax with these extensions:
     - [ ] Citations
     - [ ] Strike-through
     - [ ] Deleted and inserted text
@@ -3935,7 +3937,7 @@ repository:
               (?:(?:[?!]?\.|[?!:]:)=?)
             \b
           )
-          (?:\d\w+)
+          (?:\d\w*)
         name: variable.other.index.protea
       - comment: |
           Four types of variables:
