@@ -84,6 +84,11 @@ changelog: |
 
   Fixes:
 
+  - Keywords should all have a maximum of 6 characters, e.g. "function" should be "func".
+  - Fix syntax of generics when combined with access operators.
+    For example, T.<x>, T?.<x>, T!.<x>, T::<x>, T?:<x>, T!:<x>.
+  - Fix syntax of type annotations inside generics to avoid being parsed as custom operators.
+  - Fix syntax of generic type parameters and constraints.
   - Added Scala's 'given'/'using' syntax to function arguments
   - Match unquoted globs in routes
   - Fix syntax for JavaScript ES5 module import and export statements
@@ -1767,7 +1772,7 @@ repository:
     name: meta.regexp.protea
     patterns:
       - applyEndPatternLast: true
-        comment: Pattern section
+        comment: Multi-line pattern section
         begin: (/>)\s*
         end: \s*(</)(\p{L}*)
         name: string.regexp.pattern.protea
@@ -1777,7 +1782,7 @@ repository:
         patterns:
           - include: "#comments"
           - include: "#regexp-patterns"
-          - comment: Replacement section
+          - comment: Multi-line replacement section
             begin: (</>)\s*
             end: \s*(?=</)
             name: string.regexp.replace.protea
@@ -1786,7 +1791,7 @@ repository:
             patterns:
               - include: "#back-references"
               - include: "#string-content"
-      - comment: Pattern section
+      - comment: Single-line pattern section
         begin: (/)\s*(?=(?:[^\\/]|\\.)+/\p{L}*)
         end: \s*(/)(\p{L}*)
         name: string.regexp.pattern.protea
@@ -1795,6 +1800,15 @@ repository:
           2: {name: keyword.other.flag.protea}
         patterns:
           - include: "#regexp-patterns"
+          - comment: Single-line replacement section
+            begin: (<>)\s*
+            end: \s*(?=/)
+            name: string.regexp.replace.protea
+            captures:
+              1: {name: punctuation.definition.regexp.protea}
+            patterns:
+              - include: "#back-references"
+              - include: "#string-content"
 
   fuzzy-expression:
     patterns:
