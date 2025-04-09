@@ -635,7 +635,7 @@ repository:
         name: keyword.operator.expression.$1.kiara
 
   type-operators:
-    old:
+    unused:
       - comment: Function types
         match: (?:^|\s+)(?:(\|)|(>))(?=['"`({\[\w])|(?<=['"`)}\]\w])(?:(\|)|(<))(?:$|\s+)
         captures:
@@ -701,12 +701,16 @@ repository:
           (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
           (?:
             (true|false) # boolean
-            |(null|nan|undefined|infinity) # null, NaN
+            |(null|nan)
+            |(undef) # undefined
+            |(inf) # infinity
           )
           \b
         captures:
           1: {name: constant.language.boolean.$1.kiara}
           2: {name: constant.language.$2.kiara}
+          3: {name: constant.language.undefined.kiara}
+          4: {name: constant.language.infinity.kiara}
       - match: |
           (?x)
           (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
@@ -1675,11 +1679,15 @@ repository:
           3: {name: punctuation.separator.key-value.kiara}
         patterns:
           - include: "#constants"
-          - include: "#embedded-function-calls"
-          - include: "#variables"
+          - include: "#generics"
           - include: "#brackets"
-          - include: "#regexps"
+          - include: "#embedded-function-calls"
+          - match: (?<=>|\w)(!)(?=#?[({])
+            captures:
+              1: {name: keyword.operator.macro.kiara}
+          - include: "#variables"
           - include: "#numbers"
+          - include: "#regexps"
           - include: "#symbols"
           - *qualified-name-separators
       - comment: type specifier
