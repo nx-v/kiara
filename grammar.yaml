@@ -190,8 +190,9 @@ define:
     \b
 
   html-tag-names: &html-tag-names
-    - match: '\.|:|::'
-      name: punctuation.separator.namespace.protea
+    - match: (?x)([?!:]:|[?!]?\.)
+      captures:
+        1: {name: punctuation.separator.namespace.protea}
     - match: \b([\p{Pc}\p{L}]\w*)\b(?=[:.])
       name: entity.name.tag.namespace.protea
     - match: \b((?:[\p{Pc}\p{L}&&\P{Ll}][\w&&\P{Lu}]*)+)\b
@@ -1784,7 +1785,7 @@ repository:
           - include: "#regexp-patterns"
           - comment: Multi-line replacement section
             begin: (</>)\s*
-            end: \s*(?=</)
+            end: \s*(</>)|\s*(?=</)
             name: string.regexp.replace.protea
             captures:
               1: {name: punctuation.definition.regexp.protea}
@@ -1801,8 +1802,8 @@ repository:
         patterns:
           - include: "#regexp-patterns"
           - comment: Single-line replacement section
-            begin: (<>)\s*
-            end: \s*(?=/)
+            begin: (:)\s*
+            end: \s*(\|)|\s*(?=/)
             name: string.regexp.replace.protea
             captures:
               1: {name: punctuation.definition.regexp.protea}
@@ -1981,7 +1982,8 @@ repository:
           1: {name: punctuation.section.expression.protea}
           2: {name: keyword.control.protea}
           3: {name: punctuation.separator.colon.protea}
-        patterns: *regexp-patterns
+        patterns:
+          - include: "#regexp-patterns"
       - comment: Block comment
         begin: (\()(\?#)
         contentName: comment.block.regexp.protea
@@ -1998,14 +2000,16 @@ repository:
         name: meta.group.look-ahead.protea
         captures:
           1: {name: punctuation.definition.group.look-ahead.protea}
-        patterns: *regexp-patterns
+        patterns:
+          - include: "#regexp-patterns"
       - comment: Lookbehind assertion
         begin: (\(\?<=)
         end: \s*(\))
         name: meta.group.look-behind.protea
         captures:
           1: {name: punctuation.definition.group.look-behind.protea}
-        patterns: *regexp-patterns
+        patterns:
+          - include: "#regexp-patterns"
       - comment: Negative lookahead assertion
         begin: (\(\?!)
         end: \s*(\))
@@ -2021,11 +2025,12 @@ repository:
         captures:
           1:
             name: punctuation.definition.group.negative-look-behind.protea
-        patterns: *regexp-patterns
+        patterns:
+          - include: "#regexp-patterns"
       - comment: Match directive Oniguruma supports only 20 levels of recursion
         begin: (?x)(\(\?)(?=%)
         captures:
-          1: {name: punctuation.definition.directive.protea}
+          1: {name: punctuation.definition.group.directive.protea}
         end: \s*(\))
         name: meta.group.directive.protea
         patterns:
@@ -2037,7 +2042,35 @@ repository:
         name: meta.group.longest.protea
         captures:
           1: {name: punctuation.definition.group.longest.protea}
-        patterns: *regexp-patterns
+        patterns:
+          - include: "#regexp-patterns"
+      - comment: Back-reference groups
+        begin: \((\?&(?:([+-]?\d+)|([\p{Pc}\p{L}]\w*)))(:)?
+        end: \s*\)
+        name: meta.group.back-reference.protea
+        captures:
+          0: {name: punctuation.definition.group.back-reference.protea}
+          1: {name: punctuation.definition.group.back-reference.protea}
+          2: {name: constant.numeric.index.protea}
+          3: {patterns: [include: "#variables"]}
+          4: {name: punctuation.separator.colon.protea}
+        patterns:
+          - include: "#regexp-patterns"
+      - comment: Back-reference groups
+        begin: \((\?&)
+        end: \s*\)
+        name: meta.group.back-reference.protea
+        captures:
+          0: {name: punctuation.definition.group.back-reference.protea}
+          1: {name: punctuation.definition.group.back-reference.protea}
+        patterns:
+          - begin: (?<=\(\?&)('''+|"""+|['"])
+            end: \s*(\1)
+            name: constant.other.group.protea
+            captures:
+              1: {name: punctuation.definition.group.back-reference.protea}
+            patterns: *regex-back-references
+          - include: "#regexp-patterns"
       - comment: Flag modifier group
         begin: (\(\?\^?(?:([+-]?\d+?)|((?:[+-]\p{Lu}+)+|\p{Lu}+(?:[+-]\p{Lu}+)*)|((?:[+-]\p{Ll}+)+|\p{Ll}+(?:[+-]\p{Ll}+)*)))\s*(:)?
         end: \s*(\))
@@ -2049,7 +2082,8 @@ repository:
           3: {name: keyword.control.recursion.protea}
           4: {name: keyword.other.flag.protea}
           5: {name: punctuation.separator.colon.protea}
-        patterns: *regexp-patterns
+        patterns:
+          - include: "#regexp-patterns"
       - comment: Call-outs
         begin: (\(\?)(?={)
         end: \s*(\))
@@ -2075,39 +2109,32 @@ repository:
         name: meta.group.atomic.protea
         captures:
           1: {name: punctuation.definition.group.atomic.protea}
-        patterns: *regexp-patterns
+        patterns:
+          - include: "#regexp-patterns"
       - comment: Non-capturing groups
         begin: (\(\?:)
         end: \s*(\))
         name: meta.group.non-capturing.protea
         captures:
           1: {name: punctuation.definition.group.non-capturing.protea}
-        patterns: *regexp-patterns
+        patterns:
+          - include: "#regexp-patterns"
       - comment: Branch groups
         begin: (\(\?)(?=[(|])
         end: \s*(\))
         name: meta.group.branch.protea
         captures:
           1: {name: punctuation.definition.group.branch.protea}
-        patterns: *regexp-patterns
-      - comment: Atomic groups
+        patterns:
+          - include: "#regexp-patterns"
+      - comment: Absent groups
         begin: (\(\?~)
         end: \s*(\))
         name: meta.group.absent.protea
         captures:
           1: {name: punctuation.definition.group.absent.protea}
-        patterns: *regexp-patterns
-      - comment: Back-reference groups
-        begin: \((\?&(?:([+-]?\d+)|([\p{Pc}\p{L}]\w*)))(:)?
-        end: \s*\)
-        name: meta.group.back-reference.protea
-        captures:
-          0: {name: punctuation.definition.group.back-reference.protea}
-          1: {name: punctuation.definition.group.back-reference.protea}
-          2: {name: constant.numeric.index.protea}
-          3: {patterns: [include: "#variables"]}
-          4: {name: punctuation.separator.colon.protea}
-        patterns: *regexp-patterns
+        patterns:
+          - include: "#regexp-patterns"
       - comment: Named groups (angle-brackets)
         begin: \(\?(?=<(?![!=]))
         end: \s*(\))
@@ -2142,7 +2169,8 @@ repository:
         name: meta.group.protea
         captures:
           1: {name: punctuation.definition.group.protea}
-        patterns: *regexp-patterns
+        patterns:
+          - include: "#regexp-patterns"
 
   regexp-character-class:
     patterns:
@@ -2394,7 +2422,7 @@ repository:
               \b
               [\p{Pc}\p{L}]\w* # identifier
               \b
-              (?:::|\.?) # qualified name separator
+              (?:[?!:]:|[?!]?\.) # qualified name separator
             )*
             [\p{Pc}\p{L}]\w* # last part of identifier
             \b
@@ -2898,7 +2926,7 @@ repository:
           1: {name: punctuation.definition.tag.protea}
         patterns:
           - comment: Tag name
-            match: (?<=<)\b([\p{Pc}\p{L}]\w*\b(?:[:.][\p{Pc}\p{L}]\w*)*)\b
+            match: (?<=<)\b([\p{Pc}\p{L}]\w*\b(?:(?:[?!:]:|[?!]?\.)[\p{Pc}\p{L}]\w*)*)\b
             captures:
               1:
                 name: entity.name.tag.protea
