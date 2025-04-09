@@ -6,7 +6,7 @@ patterns: [include: "#core"]
 informationForContributors: |
   This is the grammar for Protea, a personal programming language project
   for building applications for the web, and introducing new paradigms
-  and sugar to an already familiar JS (and Rust)-inspired syntax.
+  and sugar to an already familiar JS and Rust-inspired syntax.
 
   The grammar is still nearing completion but may need to be thoroughly
   refactored and reorganized. There also are some bugfixes that have to be
@@ -145,7 +145,7 @@ define:
         |union|iter|macro|query|elem
         |object|realm|trait|style|script
         |go|defer|do|with|from|where
-        |if|unless|else|then|declare
+        |if|unless|else|then|declare|ref
         |for|foreach|repeat|while|until
         |try|throw|catch|finally|switch
         |match|case|pass|default|goto|move
@@ -174,7 +174,7 @@ define:
         |union|iter|macro|query|elem
         |object|realm|trait|style|script
         |go|defer|do|with|from|where
-        |if|unless|else|then|declare
+        |if|unless|else|then|declare|ref
         |for|foreach|repeat|while|until
         |try|throw|catch|finally|switch
         |match|case|pass|default|goto|move
@@ -293,7 +293,7 @@ repository:
           |union|iter|macro|query|elem
           |object|realm|trait|style|script
           |go|defer|do|with|from|where
-          |if|unless|else|then|declare
+          |if|unless|else|then|declare|ref
           |for|foreach|repeat|while|until
           |try|throw|catch|finally|switch
           |match|case|pass|default|goto|move
@@ -1459,7 +1459,7 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|unless|else|then|declare
+              |if|unless|else|then|declare|ref
               |for|foreach|repeat|while|until
               |try|throw|catch|finally|switch
               |match|case|pass|default|goto|move
@@ -1479,6 +1479,9 @@ repository:
           - include: "#generics"
           - include: "#brackets"
           - include: "#embedded-function-calls"
+          - match: (?<=>|\w)(!)(?=#?[({])
+            captures:
+              1: {name: keyword.operator.macro.protea}
           - include: "#variables"
           - include: "#numbers"
           - *qualified-name-separators
@@ -1511,7 +1514,7 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|unless|else|then|declare
+              |if|unless|else|then|declare|ref
               |for|foreach|repeat|while|until
               |try|throw|catch|finally|switch
               |match|case|pass|default|goto|move
@@ -1590,7 +1593,7 @@ repository:
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
                 |go|defer|do|with|from|where
-                |if|unless|else|then|declare
+                |if|unless|else|then|declare|ref
                 |for|foreach|repeat|while|until
                 |try|throw|catch|finally|switch
                 |match|case|pass|default|goto|move
@@ -1745,7 +1748,7 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|unless|else|then|declare
+              |if|unless|else|then|declare|ref
               |for|foreach|repeat|while|until
               |try|throw|catch|finally|switch
               |match|case|pass|default|goto|move
@@ -2373,7 +2376,7 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|unless|else|then|declare
+              |if|unless|else|then|declare|ref
               |for|foreach|repeat|while|until
               |try|throw|catch|finally|switch
               |match|case|pass|default|goto|move
@@ -3472,7 +3475,7 @@ repository:
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
                 |go|defer|do|with|from|where
-                |if|unless|else|then|declare
+                |if|unless|else|then|declare|ref
                 |for|foreach|repeat|while|until
                 |try|throw|catch|finally|switch
                 |match|case|pass|default|goto|move
@@ -3530,7 +3533,7 @@ repository:
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
                 |go|defer|do|with|from|where
-                |if|unless|else|then|declare
+                |if|unless|else|then|declare|ref
                 |for|foreach|repeat|while|until
                 |try|throw|catch|finally|switch
                 |match|case|pass|default|goto|move
@@ -5456,7 +5459,7 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|unless|else|then|declare
+              |if|unless|else|then|declare|ref
               |for|foreach|repeat|while|until
               |try|throw|catch|finally|switch
               |match|case|pass|default|goto|move
