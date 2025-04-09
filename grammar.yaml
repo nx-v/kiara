@@ -3586,7 +3586,8 @@ repository:
         \b
           (?= 
             \#? [({] | # opening bracket
-            [?!:]: < | [?!]?\. < | < # generics
+            [?!:]: < | [?!]?\. < | < | # generics       
+            ! # macro call operator
           ) 
         |
         (?<= ^ # beginning of line
@@ -3608,7 +3609,8 @@ repository:
         \b
           (?= 
             \#? [({] | # opening bracket
-            [?!:]: < | [?!]?\. < | < # generics
+            [?!:]: < | [?!]?\. < | < | # generics       
+            ! # macro call operator
           ) 
       )
     captures:
