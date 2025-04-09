@@ -2222,6 +2222,7 @@ repository:
           ( # from
               \\(?:d?\d+|d{[\d\s,;]+}) # decimal escape
             | \\[xu](?:\h+|{[\h\s,;]+}) # hex escape
+            | \\z(?:[\d\u218a\u218babetx]+|{[\d\u218a\u218babetx\s,;]+}) # duodecimal escape
             | \\o(?:[0-7]+|{[0-7\s,;]+}) # octal escape
             | \\b(?:[01]+|{[01\s,;]+}) # binary escape
             | \\[cm][a-z] # meta-character
@@ -2235,6 +2236,7 @@ repository:
           ( # to
               \\(?:d?\d+|d{[\d\s,;]+}) # decimal escape
             | \\[xu](?:\h+|{[\h\s,;]+}) # hex escape
+            | \\z(?:[\d\u218a\u218babetx]+|{[\d\u218a\u218babetx\s,;]+}) # duodecimal escape
             | \\o(?:[0-7]+|{[0-7\s,;]+}) # octal escape
             | \\b(?:[01]+|{[01\s,;]+}) # binary escape
             | \\[cm][a-z] # meta-character
@@ -2249,6 +2251,7 @@ repository:
                 \d+ # number
               | \\(?:d?\d+|d{[\d\s,;]+}) # decimal escape
               | \\[xu](?:\h+|{[\h\s,;]+}) # hex escape
+              | \\z(?:[\d\u218a\u218babetx]+|{[\d\u218a\u218babetx\s,;]+}) # duodecimal escape
               | \\o(?:[0-7]+|{[0-7\s,;]+}) # octal escape
               | \\b(?:[01]+|{[01\s,;]+}) # binary escape
               | \\[cm][a-z] # meta-character
