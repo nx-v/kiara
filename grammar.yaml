@@ -214,6 +214,7 @@ repository:
       - include: "#illegal-identifier"
       - include: "#jsx"
       - include: "#generics"
+      - include: "#accessor-operators"
       - include: "#brackets"
       - include: "#punctuation"
       - include: "#operators"
@@ -3443,7 +3444,9 @@ repository:
             (?:[?!:]:=?|[?!]?\.=?)? \#? [({]
           | # generics
             (?:[?!:]:=?|[?!]?\.=?)? < ['"`({\[\w]
-          | # literals
+          | # macro calls
+            ! \#? [({]
+          | # strings
             \w*['"] | `\s*(?=\N)
         )
       )
@@ -3489,7 +3492,6 @@ repository:
             [\p{Pc}\p{L}]\w* # last part of identifier
           )
           \b
-          (!)?
           (?=
             \s*
             (?: # function application, composition and piping
@@ -3498,13 +3500,14 @@ repository:
                 (?:[?!:]:=?|[?!]?\.=?)? \#? [({]
               | # generics
                 (?:[?!:]:=?|[?!]?\.=?)? < ['"`({\[\w]
+              | # macro calls
+                ! \#? [({]
               | # strings
                 \w*['"] | `\s*(?=\N)
             )
           )
         captures:
           1: {patterns: [include: "#function-names"]}
-          2: {name: keyword.operator.macro.protea}
       - name: meta.function.arguments.protea
         match: |
           (?x)
@@ -3547,10 +3550,8 @@ repository:
             [\p{Pc}\p{L}]\w* # last part of identifier
           )
           \b
-          (!)?
         captures:
           1: {patterns: [include: "#function-names"]}
-          2: {name: keyword.operator.macro.protea}
 
   embedded-function-calls:
     name: meta.function.name.protea
@@ -4041,6 +4042,9 @@ repository:
 
   special-operators:
     patterns:
+      - match: (?<=>|\w)(!)(?=#?[({])
+        captures:
+          1: {name: keyword.operator.macro.protea}
       - comment: "? ternary operator"
         begin: (?<=^|[\s({\[])(\?)(?=$|[)}\]\s])|(?<=['"`)}\]\w]|\\.)(\?)(?=['"`({\[\w])
         end: (?<=^|[\s({\[])(\:)(?=$|[)}\]\s])|(?<=['"`)}\]\w]|\\.)(\:)(?=['"`({\[\w])
@@ -4576,8 +4580,8 @@ repository:
           (?x) \s*
           \b
           (?:
-            rec|oper|curry|opaque|inline
-            |prefix|infix|suffix|unary|left|right
+            rec|oper|curry|opaque|inline|prefix
+            |infix|suffix|unary|left|right
           )
           \b
           \s*
@@ -5996,8 +6000,8 @@ repository:
   generics:
     comment: Support for Turbofish syntax
     name: meta.type-arguments
-    begin: (?<=^|['"`)}\]\w\s])([?!:]:|[?!]?\.)(<)(?=['"`({\[\w])
-    end: (?<=^|['"`)}\]>\w])()(>)(!)?
+    begin: (?<=^|['"`)}\]>\w\s])([?!:]:|[?!]?\.)(<)(?=['"`({\[\w])
+    end: (?<=^|['"`)}\]>\w])()(>)(!\b)?
     captures:
       1:
         name: punctuation.type.arguments.protea
@@ -6014,15 +6018,39 @@ repository:
     name: punctuation.type.arguments.protea
     match: |
       (?x)
-      ( # 1: optional accessor
-        \?[.:]=?
-      ) |
-      ( # 2: assertion/call operator
-        ![.:]=?
-      ) |
-      ( # 3: accessor operator
-        (?:::|\.)=?
+      (?:
+        ( # 1: optional accessor
+          \?[.:]=?
+        ) |
+        ( # 2: assertion/call operator
+          ![.:]=?
+        ) |
+        ( # 3: accessor operator
+          (?:::|\.)=?
+        )
       )
+    captures:
+      1: {name: keyword.operator.optional.protea}
+      2: {name: keyword.operator.assert.protea}
+      3: {name: keyword.operator.accessor.protea}
+
+  accessor-operators:
+    name: punctuation.type.arguments.protea
+    match: |
+      (?x)
+      (?<=\b|>)
+      (?:
+        ( # 1: optional accessor
+          \?[.:]=?
+        ) |
+        ( # 2: assertion/call operator
+          ![.:]=?
+        ) |
+        ( # 3: accessor operator
+          (?:::|\.)=?
+        )
+      )
+      (?=\b|<)
     captures:
       1: {name: keyword.operator.optional.protea}
       2: {name: keyword.operator.assert.protea}
@@ -6032,7 +6060,7 @@ repository:
     patterns:
       - comment: Type arguments. This is complicated since we don't want to match things like foo < 123 || bar > baz
         name: meta.type-arguments
-        begin: (?<=^|['"`)}\]\w\s])(<)(?=['"`({\[\w])
+        begin: (?<=^|['"`)}\]>\w\s])(<)(?=['"`({\[\w])
         end: (?<=^|['"`)}\]>\w])(>)
         captures:
           1: {name: punctuation.type.arguments.protea}
