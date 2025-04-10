@@ -9,13 +9,13 @@ informationForContributors: |
   and sugar to an already familiar JS and Rust-inspired syntax.
 
   The grammar is still being revamped but will need to be heavily refactored
-  and reorganized, along with some major bugs that need to be ironed out. 
+  and reorganized, along with some major bugs that need to be ironed out.
 
-  Feel free to fork or make an issue in this repository if there are any 
+  Feel free to fork or make an issue in this repository if there are any
   questions to be raised or changes to be made or implemented in the future.
 
 changelog: |
-  A major rewrite is underway. This language's syntax would be terser 
+  A major rewrite is underway. This language's syntax would be terser
   and thus inspired by Rust, Zig and D.
 
   New changes:
@@ -46,6 +46,8 @@ changelog: |
     - Add support for fuzzy matching (edits, insertions, deletions, etc.)
     - Improved highlighting for regexes with flags
   - Added prefixes to strings.
+  - Added Python negation syntax: is not, if not, not in, not of. 
+    - Removed unless/until keywords. Replaced by if not, while not.
   - Switched around regular expressions: / triggers a regex when it begins an
     expression. ` is now used to begin unquoted strings.
   - Two (or more) regular expressions in a row on the same line without a comma
@@ -74,9 +76,9 @@ changelog: |
 
   Fixes:
 
-  - Large regexps scattered through this document also have been
-    fixed up to be more readable to any editors out there. It once was presented
-    in a rather unpretty format.
+  - Add multiline \\ syntax for interpolated JS.
+  - Large regexps scattered throughout this document also have been
+    rewritten with the (?x) syntax to be more readable for editors.
     - [x] Markdown syntax
     - [x] function parameters
     - [x] function calls
@@ -91,7 +93,8 @@ changelog: |
     - [x] embedded content
     - [x] rounded and square brackets
     - [x] LINQ, inline SQL and constraint syntax (more to come later)
-  - Fix syntax of type annotations inside generics to avoid being parsed as custom operators.
+  - Fix syntax of type annotations inside generics to avoid being parsed 
+    as custom operators.
   - Fix syntax of generic type parameters and constraints.
   - Match unquoted globs in routes
   - Fix syntax for JavaScript ES5 module import and export statements
@@ -148,10 +151,10 @@ define:
         |union|iter|macro|query|elem
         |object|realm|trait|style|script
         |go|defer|do|with|from|where
-        |if|unless|else|then|declare|ref
-        |for|foreach|repeat|while|until
+        |if|else|then|for|while|loop
+        |for|loop|while|goto|move
         |try|throw|catch|finally|switch
-        |match|case|pass|default|goto|move
+        |match|case|pass|default
         |break|continue|redo|retry
         |return|yield|await|scope
         # |import|export|intern|extern
@@ -177,10 +180,10 @@ define:
         |union|iter|macro|query|elem
         |object|realm|trait|style|script
         |go|defer|do|with|from|where
-        |if|unless|else|then|declare|ref
-        |for|foreach|repeat|while|until
+        |if|else|then|for|while|loop
+        |for|loop|while|goto|move
         |try|throw|catch|finally|switch
-        |match|case|pass|default|goto|move
+        |match|case|pass|default
         |break|continue|redo|retry
         |return|yield|await|scope
         # |import|export|intern|extern
@@ -296,10 +299,10 @@ repository:
           |union|iter|macro|query|elem
           |object|realm|trait|style|script
           |go|defer|do|with|from|where
-          |if|unless|else|then|declare|ref
-          |for|foreach|repeat|while|until
+          |if|else|then|for|while|loop
+          |for|loop|while|goto|move
           |try|throw|catch|finally|switch
-          |match|case|pass|default|goto|move
+          |match|case|pass|default
           |break|continue|redo|retry
           |return|yield|await|scope
           # |import|export|intern|extern
@@ -629,8 +632,10 @@ repository:
         name: storage.type.extends.kiara
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(for)\b\s*
         name: storage.type.implements.kiara
-      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(infer|as|is)\b\s*
+      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(infer|as)\b\s*
         name: keyword.operator.expression.$1.kiara
+      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(is\s+not|is)\b\s*
+        name: keyword.operator.expression.is.kiara
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b((instance|value|pair|type|name|size|key)of)\b\s*
         name: keyword.operator.expression.$1.kiara
 
@@ -1073,8 +1078,8 @@ repository:
 
   numeric-escapes:
     comments: |
-      Hexadecimal escapes \u encode UTF-16 and 32  
-      while \x encodes UTF-8 code points in addition  
+      Hexadecimal escapes \u encode UTF-16 and 32
+      while \x encodes UTF-8 code points in addition
       to Unicode characters.
     patterns:
       - comment: Binary escape sequences (0 to 417777)
@@ -1466,10 +1471,10 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|unless|else|then|declare|ref
-              |for|foreach|repeat|while|until
+              |if|else|then|for|while|loop
+              |for|loop|while|goto|move
               |try|throw|catch|finally|switch
-              |match|case|pass|default|goto|move
+              |match|case|pass|default
               |break|continue|redo|retry
               |return|yield|await|scope
               # |import|export|intern|extern
@@ -1521,10 +1526,10 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|unless|else|then|declare|ref
-              |for|foreach|repeat|while|until
+              |if|else|then|for|while|loop
+              |for|loop|while|goto|move
               |try|throw|catch|finally|switch
-              |match|case|pass|default|goto|move
+              |match|case|pass|default
               |break|continue|redo|retry
               |return|yield|await|scope
               # |import|export|intern|extern
@@ -1558,7 +1563,7 @@ repository:
             )?
             [+-]? \d+ # start of range
             (?:
-              (?:[>.]\.[.<] | \.\. | [=.]\.[.=]|\.\.=?|=\.=) # range operator
+              (?:[>.]\.[.<]|\.\.|[=.]\.[.=]|\.\.=?|=\.=) # range operator
               [+-]? \d+ # end of range
               (?:
                 \.{1,3}
@@ -1573,7 +1578,7 @@ repository:
             patterns:
               - match: "[+-]"
                 name: keyword.operator.arithmetic.kiara
-              - match: (?:[>.]\.[.<] | \.\. | [=.]\.[.=]|\.\.=?|=\.=)
+              - match: (?:[>.]\.[.<]|\.\.|[=.]\.[.=]|\.\.=?|=\.=)
                 name: keyword.operator.range.kiara
       - name: meta.embedded.placeholder.kiara
         match: |
@@ -1600,10 +1605,10 @@ repository:
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
                 |go|defer|do|with|from|where
-                |if|unless|else|then|declare|ref
-                |for|foreach|repeat|while|until
+                |if|else|then|for|while|loop
+                |for|loop|while|goto|move
                 |try|throw|catch|finally|switch
-                |match|case|pass|default|goto|move
+                |match|case|pass|default
                 |break|continue|redo|retry
                 |return|yield|await|scope
                 # |import|export|intern|extern
@@ -1629,14 +1634,15 @@ repository:
 
   # Format and flag specifiers
 
-  switch-clause:
+  format-switch-clause:
     patterns:
       - comment: // for multiple flags at once with single-character aliases
         applyEndPatternLast: true
-        begin: (?<=^|\\.|['"`({\[)}\]\s])(//)(?=[\p{Pc}\p{L}])
+        begin: (?:(?<=%)|(//))([\p{Pc}\p{L}]\w*)\b
         end: (?=)|$
         captures:
           1: {name: punctuation.definition.flag.kiara}
+          2: {name: storage.type.format.kiara}
         patterns:
           - comment: Format switch without value
             match: ([\p{Pc}\p{L}]\w*)
@@ -1644,10 +1650,11 @@ repository:
               1: {name: keyword.other.flag.kiara}
       - comment: / for a single flag, with optional arguments
         applyEndPatternLast: true
-        begin: (?<=^|\\.|['"`({\[)}\]\s])(/)(?=[\p{Pc}\p{L}])
+        begin: (?:(?<=%)|(/))([\p{Pc}\p{L}]\w*)\b
         end: (?=)|$
         captures:
           1: {name: punctuation.definition.flag.kiara}
+          2: {name: storage.type.format.kiara}
         patterns:
           - comment: Format switch without value
             match: ([\p{Pc}\p{L}]\w*)
@@ -1696,6 +1703,19 @@ repository:
         captures:
           1: {name: punctuation.separator.mapping.kiara}
           2: {name: storage.type.format.kiara}
+      - comment: // for multiple flags at once with single-character aliases
+        match: (?:(?<=%)|(//))([\p{Pc}\p{L}]\w*)\b
+        name: storage.type.format.kiara
+        captures:
+          1: {name: punctuation.definition.flag.kiara}
+          2: {name: storage.type.format.kiara}
+      - comment: / for a single flag, with optional arguments
+        match: (?:(?<=%)|(/))([\p{Pc}\p{L}]\w*)\b
+        name: storage.type.format.kiara
+        captures:
+          1: {name: punctuation.definition.flag.kiara}
+          2: {name: storage.type.format.kiara}
+      - include: "#format-switch-clause"
 
   # Regular expressions
 
@@ -1759,10 +1779,10 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|unless|else|then|declare|ref
-              |for|foreach|repeat|while|until
+              |if|else|then|for|while|loop
+              |for|loop|while|goto|move
               |try|throw|catch|finally|switch
-              |match|case|pass|default|goto|move
+              |match|case|pass|default
               |break|continue|redo|retry
               |return|yield|await|scope
               # |import|export|intern|extern
@@ -2335,8 +2355,10 @@ repository:
         name: keyword.operator.logical.kiara
       - match: ","
         name: punctuation.separator.sequence.kiara
-      - match: \b(in|is)\b
-        name: keyword.operator.expression.$1.kiara
+      - match: \b(is\s+not|is)\b
+        name: keyword.operator.expression.is.kiara
+      - match: \b(not\s+)?(in|of)\b
+        name: keyword.operator.expression.$2.kiara
       - begin: \b([\p{Pc}\p{L}]\w*)\b([:!=</>.^$%?*+|&~]?=)
         beginCaptures:
           1: {name: entity.other.attribute-name.key.kiara}
@@ -2387,10 +2409,10 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|unless|else|then|declare|ref
-              |for|foreach|repeat|while|until
+              |if|else|then|for|while|loop
+              |for|loop|while|goto|move
               |try|throw|catch|finally|switch
-              |match|case|pass|default|goto|move
+              |match|case|pass|default
               |break|continue|redo|retry
               |return|yield|await|scope
               # |import|export|intern|extern
@@ -2502,7 +2524,7 @@ repository:
           - include: "#css-property-names"
 
   spread-attribute:
-    comment: Spread attribute { ... AssignmentExpression }
+    comment: Spread *attribute
     match: (?<!\*)\*(?!\*)
     name: keyword.operator.spread.kiara
 
@@ -3486,10 +3508,10 @@ repository:
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
                 |go|defer|do|with|from|where
-                |if|unless|else|then|declare|ref
-                |for|foreach|repeat|while|until
+                |if|else|then|for|while|loop
+                |for|loop|while|goto|move
                 |try|throw|catch|finally|switch
-                |match|case|pass|default|goto|move
+                |match|case|pass|default
                 |break|continue|redo|retry
                 |return|yield|await|scope
                 # |import|export|intern|extern
@@ -3544,10 +3566,10 @@ repository:
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
                 |go|defer|do|with|from|where
-                |if|unless|else|then|declare|ref
-                |for|foreach|repeat|while|until
+                |if|else|then|for|while|loop
+                |for|loop|while|goto|move
                 |try|throw|catch|finally|switch
-                |match|case|pass|default|goto|move
+                |match|case|pass|default
                 |break|continue|redo|retry
                 |return|yield|await|scope
                 # |import|export|intern|extern
@@ -3584,11 +3606,13 @@ repository:
             ([\p{Pc}\p{L}]\w*)
           )
         \b
-          (?= 
-            \#? [({] | # opening bracket
-            [?!:]: < | [?!]?\. < | < | # generics       
-            ! # macro call operator
-          ) 
+          (?= # opening bracket
+              \#? [({]
+            | generics
+              [?!:]: < | [?!]?\. < | <
+            | # macro calls
+              ! \#? [({]
+          )
         |
         (?<= ^ # beginning of line
           | ['"`({\[)}\]\w\s] # literal
@@ -3607,11 +3631,13 @@ repository:
             ([\p{Pc}\p{L}]\w*)
           )
         \b
-          (?= 
-            \#? [({] | # opening bracket
-            [?!:]: < | [?!]?\. < | < | # generics       
-            ! # macro call operator
-          ) 
+          (?= # opening bracket
+              \#? [({]
+            | generics
+              [?!:]: < | [?!]?\. < | <
+            | # macro calls
+              ! \#? [({]
+          )
       )
     captures:
       1:
@@ -4632,9 +4658,9 @@ repository:
   general-keywords:
     comment: general keywords
     patterns:
-      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if|unless|else)\b\s*
+      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if|else)\b\s*
         name: keyword.control.conditional.kiara
-      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(for|foreach|repeat|while|until)\b\s*
+      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(for|loop|while|goto|move)\b\s*
         name: keyword.control.loop.kiara
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(try|throw|catch|finally|then)\b\s*
         name: keyword.control.trycatch.kiara
@@ -4654,8 +4680,12 @@ repository:
   expression-keywords:
     comment: expression keywords
     patterns:
-      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(in|of|as|is|new)\b\s*
+      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(as|new)\b\s*
         name: keyword.operator.expression.$1.kiara
+      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(not\s+)?(in|of)\b\s*
+        name: keyword.operator.expression.$2.kiara
+      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(is\s+not|is)\b\s*
+        name: keyword.operator.expression.is.kiara
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(delete)\b\s*
         name: keyword.operator.expression.delete.kiara
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(to|till|thru|by)\b\s*
@@ -4863,7 +4893,7 @@ repository:
           1: {name: keyword.control.query.kiara}
         end: (?=[,;)}\]])
         patterns:
-          - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(by|while|until|with)\b\s*
+          - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(by|while|with)\b\s*
             name: keyword.control.query.kiara
           - include: "#query-body"
           - include: $self
@@ -4883,7 +4913,7 @@ repository:
           1: {name: keyword.control.query.kiara}
         end: (?=[,;)}\]])
         patterns:
-          - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(by|while|until|with)\b\s*
+          - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(by|while|with)\b\s*
             name: keyword.control.query.kiara
           - include: "#query-body"
           - include: $self
@@ -4903,7 +4933,7 @@ repository:
           1: {name: keyword.control.query.kiara}
         end: (?=[,;)}\]])
         patterns:
-          - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(by|while|until|with)\b\s*
+          - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(by|while|with)\b\s*
             name: keyword.control.query.kiara
           - include: "#query-body"
           - include: $self
@@ -5478,10 +5508,10 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|unless|else|then|declare|ref
-              |for|foreach|repeat|while|until
+              |if|else|then|for|while|loop
+              |for|loop|while|goto|move
               |try|throw|catch|finally|switch
-              |match|case|pass|default|goto|move
+              |match|case|pass|default
               |break|continue|redo|retry
               |return|yield|await|scope
               # |import|export|intern|extern
@@ -5538,10 +5568,17 @@ repository:
       type-clause:
         patterns:
           - applyEndPatternLast: true
-            begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(is|as)\b\s*
+            begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(as)\b\s*
             end: (?=)|$
             beginCaptures:
-              1: {name: keyword.operator.expression.$1.kiara}
+              1: {name: keyword.operator.expression.as.kiara}
+            patterns:
+              - include: "#types"
+          - applyEndPatternLast: true
+            begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(is\s+not|is)\b\s*
+            end: (?=)|$
+            beginCaptures:
+              1: {name: keyword.operator.expression.is.kiara}
             patterns:
               - include: "#types"
           - applyEndPatternLast: true
@@ -5596,20 +5633,20 @@ repository:
             patterns:
               - include: "#argument-list"
               - applyEndPatternLast: true
-                begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(is)\b\s*
+                begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(is\s+not|is)\b\s*
                 end: (?=)|$
                 beginCaptures:
                   1: {name: keyword.control.error.kiara}
                 patterns:
                   - include: "#types"
-              - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if|as)\b\s*
+              - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if\s+not|if|as)\b\s*
                 name: keyword.control.error.kiara
               - include: "#type-keywords"
               - include: $self
 
       for-clause:
         applyEndPatternLast: true
-        begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(for|foreach|while|until)\b\s*(?=\()
+        begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(for|while\s+not|while)\b\s*(?=\()
         end: (?=)|$
         name: meta.for.kiara
         captures:
@@ -5626,11 +5663,12 @@ repository:
 
       if-clause:
         applyEndPatternLast: true
-        begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if|unless)\b\s*(?=\()
+        begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if\s+not|if)\b\s*(?=\()
         end: (?=)|$
         name: meta.if.kiara
         captures:
           1: {name: keyword.control.conditional.kiara}
+          2: {name: keyword.operator.logical.kiara}
         patterns:
           - begin: \s*(\()\s*
             end: \s*(\))
@@ -5663,6 +5701,34 @@ repository:
               1: {name: punctuation.definition.block.kiara}
             patterns:
               - include: "#match-case-clause"
+              - include: $self
+
+      match-case-clause:
+        patterns:
+          - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(default)\b\s*(:)
+            captures:
+              1: {name: keyword.control.match.kiara}
+              2:
+                name: punctuation.definition.case-statement.kiara
+          - begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(case)\b\s*
+            end: \s*(:)(?=['"`({\[)}\]\w\s])|$
+            beginCaptures:
+              1: {name: keyword.control.match.kiara}
+            endCaptures:
+              1:
+                name: punctuation.definition.case-statement.kiara
+            patterns:
+              - include: "#argument-list"
+              - applyEndPatternLast: true
+                begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(is\s+not|is)\b\s*
+                end: (?=)|$
+                beginCaptures:
+                  1: {name: keyword.control.match.kiara}
+                patterns:
+                  - include: "#types"
+              - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if\s+not|if|as)\b\s*
+                name: keyword.control.match.kiara
+              - include: "#type-keywords"
               - include: $self
 
       switch-clause:
@@ -5706,42 +5772,14 @@ repository:
             patterns:
               - include: "#argument-list"
               - applyEndPatternLast: true
-                begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(is)\b\s*
+                begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(is\s+not|is)\b\s*
                 end: (?=)|$
                 beginCaptures:
                   1: {name: keyword.control.switch.kiara}
                 patterns:
                   - include: "#types"
-              - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if|as)\b\s*
+              - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if\s+not|if|as)\b\s*
                 name: keyword.control.switch.kiara
-              - include: "#type-keywords"
-              - include: $self
-
-      match-case-clause:
-        patterns:
-          - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(default)\b\s*(:)
-            captures:
-              1: {name: keyword.control.match.kiara}
-              2:
-                name: punctuation.definition.case-statement.kiara
-          - begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(case)\b\s*
-            end: \s*(:)(?=['"`({\[)}\]\w\s])|$
-            beginCaptures:
-              1: {name: keyword.control.match.kiara}
-            endCaptures:
-              1:
-                name: punctuation.definition.case-statement.kiara
-            patterns:
-              - include: "#argument-list"
-              - applyEndPatternLast: true
-                begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(is)\b\s*
-                end: (?=)|$
-                beginCaptures:
-                  1: {name: keyword.control.match.kiara}
-                patterns:
-                  - include: "#types"
-              - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if|as)\b\s*
-                name: keyword.control.match.kiara
               - include: "#type-keywords"
               - include: $self
 
