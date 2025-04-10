@@ -14,6 +14,9 @@ informationForContributors: |
   Feel free to fork or make an issue in this repository if there are any
   questions to be raised or changes to be made or implemented in the future.
 
+important: |
+  To fix: JSX attributes cause a bug that fails.
+
 changelog: |
   A major rewrite is underway. This language's syntax would be terser
   and thus inspired by Rust, Zig and D.
@@ -76,6 +79,7 @@ changelog: |
 
   Fixes:
 
+  - Fix a bug where interpolated syntax would not be
   - Add multiline \\ syntax for interpolated JS.
   - Large regexps scattered throughout this document also have been
     rewritten with the (?x) syntax to be more readable for editors.
@@ -2470,8 +2474,8 @@ repository:
           3: {name: punctuation.definition.tag.kiara}
           4: {name: invalid.illegal.termination.kiara}
         patterns:
-          - include: "#tag-termination"
           - include: "#tag-attributes"
+          - include: "#tag-termination"
 
   jsx-comments:
     begin: (<!--)
@@ -2498,21 +2502,22 @@ repository:
 
   tag-attributes:
     patterns:
-      - include: "#literals"
-      - include: "#embedded-expression"
-      - include: "#brackets"
       - applyEndPatternLast: true
-        begin: \s*(=)\s*
+        begin: (?<=[)}\]\w\s'"`]|\\.)(=)(?=$|[\w\s'"`({\[])
         beginCaptures:
           1: {name: punctuation.separator.key-value.kiara}
         end: (?=)|$
         name: meta.property.jsx.kiara
         patterns:
           - include: "#style-property-values"
+      - include: "#literals"
+      - include: "#embedded-expression"
+      - include: "#brackets"
       - include: "#style-selectors"
       - include: "#attribute-names"
       - include: "#comments"
       - include: "#punctuation"
+      - include: "#space"
 
   attribute-names:
     match: \s*([\p{Pd}\w]+)\b\s*
@@ -3035,7 +3040,7 @@ repository:
       - include: source.css.scss#constant_optional
 
   property-name:
-    match: \b([\p{Pc}\p{L}]\w*\b(?:(?:::|\.?)[\p{Pc}\p{L}]\w*)*)\b
+    match: \b([\p{Pc}\p{L}]\w*\b(?:(?:(?:[?!:]:|[?!]?\.)?[\p{Pc}\p{L}]\w*)*)\b
     name: meta.property-name.kiara
     captures:
       1:
@@ -3045,7 +3050,7 @@ repository:
             name: constant.other.kiara
           - match: ([\p{Pc}\p{L}]\w*)\b
             name: constant.language.kiara
-          - match: '\.|:|::'
+          - match: '[?!:]:|[?!]?\.'
             name: punctuation.separator.namespace.kiara
 
   style-list:
@@ -3080,7 +3085,7 @@ repository:
       1: {name: punctuation.definition.constant.css}
 
   tag-names:
-    match: \s*\b([\p{Pc}\p{L}]\w*\b(?:(?:::|\.?)[\p{Pc}\p{L}]\w*)*)\b\s*
+    match: \s*\b([\p{Pc}\p{L}]\w*\b(?:(?:[?!:]:|[?!]?\.)?[\p{Pc}\p{L}]\w*)*)\b\s*
     name: entity.name.tag.kiara
     captures:
       1:
@@ -3328,7 +3333,7 @@ repository:
 
   jsdoc-simple:
     comment: "@tag"
-    match: (@(abstract|author|classdesc|copyright|default|defaultvalue|deprecated|description|desc|example|external|fileoverview|file|global|host|ignore|inheritdoc|inner|instance|license|override|overview|readonly|see|since|static|summary|todo|tutorial|virtual|variation|version)\b)(?=$|\s)
+    match: (@(abs|author|classdesc|copyright|default|defaultvalue|deprecated|description|desc|example|external|fileoverview|file|global|host|ignore|inheritdoc|inner|instance|license|override|overview|readonly|see|since|stat|summary|todo|tutorial|virtual|variation|version)\b)(?=$|\s)
     captures:
       1: {name: storage.type.class.jsdoc}
 
@@ -3430,7 +3435,7 @@ repository:
       - match: (\.)([\p{Pc}\p{L}]\w*)\b(?=\s|$|\")
         captures:
           1: {name: keyword.operator.accessor.jsdoc}
-          2: {name: entity.name.function.method.static.jsdoc}
+          2: {name: entity.name.function.method.stat.jsdoc}
       - match: (\#)([\p{Pc}\p{L}]\w*)\b(?=\s|$|\")
         captures:
           1: {name: keyword.operator.accessor.jsdoc}
@@ -4067,11 +4072,11 @@ repository:
         captures:
           1: {name: variable.other.property.dynamic.kiara}
           2: {name: variable.other.constant.property.kiara}
-          3: {name: variable.other.property.static.kiara}
+          3: {name: variable.other.property.stat.kiara}
           4: {name: variable.other.property.kiara}
           5: {name: variable.other.global.kiara}
           6: {name: variable.other.constant.object.kiara}
-          7: {name: variable.other.class.static.kiara}
+          7: {name: variable.other.class.stat.kiara}
           8: {name: variable.other.object.kiara}
           9: {name: variable.other.dollar.kiara}
           10: {name: variable.other.constant.kiara}
@@ -4567,10 +4572,10 @@ repository:
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
                 |post|[gs]et|put|delete|req|opt|delegate
-                |safe|unsafe|virtual|sealed|abstract
+                |safe|unsafe|virtual|sealed|abs
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
-                |static|dyn|lazy|eager|bound|free|unique
+                |stat|dyn|lazy|eager|bound|free|unique
                 |union|open|closed?|rec|oper|curry|opaque
                 |inline|prefix|infix|suffix|unary|left|right
               )
@@ -4606,7 +4611,7 @@ repository:
             pub|priv|prot|final|readonly|override
             |global|local|intern|extern|mut|immut
             |post|[gs]et|put|delete|req|opt|delegate
-            |safe|unsafe|virtual|sealed|abstract
+            |safe|unsafe|virtual|sealed|abs
           )
           \b
           \s*
@@ -4617,7 +4622,7 @@ repository:
           \b
           (?:
             in|out|inout|inplace|ref|defer|a?sync
-            |static|dyn|lazy|eager|bound|free|unique
+            |stat|dyn|lazy|eager|bound|free|unique
             |union|open|closed?
           )
           \b
@@ -4660,7 +4665,7 @@ repository:
     patterns:
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if|else)\b\s*
         name: keyword.control.conditional.kiara
-      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(for|loop|while|goto|move)\b\s*
+      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(for|loop|while)\b\s*
         name: keyword.control.loop.kiara
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(try|throw|catch|finally|then)\b\s*
         name: keyword.control.trycatch.kiara
@@ -5309,10 +5314,10 @@ repository:
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
                 |post|[gs]et|put|delete|req|opt|delegate
-                |safe|unsafe|virtual|sealed|abstract
+                |safe|unsafe|virtual|sealed|abs
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
-                |static|dyn|lazy|eager|bound|free|unique
+                |stat|dyn|lazy|eager|bound|free|unique
                 |union|open|closed?|rec|oper|curry|opaque
                 |inline|prefix|infix|suffix|unary|left|right
               )
@@ -5358,10 +5363,10 @@ repository:
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
                 |post|[gs]et|put|delete|req|opt|delegate
-                |safe|unsafe|virtual|sealed|abstract
+                |safe|unsafe|virtual|sealed|abs
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
-                |static|dyn|lazy|eager|bound|free|unique
+                |stat|dyn|lazy|eager|bound|free|unique
                 |union|open|closed?|rec|oper|curry|opaque
                 |inline|prefix|infix|suffix|unary|left|right
               )
@@ -5405,10 +5410,10 @@ repository:
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
                 |post|[gs]et|put|delete|req|opt|delegate
-                |safe|unsafe|virtual|sealed|abstract
+                |safe|unsafe|virtual|sealed|abs
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
-                |static|dyn|lazy|eager|bound|free|unique
+                |stat|dyn|lazy|eager|bound|free|unique
                 |union|open|closed?|rec|oper|curry|opaque
                 |inline|prefix|infix|suffix|unary|left|right
               )
@@ -5454,10 +5459,10 @@ repository:
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
                 |post|[gs]et|put|delete|req|opt|delegate
-                |safe|unsafe|virtual|sealed|abstract
+                |safe|unsafe|virtual|sealed|abs
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
-                |static|dyn|lazy|eager|bound|free|unique
+                |stat|dyn|lazy|eager|bound|free|unique
                 |union|open|closed?|rec|oper|curry|opaque
                 |inline|prefix|infix|suffix|unary|left|right
               )
@@ -5933,10 +5938,10 @@ repository:
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
                 |post|[gs]et|put|delete|req|opt|delegate
-                |safe|unsafe|virtual|sealed|abstract
+                |safe|unsafe|virtual|sealed|abs
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
-                |static|dyn|lazy|eager|bound|free|unique
+                |stat|dyn|lazy|eager|bound|free|unique
                 |union|open|closed?|rec|oper|curry|opaque
                 |inline|prefix|infix|suffix|unary|left|right
               )
@@ -5982,10 +5987,10 @@ repository:
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
                 |post|[gs]et|put|delete|req|opt|delegate
-                |safe|unsafe|virtual|sealed|abstract
+                |safe|unsafe|virtual|sealed|abs
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
-                |static|dyn|lazy|eager|bound|free|unique
+                |stat|dyn|lazy|eager|bound|free|unique
                 |union|open|closed?|rec|oper|curry|opaque
                 |inline|prefix|infix|suffix|unary|left|right
               )
@@ -6495,7 +6500,7 @@ repository:
         name: support.constant.color.current.css.kiara
       - match: (?x)\b(ActiveBorder|ActiveCaption|AppWorkspace|Background|ButtonFace|ButtonHighlight|ButtonShadow|ButtonText|CaptionText|GrayText|Highlight|HighlightText|InactiveBorder|InactiveCaption|InactiveCaptionText|InfoBackground|InfoText|Menu|MenuText|Scrollbar|ThreeDDarkShadow|ThreeDFace|ThreeDHighlight|ThreeDLightShadow|ThreeDShadow|Window|WindowFrame|WindowText)\b
         name: support.constant.color.system.css.kiara
-      - match: (?x)\b(above|absolute|active|add|additive|afterEdge|alias|all|allPetiteCaps|allScroll|allSmallCaps|alpha|alphabetic|alternate|alternateReverse|always|antialiased|auto|autoPos|available|avoid|avoidColumn|avoidPage|avoidRegion|backwards|balance|baseline|beforeEdge|below|bevel|bidiOverride|blink|block|blockAxis|blockStart|blockEnd|bold|bolder|border|borderBox|both|bottom|bottomOutside|breakAll|breakWord|bullets|butt|capitalize|caption|cell|center|central|char|circle|clip|clone|closeQuote|closestCorner|closestSide|colResize|collapse|color|colorBurn|colorDodge|column|columnReverse|commonLigatures|compact|condensed|contain|content|contentBox|contents|contextMenu|contextual|copy|cover|crispEdges|crispEdges|crosshair|cyclic|darken|dashed|decimal|default|dense|diagonalFractions|difference|digits|disabled|disc|discretionaryLigatures|distribute|distributeAllLines|distributeLetter|distributeSpace|dot|dotted|double|doubleCircle|downleft|downright|eResize|eachLine|ease|easeIn|easeInOut|easeOut|economy|ellipse|ellipsis|embed|end|evenodd|ewResize|exact|exclude|exclusion|expanded|extends|extraCondensed|extraExpanded|fallback|farthestCorner|farthestSide|fill|fillAvailable|fillBox|filled|fitContent|fixed|flat|flex|flexEnd|flexStart|flip|flowRoot|forwards|freeze|fromImage|fullWidth|geometricPrecision|georgian|grab|grabbing|grayscale|grid|groove|hand|hanging|hardLight|help|hidden|hide|historicalForms|historicalLigatures|horizontal|horizontalTb|hue|icon|ideographAlpha|ideographNumeric|ideographParenthesis|ideographSpace|ideographic|inactive|infinite|inherit|initial|inline|inlineAxis|inlineBlock|inlineEnd|inlineFlex|inlineGrid|inlineListItem|inlineStart|inlineTable|inset|inside|interCharacter|interIdeograph|interWord|intersect|invert|isolate|isolateOverride|italic|jis04|jis78|jis83|jis90|justify|justifyAll|kannada|keepAll|landscape|large|larger|left|lighten|lighter|line|lineEdge|lineThrough|linear|linearRGB|liningNums|listItem|local|loose|lowercase|lr|lrTb|ltr|luminance|luminosity|mainSize|mandatory|manipulation|manual|marginBox|matchParent|matchSource|mathematical|maxContent|medium|menu|messageBox|middle|minContent|miter|mixed|move|multiply|nResize|narrower|neResize|nearestNeighbor|neswResize|newspaper|noChange|noClip|noCloseQuote|noCommonLigatures|noContextual|noDiscretionaryLigatures|noDrop|noHistoricalLigatures|noOpenQuote|noRepeat|none|nonzero|normal|notAllowed|nowrap|nsResize|numbers|numeric|nwResize|nwseResize|oblique|oldstyleNums|open|openQuote|optimizeLegibility|optimizeQuality|optimizeSpeed|optional|ordinal|outset|outside|over|overlay|overline|padding|paddingBox|page|painted|panDown|panLeft|panRight|panUp|panX|panY|paused|petiteCaps|pixelated|plaintext|pointer|portrait|pre|preLine|preWrap|preserve3d|progress|progressive|proportionalNums|proportionalWidth|proximity|radial|recto|region|relative|remove|repeat|repeat-[xy]|resetSize|reverse|revert|ridge|right|rl|rlTb|round|row|rowResize|rowReverse|rowSeverse|rtl|ruby|rubyBase|rubyBaseContainer|rubyText|rubyTextContainer|runIn|running|sResize|saturation|scaleDown|screen|scroll|scrollPosition|seResize|semiCondensed|semiExpanded|separate|sesame|show|sideways|sidewaysLeft|sidewaysLr|sidewaysRight|sidewaysRl|simplified|slashedZero|slice|small|smallCaps|smallCaption|smaller|smooth|softLight|solid|space|spaceAround|spaceBetween|spaceEvenly|spellOut|square|sRGB|stackedFractions|start|static|statusBar|swap|stepEnd|stepStart|sticky|stretch|strict|stroke|strokeBox|style|sub|subgrid|subpixelAntialiased|subtract|super|swResize|symbolic|table|tableCaption|tableCell|tableColumn|tableColumnGroup|tableFooterGroup|tableHeaderGroup|tableRow|tableRowGroup|tabularNums|tb|tbRl|text|textAfterEdge|textBeforeEdge|textBottom|textTop|thick|thin|titlingCaps|top|topOutside|touch|traditional|transparent|triangle|ultraCondensed|ultraExpanded|under|underline|unicase|unset|upleft|uppercase|upright|useGlyphOrientation|useScript|verso|vertical|verticalIdeographic|verticalLr|verticalRl|verticalText|viewBox|visible|visibleFill|visiblePainted|visibleStroke|wResize|wait|wavy|weight|whitespace|wider|words|wrap|wrapReverse|x|xLarge|xSmall|xxLarge|xxSmall|y|zero|zoomIn|zoomOut)\b
+      - match: (?x)\b(above|absolute|active|add|additive|afterEdge|alias|all|allPetiteCaps|allScroll|allSmallCaps|alpha|alphabetic|alternate|alternateReverse|always|antialiased|auto|autoPos|available|avoid|avoidColumn|avoidPage|avoidRegion|backwards|balance|baseline|beforeEdge|below|bevel|bidiOverride|blink|block|blockAxis|blockStart|blockEnd|bold|bolder|border|borderBox|both|bottom|bottomOutside|breakAll|breakWord|bullets|butt|capitalize|caption|cell|center|central|char|circle|clip|clone|closeQuote|closestCorner|closestSide|colResize|collapse|color|colorBurn|colorDodge|column|columnReverse|commonLigatures|compact|condensed|contain|content|contentBox|contents|contextMenu|contextual|copy|cover|crispEdges|crispEdges|crosshair|cyclic|darken|dashed|decimal|default|dense|diagonalFractions|difference|digits|disabled|disc|discretionaryLigatures|distribute|distributeAllLines|distributeLetter|distributeSpace|dot|dotted|double|doubleCircle|downleft|downright|eResize|eachLine|ease|easeIn|easeInOut|easeOut|economy|ellipse|ellipsis|embed|end|evenodd|ewResize|exact|exclude|exclusion|expanded|extends|extraCondensed|extraExpanded|fallback|farthestCorner|farthestSide|fill|fillAvailable|fillBox|filled|fitContent|fixed|flat|flex|flexEnd|flexStart|flip|flowRoot|forwards|freeze|fromImage|fullWidth|geometricPrecision|georgian|grab|grabbing|grayscale|grid|groove|hand|hanging|hardLight|help|hidden|hide|historicalForms|historicalLigatures|horizontal|horizontalTb|hue|icon|ideographAlpha|ideographNumeric|ideographParenthesis|ideographSpace|ideographic|inactive|infinite|inherit|initial|inline|inlineAxis|inlineBlock|inlineEnd|inlineFlex|inlineGrid|inlineListItem|inlineStart|inlineTable|inset|inside|interCharacter|interIdeograph|interWord|intersect|invert|isolate|isolateOverride|italic|jis04|jis78|jis83|jis90|justify|justifyAll|kannada|keepAll|landscape|large|larger|left|lighten|lighter|line|lineEdge|lineThrough|linear|linearRGB|liningNums|listItem|local|loose|lowercase|lr|lrTb|ltr|luminance|luminosity|mainSize|mandatory|manipulation|manual|marginBox|matchParent|matchSource|mathematical|maxContent|medium|menu|messageBox|middle|minContent|miter|mixed|move|multiply|nResize|narrower|neResize|nearestNeighbor|neswResize|newspaper|noChange|noClip|noCloseQuote|noCommonLigatures|noContextual|noDiscretionaryLigatures|noDrop|noHistoricalLigatures|noOpenQuote|noRepeat|none|nonzero|normal|notAllowed|nowrap|nsResize|numbers|numeric|nwResize|nwseResize|oblique|oldstyleNums|open|openQuote|optimizeLegibility|optimizeQuality|optimizeSpeed|optional|ordinal|outset|outside|over|overlay|overline|padding|paddingBox|page|painted|panDown|panLeft|panRight|panUp|panX|panY|paused|petiteCaps|pixelated|plaintext|pointer|portrait|pre|preLine|preWrap|preserve3d|progress|progressive|proportionalNums|proportionalWidth|proximity|radial|recto|region|relative|remove|repeat|repeat-[xy]|resetSize|reverse|revert|ridge|right|rl|rlTb|round|row|rowResize|rowReverse|rowSeverse|rtl|ruby|rubyBase|rubyBaseContainer|rubyText|rubyTextContainer|runIn|running|sResize|saturation|scaleDown|screen|scroll|scrollPosition|seResize|semiCondensed|semiExpanded|separate|sesame|show|sideways|sidewaysLeft|sidewaysLr|sidewaysRight|sidewaysRl|simplified|slashedZero|slice|small|smallCaps|smallCaption|smaller|smooth|softLight|solid|space|spaceAround|spaceBetween|spaceEvenly|spellOut|square|sRGB|stackedFractions|start|stat|statusBar|swap|stepEnd|stepStart|sticky|stretch|strict|stroke|strokeBox|style|sub|subgrid|subpixelAntialiased|subtract|super|swResize|symbolic|table|tableCaption|tableCell|tableColumn|tableColumnGroup|tableFooterGroup|tableHeaderGroup|tableRow|tableRowGroup|tabularNums|tb|tbRl|text|textAfterEdge|textBeforeEdge|textBottom|textTop|thick|thin|titlingCaps|top|topOutside|touch|traditional|transparent|triangle|ultraCondensed|ultraExpanded|under|underline|unicase|unset|upleft|uppercase|upright|useGlyphOrientation|useScript|verso|vertical|verticalIdeographic|verticalLr|verticalRl|verticalText|viewBox|visible|visibleFill|visiblePainted|visibleStroke|wResize|wait|wavy|weight|whitespace|wider|words|wrap|wrapReverse|x|xLarge|xSmall|xxLarge|xxSmall|y|zero|zoomIn|zoomOut)\b
         name: support.constant.property-value.css.kiara
       - match: (?x)\b(arabicIndic|armenian|bengali|cambodian|circle|cjkDecimal|cjkEarthlyBranch|cjkHeavenlyStem|cjkIdeographic|decimal|decimalLeadingZero|devanagari|disc|disclosureClosed|disclosureOpen|ethiopicHalehameAm|ethiopicHalehameTiE[rt]|ethiopicNumeric|georgian|gujarati|gurmukhi|hangul|hangulConsonant|hebrew|hiragana|hiraganaIroha|japaneseFormal|japaneseInformal|kannada|katakana|katakanaIroha|khmer|koreanHangulFormal|koreanHanjaFormal|koreanHanjaInformal|lao|lowerAlpha|lowerArmenian|lowerGreek|lowerLatin|lowerRoman|malayalam|mongolian|myanmar|oriya|persian|simpChineseFormal|simpChineseInformal|square|tamil|telugu|thai|tibetan|tradChineseFormal|tradChineseInformal|upperAlpha|upperArmenian|upperLatin|upperRoman|urdu)\b
         name: support.constant.property-value.list-style-type.css.kiara
