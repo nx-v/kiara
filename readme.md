@@ -1,4 +1,4 @@
-# Kiara: the programming language for full-stack web-app/game development
+# Kiara: a programming language for full-stack web-app/game development
 
 Kiara is a high-level, gradually-typed, multi-paradigm programming language meant for web-based full stack app and game development.
 
@@ -375,8 +375,8 @@ const query = sql$"select * from $table_name where $column = 'test@example.com';
 
 # string comparison
 const names = ['Alaine', 'Brendan', 'Brooke', 'Alex']
-const sortedNames = names.sort(|a, b| a <-> b)
-const sortedNames = names.sort(<->) # pass built-in operators as functions
+const sortedNames = names.sort(|a, b| a <=> b)
+const sortedNames = names.sort(<=>) # pass built-in operators as functions
 
 # string concatenation
 const part1 = "Hello"
