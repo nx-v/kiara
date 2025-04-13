@@ -6,7 +6,7 @@ It's got a syntax similar to Rust, JS, LiveScript, CoffeeScript, Ruby, Elixir, O
 
 I'll be using this language for future projects once the Rust compiler, JS formatter, YAML TextMate file, and the documentation for the language and its standard library is done.
 
-```txt
+```
 # main.ki
 # -> delimits an expression from a statement
 elem App(args: []str): void =
@@ -30,7 +30,7 @@ print("Sieve", primes)
 
 ## Comments
 
-```txt
+```
 # line comments start with '#'
 # and must always be followed by a space
 # they can be on the same line or multiple lines
@@ -142,7 +142,7 @@ Compound assignment operators offer concise ways to modify variables. Kiara's ra
 
 Numeric literals can be made more readable using underscores as separators. Furthermore, you can explicitly specify the base of integer literals. While generally not recommended, Kiara even allows extending primitive number types. Lastly, it provides access to special numeric values like NaN and infinity for floating-point and complex number types.
 
-```txt
+```
 # numbers
 const dec = 1073741824
 const hex = 0xdead_bea7
@@ -301,7 +301,7 @@ const infinity_complex_64: j64 = -f32::INF + f32::INF * 1j
 
 In Kiara, characters are represented as single-character strings with backticks. Each character has a `length` of `1` and has a `size` of 1 to 4 bytes in memory, depending on its UTF-8 encoding. Importantly, **every character in Kiara is treated as a string of length one**, regardless of its Unicode code point.
 
-```txt
+```
 # in Kiara, every character is length 1 regardless of code point and encoding
 const single_quote: str = 'Hello, Kiara!'
 const double_quote = "Hello"
@@ -471,7 +471,7 @@ const str_from_list_1 = List('W', 'o', 'r', 'l', 'd') as str # "World"
 
 ### Booleans
 
-```txt
+```
 const is_true = true
 const is_false = false
 
@@ -509,7 +509,7 @@ const abstract_not_equal = string_num !~ number_num # false
 
 Kiara's flavor of RegExps is similar to [Oniguruma](https:#github.com/kkos/onirguruma) and Perl's syntax, which is more powerful than JS's native RegExps. More advanced features and integration with format syntax will be detailed in a future document.
 
-```txt
+```
 # regular expressions (Oniguruma, Perl and more)
 const email = /((?:mailto:)?[a-zA-Z\d.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z\d-]+(?:\.[a-zA-Z\d-]+)*)/g
 const multiline_regex = />
@@ -564,7 +564,7 @@ const hewwo_everyone =
 
 Kiara simplifies the concept of null values by providing a single type: `null`. This contrasts with languages like JavaScript, which have multiple representations for the absence of a value. Kiara also introduces the `Option` type, similar to Rust, to handle potentially missing values in a type-safe manner.
 
-```txt
+```
 const nothing = null # equivalent to null or undefined in other languages
 const maybe_a_number: int? = 42 # optional integer, can be 42 or null
 const maybe_a_string: str? = null # optional string
@@ -679,7 +679,7 @@ All data structures are immutable by default, but can be made mutable by explici
 
 ### Lists
 
-```txt
+```
 # immutable list (default):
 const numbers: []int = [1, 2, 3, 4, 5]
 # numbers.push(6) # Error: Immutable list cannot be modified
@@ -760,7 +760,7 @@ const [first_m, *rest_m] = mutable_strings # first_m = "red", rest_m = [|"yellow
 
 ### Tuples
 
-```txt
+```
 # Tuples are fixed-size, ordered collections of elements of potentially different types
 const my_tuple = (1, "hello", 3.14)
 const point: (int, int) = (10, 20)
@@ -795,7 +795,7 @@ const single_value = single.0 # 42
 
 Sets are unordered collections of unique elements. Both `in` and `of` can be used to check for set presence since the keys and values are paired with each other.
 
-```txt
+```
 # Immutable Set (default):
 const my_set: {}int = {1, 2, 3, 2, 1} # {1, 2, 3} (duplicates are removed)
 const string_set_imm = {"apple", "banana", "apple", "orange"} # {"apple", "banana", "orange"}
@@ -829,7 +829,7 @@ const squared_evens = {*from const x in 1...10 if x % 2 == 0 -> x * x} # {4, 16,
 
 Maps are collections of key-value pairs.
 
-```txt
+```
 # immutable Map (default):
 const my_map: {str: int} = {"apple": 1, "banana": 2, "cherry": 3}
 
@@ -887,7 +887,7 @@ const symmetric_difference_map = map1 ^ map2 # {"a": 1, "c": 4}
 
 ### LINQ
 
-```txt
+```
 const numbers = [1, 2, 3, 4, 5]
 
 # select (map)
@@ -988,7 +988,7 @@ These keywords are self-closing:
 
 ### Conditionals
 
-```txt
+```
 var x = 7
 var y = 10
 
@@ -1032,7 +1032,7 @@ else
 
 ### Loops
 
-```txt
+```
 # LOOPS
 var counter = 0
 for const i in 1...5 do counter += i
@@ -1119,7 +1119,7 @@ for const (index, value) in ["a", "b", "c"]::indexed
 
 Match expressions are similar to switch case but far more powerful.
 
-```txt
+```
 # inline match expression
 const result = match expr with Some(x) -> x, else -> null
 
@@ -1175,7 +1175,7 @@ const person = text match
 
 Catch statement can either be followed by an implicit `do` or explicit `with`, the latter which opens a `match` statement.
 
-```txt
+```
 var attempts = 0
 const max_attempts = 3
 loop
@@ -1207,7 +1207,7 @@ catch const err with
 
 ### Asynchronous Operations
 
-```txt
+```
 # await...then is similar to 'try'
 async const x = await fetch("https:#example.com/data.json")
   then const response do response.json()
@@ -1236,7 +1236,7 @@ async func process_map_entries(map: $any: any) =
 
 ### Everything is an expression
 
-```txt
+```
 const is_even = if number % 2 == 0 then true else false
 const message = match status_code
   200 -> "OK"
@@ -1262,7 +1262,7 @@ panic_func(true)
 
 Functions are first-class, like any other vaule. You can also define your own custom functions and assign them to operators with the `infix`, `prefix`, or `suffix` keywords before `func`.
 
-```txt
+```
 func add(a: int, b: int): int =
   a + b
 
@@ -1336,7 +1336,7 @@ print(result_2) # Output: 13
 
 Classes are blueprints for creating objects, encapsulating data (fields/properties) and behavior (methods).
 
-```txt
+```
 class Rectangle
   var width: int
   var height: int
@@ -1416,7 +1416,7 @@ my_car.stop() # Output: Car model Sedan stopped.
 
 Structs are value types (copied on assignment) that can hold data members. They are similar to classes but typically used for simpler data aggregates.
 
-```txt
+```
 struct Point
   var x: int
   var y: int
@@ -1449,7 +1449,7 @@ print($"Default radius: {default_config.radius}, color: {default_config.color}")
 
 Traits (similar to interfaces or mixins in other languages) define a set of methods that a class or struct can implement. They allow for a form of multiple inheritance of behavior.
 
-```txt
+```
 trait Loggable
   func log(message: str)
 
@@ -1506,7 +1506,7 @@ img.print() # Output: Default printing behavior (using default implementation fr
 
 Enums (enumerations) define a set of named constants.
 
-```txt
+```
 enum Status
   OK
   WARNING
@@ -1561,7 +1561,7 @@ print($"Color code: {get_color_code(selected_color)}") # Output: Color code: gre
 
 Unions allow a variable to hold a value of one of several possible types. The size of the union is typically determined by the size of its largest member.
 
-```txt
+```
 union Variant
   int_val: int
   float_val: float
