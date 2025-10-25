@@ -29,13 +29,13 @@ let scope = ({quote = "'", flags = '', multi = false}) => {
   let escapes = [];
 
   let map = {
-    '%': ['format', {include: '#embedded-format'}, '%%'],
-    '#': ['template', {include: '#embedded-placeholder'}, '##'],
     '\\': [
       'verbatim',
       {match: escapes, name: 'constant.character.escape.hitori'},
       quote.repeat(2),
     ],
+    '%': ['format', {include: '#embedded-format'}, '%%'],
+    '#': ['template', {include: '#embedded-placeholder'}, '##'],
     $: ['interpolated', {include: '#embedded-expression'}, '$$'],
   };
 
@@ -47,7 +47,8 @@ let scope = ({quote = "'", flags = '', multi = false}) => {
 
   for (let key of flags)
     if (key in map) {
-      patterns.push(map[key][1]);
+      if (key != '\\') patterns.push(map[key][1]);
+      else patterns.push({include: '#string-escapes'});
       results.push(map[key][0]);
     }
 
