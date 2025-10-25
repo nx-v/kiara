@@ -47,8 +47,7 @@ let scope = ({quote = "'", flags = '', multi = false}) => {
 
   for (let key of flags)
     if (key in map) {
-      if (key != '\\') patterns.push(map[key][1]);
-      else patterns.push({include: '#string-escapes'});
+      patterns.push(key != '\\' ? map[key][1] : {include: '#string-escapes'});
       results.push(map[key][0]);
     }
 
