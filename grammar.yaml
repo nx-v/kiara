@@ -15,7 +15,7 @@ information: |
   This grammar file covers the syntax and structure of Hitori, including its 
   unique features like s-expressions, message passing, and inline DSLs (domain-
   specific languages).
-  
+
   It is designed to provide accurate syntax highlighting 
   and code analysis for Hitori source files.
 
@@ -26,20 +26,20 @@ important: |
 
 todo: |
   - [ ] Rework inline "Markdown" syntax. Refer to Texy, Textile, AsciiDoc
-        and cousins for inspiration. Reimplement Markdown syntax with these extensions:
-        - [ ] Citations
-        - [ ] Strike-through
-        - [ ] Deleted and inserted text
-        - [ ] Superscript
-        - [ ] Subscript
-        - [ ] Spans
-        - [ ] Selectors and anchors
-        - [ ] Code blocks
-        - [ ] Definition blocks
-        - [ ] Tables
-        - [ ] Headings and subheadings
-  - [ ] Plan and implement all the built-in objects, constants and
-        functions for Hitori's standard library.
+      and cousins for inspiration. Reimplement Markdown syntax with these extensions:
+      - [ ] Citations
+      - [ ] Strike-through
+      - [ ] Deleted and inserted text
+      - [ ] Superscript
+      - [ ] Subscript
+      - [ ] Spans
+      - [ ] Selectors and anchors
+      - [ ] Code blocks
+      - [ ] Definition blocks
+      - [ ] Tables
+      - [ ] Headings and subheadings
+  - [ ] Plan and implement all the built-in modules, classes, objects, constants
+        functions and properties for Hitori's standard library.
         This would all be done in a separate PR and once the grammar is completely
         finished.
   - [ ] Multi-base numeric literals (up to base 64). Digits will be 0-9, a-z, 
@@ -1028,8 +1028,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '''''|\$\$|%%|##'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
           - include: '#embedded-format'
           - include: '#embedded-placeholder'
@@ -1041,8 +1040,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "\"\"|\\$\\$|%%|##"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
           - include: '#embedded-format'
           - include: '#embedded-placeholder'
@@ -1054,8 +1052,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '''''|\$\$|%%|##'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
           - include: '#embedded-format'
           - include: '#embedded-placeholder'
@@ -1067,8 +1064,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "\"\"|\\$\\$|%%|##"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
           - include: '#embedded-format'
           - include: '#embedded-placeholder'
@@ -1080,8 +1076,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '''''|\$\$|%%'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
           - include: '#embedded-format'
       - comment: multi double-quoted verbatim, interpolated, and format string
@@ -1092,8 +1087,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "\"\"|\\$\\$|%%"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
           - include: '#embedded-format'
       - comment: single-quoted verbatim, interpolated, and format string
@@ -1104,8 +1098,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '''''|\$\$|%%'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
           - include: '#embedded-format'
       - comment: double-quoted verbatim, interpolated, and format string
@@ -1116,8 +1109,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "\"\"|\\$\\$|%%"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
           - include: '#embedded-format'
       - comment: multi single-quoted verbatim, interpolated, and template string
@@ -1128,8 +1120,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '''''|\$\$|##'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
           - include: '#embedded-placeholder'
       - comment: multi double-quoted verbatim, interpolated, and template string
@@ -1140,8 +1131,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "\"\"|\\$\\$|##"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
           - include: '#embedded-placeholder'
       - comment: single-quoted verbatim, interpolated, and template string
@@ -1152,8 +1142,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '''''|\$\$|##'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
           - include: '#embedded-placeholder'
       - comment: double-quoted verbatim, interpolated, and template string
@@ -1164,8 +1153,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "\"\"|\\$\\$|##"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
           - include: '#embedded-placeholder'
       - comment: multi single-quoted verbatim, format, and template string
@@ -1176,8 +1164,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "''|%%|##"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-format'
           - include: '#embedded-placeholder'
       - comment: multi double-quoted verbatim, format, and template string
@@ -1188,8 +1175,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '""|%%|##'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-format'
           - include: '#embedded-placeholder'
       - comment: single-quoted verbatim, format, and template string
@@ -1200,8 +1186,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "''|%%|##"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-format'
           - include: '#embedded-placeholder'
       - comment: double-quoted verbatim, format, and template string
@@ -1212,8 +1197,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '""|%%|##'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-format'
           - include: '#embedded-placeholder'
       - comment: multi single-quoted interpolated, format, and template string
@@ -1272,8 +1256,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '''''|\$\$'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
       - comment: multi double-quoted verbatim and interpolated string
         begin: \s*([\\\$]+)("""+)\s*
@@ -1283,8 +1266,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "\"\"|\\$\\$"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
       - comment: single-quoted verbatim and interpolated string
         begin: \s*([\\\$]+)(')\s*
@@ -1294,8 +1276,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '''''|\$\$'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
       - comment: double-quoted verbatim and interpolated string
         begin: \s*([\\\$]+)(")\s*
@@ -1305,8 +1286,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "\"\"|\\$\\$"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-expression'
       - comment: multi single-quoted verbatim and format string
         begin: \s*([\\%]+)('''+)\s*
@@ -1316,8 +1296,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "''|%%"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-format'
       - comment: multi double-quoted verbatim and format string
         begin: \s*([\\%]+)("""+)\s*
@@ -1327,8 +1306,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '""|%%'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-format'
       - comment: single-quoted verbatim and format string
         begin: \s*([\\%]+)(')\s*
@@ -1338,8 +1316,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "''|%%"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-format'
       - comment: double-quoted verbatim and format string
         begin: \s*([\\%]+)(")\s*
@@ -1349,8 +1326,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '""|%%'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-format'
       - comment: multi single-quoted interpolated and format string
         begin: \s*([\$%]+)('''+)\s*
@@ -1404,8 +1380,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "''|##"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-placeholder'
       - comment: multi double-quoted verbatim and template string
         begin: \s*([\\#]+)("""+)\s*
@@ -1415,8 +1390,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '""|##'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-placeholder'
       - comment: single-quoted verbatim and template string
         begin: \s*([\\#]+)(')\s*
@@ -1426,8 +1400,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "''|##"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-placeholder'
       - comment: double-quoted verbatim and template string
         begin: \s*([\\#]+)(")\s*
@@ -1437,8 +1410,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '""|##'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
           - include: '#embedded-placeholder'
       - comment: multi single-quoted interpolated and template string
         begin: \s*([\$#]+)('''+)\s*
@@ -1536,8 +1508,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "''"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
       - comment: multi double-quoted verbatim string
         begin: \s*(\\)("""+)\s*
         contentName: string.quoted.double.hitori
@@ -1546,8 +1517,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '""'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
       - comment: single-quoted verbatim string
         begin: \s*(\\)(')\s*
         contentName: string.quoted.single.hitori
@@ -1556,8 +1526,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: "''"
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
       - comment: double-quoted verbatim string
         begin: \s*(\\)(")\s*
         contentName: string.quoted.double.hitori
@@ -1566,8 +1535,7 @@ repository:
           1: {name: storage.type.string.hitori}
           2: {name: punctuation.definition.string.hitori}
         patterns:
-          - match: '""'
-            name: constant.character.escape.hitori
+          - include: '#string-escapes'
       - comment: multi single-quoted interpolated string
         begin: \s*(\$)('''+)\s*
         contentName: string.quoted.single.hitori
