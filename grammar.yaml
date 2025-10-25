@@ -4841,8 +4841,8 @@ repository:
         ( # 8: bitwise and set
           \& | \| | \^ | ~
         ) |
-        ( # 9: bitwise shift
-          <<<? | >>>?
+        ( # 9: bitwise shift/rotate
+          <<[<>]? | [<>]?>>
         ) |
         ( # 10: pipeline
           <\|+ | \|+>
@@ -5016,8 +5016,8 @@ repository:
         ( # 8: bitwise and set
           \& | \| | \^ | ~
         ) |
-        ( # 9: bitwise shift
-          <<<? | >>>?
+        ( # 9: bitwise shift/rotate
+          <<[<>]? | [<>]?>>
         ) |
         ( # 10: pipeline
           <\|+ | \|+>
