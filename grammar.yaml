@@ -3304,11 +3304,18 @@ repository:
 
   tag-attributes:
     patterns:
+      - match: \s*([@#&*|%.:~^?]|::)(?=[\w$'"`])
+        name: punctuation.definition.entity.hitori
       - include: '#attribute-directive'
       - include: '#attribute-assignment'
       - include: '#attribute-names'
       - include: '#literals'
+      - include: '#hex-colors'
       - include: '#embedded-expression'
+      - include: '#embedded-format'
+      - include: '#embedded-placeholder'
+      - include: '#function-calls'
+      - include: '#variables'
       - include: '#brackets'
       - include: '#comments'
       - include: '#punctuation'
@@ -3323,11 +3330,39 @@ repository:
           2: {name: entity.other.attribute-name.directive.hitori}
 
   attribute-assignment:
+    applyEndPatternLast: true
     begin: \s*([\p{Pc}\p{L}][\p{Pd}\w]*)\s*(=)
     beginCaptures:
-      1: {name: entity.other.attribute-name.hitori}
+      1: &attribute-name
+        name: entity.other.attribute-name.hitori
+        patterns:
+          - match: \s*(?<=\@)[\p{Pc}\p{L}]\w*\b\s*
+            name: keyword.control.at-rule.hitori
+          - match: \s*(?<=\#)[\p{Pc}\p{L}]\w*\b\s*
+            name: entity.other.attribute-name.id.hitori
+          - match: \s*(?<=\.)[\p{Pc}\p{L}]\w*\b\s*
+            name: entity.other.attribute-name.class.hitori
+          - match: \s*(?<=::)[\p{Pc}\p{L}]\w*\b\s*
+            name: entity.other.attribute-name.pseudo-component.hitori
+          - match: \s*(?<=\~)[\p{Pc}\p{L}]\w*\b\s*
+            name: entity.other.attribute-name.key.hitori
+          - match: \s*(?<=\&)[\p{Pc}\p{L}]\w*\b\s*
+            name: entity.other.attribute-name.hitori entity.name.type.anchor.hitori
+          - match: \s*(?<=\*)[\p{Pc}\p{L}]\w*\b\s*
+            name: entity.other.attribute-name.hitori entity.name.type.alias.hitori
+          - match: \s*(?<=\%)[\p{Pc}\p{L}]\w*\b\s*
+            name: entity.other.attribute-name.hitori entity.name.function.hitori
+          - match: \s*(?<=\|)[\p{Pc}\p{L}]\w*\b\s*
+            name: entity.other.attribute-name.hitori entity.name.method.hitori
+          - match: \s*(?<=\:)[\p{Pc}\p{L}]\w*\b\s*
+            name: entity.other.attribute-name.hitori entity.name.procedure.hitori
+          - match: \s*(?<=\^)[\p{Pc}\p{L}]\w*\b\s*
+            name: entity.other.attribute-name.hitori entity.name.property.hitori
+          - match: \s*(?<=\?)[\p{Pc}\p{L}]\w*\b\s*
+            name: entity.other.attribute-name.hitori entity.name.predicate.hitori
+          - include: '#css-property-names'
       2: {name: punctuation.separator.key-value.hitori}
-    end: (?=\s+[\p{Pc}\p{L}][\p{Pd}\w]*(?:\s*=|/>|>))|(?=\s*[@#&*%|:?])|(?=\s*/>)|(?=\s*>)|$
+    end: (?=)|$
     name: meta.attribute.assignment.hitori
     patterns:
       - include: '#attribute-values'
@@ -3342,10 +3377,7 @@ repository:
     match: \s*([\p{Pc}\p{L}][\p{Pd}\w]*)\b(?!\s*=)\s*
     name: meta.attribute.boolean.hitori
     captures:
-      1:
-        name: entity.other.attribute-name.hitori
-        patterns:
-          - include: '#css-property-names'
+      1: *attribute-name
 
   spread-attribute:
     comment: Spread *attribute
@@ -3790,18 +3822,14 @@ repository:
               1:
                 name: entity.name.tag.hitori
                 patterns: *html-tag-names
-          - comment: ID
-            match: (?<=#)\b([\p{Pc}\p{L}]\w*)\b
-            name: entity.other.attribute-name.id.hitori
-          - comment: Class
-            match: (?<=\.)\b([\p{Pc}\p{L}]\w*)\b
-            name: entity.other.attribute-name.class.hitori
+          - include: '#style-selectors'
           - begin: (\[)\s*
             end: \s*(\])\s*
             captures:
               1: {name: punctuation.definition.directive.hitori}
             patterns:
-          - include: $self
+              - include: '#attribute-selectors'
+              - include: $self
           - begin: (\{)\s*
             end: \s*(\})\s*
             captures:
@@ -3816,23 +3844,11 @@ repository:
             patterns:
               - include: '#tag-attributes'
               - include: $self
-          - match: \s*([.#])(?=[\w$])
-            name: punctuation.definition.entity.hitori
-          - comment: inline markup
-            begin: (?<!'+)\s*('''+|')
-            contentName: string.quoted.single.hitori
-            end: \s*((\1)(?!'+))
-            captures:
-              1: {name: punctuation.definition.string.hitori}
-            patterns: [include: '#markdown']
-          - comment: inline markup
-            begin: (?<!"+)\s*("""+|")
-            contentName: string.quoted.double.hitori
-            end: \s*((\1)(?!"+))
-            captures:
-              1: {name: punctuation.definition.string.hitori}
-            patterns: [include: '#markdown']
+          - include: '#literals'
           - include: '#regexps'
+          - include: '#punctuation'
+          - include: '#comments'
+          - include: '#space'
 
       inline-styles:
         begin: (?<=^|[\w\s'"`])(\+>)(.*)\n*
@@ -3895,6 +3911,9 @@ repository:
   style-property-values:
     patterns:
       - include: '#hex-colors'
+      - include: '#embedded-expression'
+      - include: '#embedded-format'
+      - include: '#embedded-placeholder'
       - include: '#css-value-names'
       - include: $self
 
