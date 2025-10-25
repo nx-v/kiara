@@ -4,29 +4,60 @@ fileTypes: [hitori, spwn]
 patterns: [include: '#core']
 
 information: |
-  This is the grammar for Hitori, a mid-level, gradually-typed
-  programming language for building games and applications natively
-  with a focus on familiarity for JavaScript, TypeScript, C++ and Rust
-  developers.
+  **Hitori** is a high-level, high-on-syntax-sugar, high-on-regret programming language catering to indie devs, stubborn DSL writers, and anyone who's ever screamed: "Why doesn't this just let me _do the thing_?!"
 
-  This grammar is a work in progress, and is being actively developed.
+  Hitori aims to be the most flexible, expressive, and downright fun programming language out there. It combines the best features of modern languages with a sprinkle of whimsy and a dash of rebellion against the mundane.
+
+  This grammar file covers the syntax and structure of Hitori, including its unique features like s-expressions, message passing, and inline DSLs. It is designed to provide accurate syntax highlighting and code analysis for Hitori source files.
 
 important: |
-  This grammar is still under heavy development and may change
-  significantly in the future. Please report any issues or
-  suggestions on the GitHub repository.
-
-  Contributions are welcome! Please open an issue or a pull request
-  on the GitHub repository.
+  This grammar is a work in progress. Features and syntax will change
+  frequently as the language evolves. In the meantime, please be patient
+  and report any issues you encounter.
 
 todo: |
-  - [x] Add base 4 numeric literals (0q prefix, \q in strings and char classes, and &#q; in XML)
-  - [x] Add base 6 numeric literals (0s prefix, \s in strings and char classes, and &#s; in XML)
-  - [ ] Rework inline "Markdown" syntax. Refer to Texy, Textile, AsciiDoc and cousins.
+  - [ ] Rework inline "Markdown" syntax. Refer to Texy, Textile, AsciiDoc
+        and cousins for inspiration. Reimplement Markdown syntax with these extensions:
+        - [ ] Citations
+        - [ ] Strike-through
+        - [ ] Deleted and inserted text
+        - [ ] Superscript
+        - [ ] Subscript
+        - [ ] Spans
+        - [ ] Selectors and anchors
+        - [ ] Code blocks
+        - [ ] Definition blocks
+        - [ ] Tables
+        - [ ] Headings and subheadings
   - [ ] Plan and implement all the built-in objects, constants and
         functions for Hitori's standard library.
         This would all be done in a separate PR and once the grammar is completely
         finished.
+  - [ ] Multi-base numeric literals (up to base 64). Digits will be 0-9, a-z, 
+        lowercase Icelandic thorn, lowercase eth, A-Z, uppercase Icelandic thorn.
+  - [ ] Add new parameter binding/destructuring syntax for:
+        - [ ] Strings
+        - [ ] Regular expressions
+        - [ ] Arrays
+        - [ ] Sets
+        - [ ] Maps and objects
+        - [ ] Tuples
+        - [ ] Function arguments
+        - [ ] Variables
+  - [ ] Rework function call syntax to be more consistent and terser.
+        Inspired by Haskell.
+  - [ ] Rework import/export/module syntax to be terse, drawing inspiration 
+        from JavaScript ES6 modules, with changes such as:
+          - glob file path matching (import path/**/*.hitori)
+          - named imports/exports (import module{a, b, c})
+          - default imports/exports (import module)
+          - renaming imports/exports (import module{a: x, b: y})
+          - show/hide mechanism (import module{a,b - c,d})
+          - glob-style pattern matching (import module{a*, b?, c{1,2}})
+  - [ ] Fix and expand regex syntax and highlighting:
+        - [ ] Add and expand quantifiers and range highlighting
+        - [ ] Add support for fuzzy matching (edits, insertions, deletions, etc.)
+        - [ ] Improve highlighting for regexes with flags
 
 changelog: |
   A major rewrite is underway. This language's syntax would be terser
@@ -34,6 +65,8 @@ changelog: |
 
   New changes:
 
+  - Added base 4, 6 and 12 numeric literals. Except for base 14, all even
+    bases up to 16 are now supported.
   - Overall now closely resembles Rust's. This includes keywords, comments,
     literals, strings etc. Only thing I need to do is to rework how code blocks
     (i.e. clauses) are highlighted to be more consistent with Rust's own grammar.
@@ -168,7 +201,7 @@ define:
         |union|iter|macro|query|elem
         |object|realm|trait|style|script
         |go|defer|do|with|from|where
-        |if|else|then|for|while|loop
+        |if|else|then|guard|when
         |for|loop|while|goto|move
         |try|throw|catch|finally|switch
         |match|case|pass|def
@@ -197,7 +230,7 @@ define:
         |union|iter|macro|query|elem
         |object|realm|trait|style|script
         |go|defer|do|with|from|where
-        |if|else|then|for|while|loop
+        |if|else|then|guard|when
         |for|loop|while|goto|move
         |try|throw|catch|finally|switch
         |match|case|pass|def
@@ -318,7 +351,7 @@ repository:
           |union|iter|macro|query|elem
           |object|realm|trait|style|script
           |go|defer|do|with|from|where
-          |if|else|then|for|while|loop
+          |if|else|then|guard|when
           |for|loop|while|goto|move
           |try|throw|catch|finally|switch
           |match|case|pass|def
@@ -2277,7 +2310,7 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|else|then|for|while|loop
+              |if|else|then|guard|when
               |for|loop|while|goto|move
               |try|throw|catch|finally|switch
               |match|case|pass|def
@@ -2332,7 +2365,7 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|else|then|for|while|loop
+              |if|else|then|guard|when
               |for|loop|while|goto|move
               |try|throw|catch|finally|switch
               |match|case|pass|def
@@ -2411,7 +2444,7 @@ repository:
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
                 |go|defer|do|with|from|where
-                |if|else|then|for|while|loop
+                |if|else|then|guard|when
                 |for|loop|while|goto|move
                 |try|throw|catch|finally|switch
                 |match|case|pass|def
@@ -2585,7 +2618,7 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|else|then|for|while|loop
+              |if|else|then|guard|when
               |for|loop|while|goto|move
               |try|throw|catch|finally|switch
               |match|case|pass|def
@@ -3215,7 +3248,7 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|else|then|for|while|loop
+              |if|else|then|guard|when
               |for|loop|while|goto|move
               |try|throw|catch|finally|switch
               |match|case|pass|def
@@ -4352,7 +4385,7 @@ repository:
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
                 |go|defer|do|with|from|where
-                |if|else|then|for|while|loop
+                |if|else|then|guard|when
                 |for|loop|while|goto|move
                 |try|throw|catch|finally|switch
                 |match|case|pass|def
@@ -4409,7 +4442,7 @@ repository:
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
                 |go|defer|do|with|from|where
-                |if|else|then|for|while|loop
+                |if|else|then|guard|when
                 |for|loop|while|goto|move
                 |try|throw|catch|finally|switch
                 |match|case|pass|def
@@ -5502,7 +5535,7 @@ repository:
   general-keywords:
     comment: general keywords
     patterns:
-      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if|else)\b\s*
+      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if|else|guard|when)\b\s*
         name: keyword.control.conditional.hitori
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(for|loop|while)\b\s*
         name: keyword.control.loop.hitori
@@ -6350,7 +6383,7 @@ repository:
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
               |go|defer|do|with|from|where
-              |if|else|then|for|while|loop
+              |if|else|then|guard|when
               |for|loop|while|goto|move
               |try|throw|catch|finally|switch
               |match|case|pass|def
@@ -6385,6 +6418,7 @@ repository:
       - include: '#if-clause'
       - include: '#match-clause'
       - include: '#switch-clause'
+      - include: '#try-clause'
       - include: '#catch-clause'
       - include: '#with-clause'
       - include: '#do-clause'
@@ -6434,6 +6468,24 @@ repository:
                 captures:
                   1: {name: keyword.operator.assignment.hitori}
 
+      try-clause:
+        applyEndPatternLast: true
+        begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(try|then|finally)\b\s*(?=\()
+        end: (?=)|$
+        name: meta.if.hitori
+        captures:
+          1: {name: keyword.control.error.hitori}
+          2: {name: keyword.operator.logical.hitori}
+        patterns:
+          - begin: \s*(\()\s*
+            end: \s*(\))
+            captures:
+              1: {name: punctuation.definition.expression.hitori}
+            patterns:
+              - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(await)\b\s*
+                name: keyword.control.error.hitori
+              - include: $self
+
       catch-clause:
         applyEndPatternLast: true
         begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(catch)\b\s*(?=\()
@@ -6481,7 +6533,7 @@ repository:
                   1: {name: keyword.control.error.hitori}
                 patterns:
                   - include: '#types'
-              - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if\s+not|if|as)\b\s*
+              - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if\s+not|if|guard|when|as)\b\s*
                 name: keyword.control.error.hitori
               - include: '#type-keywords'
               - include: $self
@@ -6505,7 +6557,7 @@ repository:
 
       if-clause:
         applyEndPatternLast: true
-        begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if\s+not|if)\b\s*(?=\()
+        begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if\s+not|if|guard|when)\b\s*(?=\()
         end: (?=)|$
         name: meta.if.hitori
         captures:
@@ -6568,7 +6620,7 @@ repository:
                   1: {name: keyword.control.match.hitori}
                 patterns:
                   - include: '#types'
-              - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if\s+not|if|as)\b\s*
+              - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if\s+not|if|guard|when|as)\b\s*
                 name: keyword.control.match.hitori
               - include: '#type-keywords'
               - include: $self
@@ -6620,7 +6672,7 @@ repository:
                   1: {name: keyword.control.switch.hitori}
                 patterns:
                   - include: '#types'
-              - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if\s+not|if|as)\b\s*
+              - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(if\s+not|if|guard|when|as)\b\s*
                 name: keyword.control.switch.hitori
               - include: '#type-keywords'
               - include: $self
@@ -7344,7 +7396,7 @@ repository:
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
                 |go|defer|do|with|from|where
-                |if|else|then|for|while|loop
+                |if|else|then|guard|when
                 |for|loop|while|goto|move
                 |try|throw|catch|finally|switch
                 |match|case|pass|def
@@ -7410,7 +7462,7 @@ repository:
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
                 |go|defer|do|with|from|where
-                |if|else|then|for|while|loop
+                |if|else|then|guard|when
                 |for|loop|while|goto|move
                 |try|throw|catch|finally|switch
                 |match|case|pass|def
@@ -7505,7 +7557,7 @@ repository:
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
                 |go|defer|do|with|from|where
-                |if|else|then|for|while|loop
+                |if|else|then|guard|when
                 |for|loop|while|goto|move
                 |try|throw|catch|finally|switch
                 |match|case|pass|def
