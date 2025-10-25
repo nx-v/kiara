@@ -19,6 +19,16 @@ important: |
   Contributions are welcome! Please open an issue or a pull request
   on the GitHub repository.
 
+todo: |
+  - [ ] Add base 4 numeric literals (0q prefix, \q in strings and char classes)
+  - [ ] Add base 6 numeric literals (0s prefix, \s in strings and char classes)
+  - [ ] Add multi-base numeric literals (0b4..64 prefix, \b4..\b64 in strings and char classes)
+  - [ ] Rework inline "Markdown" syntax. Refer to Texy, Textile, AsciiDoc and cousins.
+  - [ ] Plan and implement all the built-in objects, constants and
+        functions for Hitori's standard library.
+        This would all be done in a separate PR and once the grammar is completely
+        finished.
+
 changelog: |
   A major rewrite is underway. This language's syntax would be terser
   and thus inspired by Rust, Zig and D.
