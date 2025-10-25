@@ -4,11 +4,20 @@ fileTypes: [hitori, spwn]
 patterns: [include: '#core']
 
 information: |
-  **Hitori** is a high-level, high-on-syntax-sugar, high-on-regret programming language catering to indie devs, stubborn DSL writers, and anyone who's ever screamed: "Why doesn't this just let me _do the thing_?!"
+  **Hitori** is a high-level, high-on-syntax-sugar, high-on-regret programming
+  language catering to indie devs, stubborn DSL writers, and anyone who's ever
+  screamed: "Why doesn't this just let me _do the thing_?!"
 
-  Hitori aims to be the most flexible, expressive, and downright fun programming language out there. It combines the best features of modern languages with a sprinkle of whimsy and a dash of rebellion against the mundane.
+  Hitori aims to be the most flexible, expressive, and downright fun programming 
+  language out there. It combines the best features of modern languages with a 
+  sprinkle of whimsy and a dash of rebellion against the mundane.
 
-  This grammar file covers the syntax and structure of Hitori, including its unique features like s-expressions, message passing, and inline DSLs. It is designed to provide accurate syntax highlighting and code analysis for Hitori source files.
+  This grammar file covers the syntax and structure of Hitori, including its 
+  unique features like s-expressions, message passing, and inline DSLs (domain-
+  specific languages).
+  
+  It is designed to provide accurate syntax highlighting 
+  and code analysis for Hitori source files.
 
 important: |
   This grammar is a work in progress. Features and syntax will change
