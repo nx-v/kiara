@@ -25,15 +25,17 @@ changelog: |
 
   New changes:
 
-  - Most keywords should have a max of 6 characters, though some, like
-    "continue", "default" and "foreach", will be kept as is.
+  - Overall now closely resembles Rust's. This includes keywords, comments,
+    literals, strings etc. Only thing I need to do is to rework how code blocks
+    (i.e. clauses) are highlighted to be more consistent with Rust's own grammar.
+  - Added s-expressions and message passing, which intentionally
+    resembles Lisp, Clojure, Elixir and Smalltalk.
+  - Numbers and escape sequences have been reworked, and will no longer accept
+  - Most keywords should have a max of 6 characters.
   - Range keywords to, till and by have been removed in favor of range operators.
-  - Syntax now closely resembles Rust's. This includes keywords, comments,
-    literals, strings etc. Many parts of this document have been changed.
   - Generics now capture properly before and after function names
     For example, T.<x>, T?.<x>, T!.<x>, T::<x>, T?:<x>, T!:<x>.
     They can even be curried: x<T><U>(y).
-  - Numbers and escape sequences have been reworked, and will no longer accept
     integers bigger than decimal 1114111 which now are highlighted as an error.
   - Base 12 (0z, \z in strings and character classes) is added back,
     with A, X, T, or turned 2 for digit 10, and B, E or turned 3 for digit 11.
@@ -149,10 +151,10 @@ define:
     (?!
       (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
       (?: # keywords
-        [io]n|of|as|is|new|delete
+        [io]n|of|as|is|new|del
         |unset|ref|and|x?or|not
-        |var|val|let|const|func
-        |proc|method|type|class|crate
+        |var|val|let|const|given|using|given|using
+        |func|proc|method|type|class|crate
         |impl|enum|module|struct|field
         |union|iter|macro|query|elem
         |object|realm|trait|style|script
@@ -161,7 +163,7 @@ define:
         |for|loop|while|goto|move
         |try|throw|catch|finally|switch
         |match|case|pass|def
-        |break|continue|redo|retry
+        |break|skip|redo|retry
         |return|yield|await|scope
         |import|export|intern|extern
         |debug|assert|check
@@ -178,10 +180,10 @@ define:
 
     (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
       (?: # keywords
-        [io]n|of|as|is|new|delete
+        [io]n|of|as|is|new|del
         |unset|ref|and|x?or|not
-        |var|val|let|const|func
-        |proc|method|type|class|crate
+        |var|val|let|const|given|using|given|using
+        |func|proc|method|type|class|crate
         |impl|enum|module|struct|field
         |union|iter|macro|query|elem
         |object|realm|trait|style|script
@@ -190,7 +192,7 @@ define:
         |for|loop|while|goto|move
         |try|throw|catch|finally|switch
         |match|case|pass|def
-        |break|continue|redo|retry
+        |break|skip|redo|retry
         |return|yield|await|scope
         |import|export|intern|extern
         |debug|assert|check
@@ -223,7 +225,7 @@ repository:
       - include: '#symbols'
       - include: '#decorators'
       - include: '#type-signature'
-      - include: '#illegal-identifier'
+      # - include: '#illegal-identifier'
       - include: '#xml'
       - include: '#generics'
       - include: '#literals'
@@ -235,6 +237,8 @@ repository:
       - include: '#variables'
       - include: '#illegal'
       - include: '#space'
+
+  # Ignore Patterns
 
   ignore-long-lines:
     comment: avoid parsing files with long lines of code
@@ -297,10 +301,10 @@ repository:
       (?!
         (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
         (?: # keywords
-          [io]n|of|as|is|new|delete
+          [io]n|of|as|is|new|del
           |unset|ref|and|x?or|not
-          |var|val|let|const|func
-          |proc|method|type|class|crate
+          |var|val|let|const|given|using|given|using
+          |func|proc|method|type|class|crate
           |impl|enum|module|struct|field
           |union|iter|macro|query|elem
           |object|realm|trait|style|script
@@ -309,7 +313,7 @@ repository:
           |for|loop|while|goto|move
           |try|throw|catch|finally|switch
           |match|case|pass|def
-          |break|continue|redo|retry
+          |break|skip|redo|retry
           |return|yield|await|scope
           |import|export|intern|extern
           |debug|assert|check
@@ -401,7 +405,7 @@ repository:
             (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
             \b
               (?: # destructuring keywords
-                var|val|let|const|case
+                var|val|let|const|given|using|case
               )
             \b
             (?:$|[,;'"({\[)}\]\s]) # beside a delimiter or space
@@ -425,7 +429,7 @@ repository:
             (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
             \b
               (?: # expression keywords
-                [io]n|of|as|is|new|delete
+                [io]n|of|as|is|new|del
                 |unset|ref|and|x?or|not
               )
             \b
@@ -448,7 +452,7 @@ repository:
             (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
             \b
               (?: # expression keywords
-                [io]n|of|as|is|new|delete
+                [io]n|of|as|is|new|del
                 |unset|ref|and|x?or|not
               )
             \b
@@ -539,7 +543,7 @@ repository:
             (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
             \b
               (?: # destructuring keywords
-                var|val|let|const|case
+                var|val|let|const|given|using|case
               )
             \b
             (?:$|[,;'"({\[)}\]\s]) # beside a delimiter or space
@@ -598,7 +602,7 @@ repository:
             (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
             \b
               (?: # destructuring keywords
-                var|val|let|const|case
+                var|val|let|const|given|using|case
               )
             \b
             (?:$|[,;'"({\[)}\]\s]) # beside a delimiter or space
@@ -2128,10 +2132,10 @@ repository:
           (?!
             (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
             (?: # keywords
-              [io]n|of|as|is|new|delete
+              [io]n|of|as|is|new|del
               |unset|ref|and|x?or|not
-              |var|val|let|const|func
-              |proc|method|type|class|crate
+              |var|val|let|const|given|using|given|using
+              |func|proc|method|type|class|crate
               |impl|enum|module|struct|field
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
@@ -2140,7 +2144,7 @@ repository:
               |for|loop|while|goto|move
               |try|throw|catch|finally|switch
               |match|case|pass|def
-              |break|continue|redo|retry
+              |break|skip|redo|retry
               |return|yield|await|scope
               |import|export|intern|extern
               |debug|assert|check
@@ -2183,10 +2187,10 @@ repository:
           (?!
             (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
             (?: # keywords
-              [io]n|of|as|is|new|delete
+              [io]n|of|as|is|new|del
               |unset|ref|and|x?or|not
-              |var|val|let|const|func
-              |proc|method|type|class|crate
+              |var|val|let|const|given|using|given|using
+              |func|proc|method|type|class|crate
               |impl|enum|module|struct|field
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
@@ -2195,7 +2199,7 @@ repository:
               |for|loop|while|goto|move
               |try|throw|catch|finally|switch
               |match|case|pass|def
-              |break|continue|redo|retry
+              |break|skip|redo|retry
               |return|yield|await|scope
               |import|export|intern|extern
               |debug|assert|check
@@ -2262,10 +2266,10 @@ repository:
             (?!
               (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
               (?: # keywords
-                [io]n|of|as|is|new|delete
+                [io]n|of|as|is|new|del
                 |unset|ref|and|x?or|not
-                |var|val|let|const|func
-                |proc|method|type|class|crate
+                |var|val|let|const|given|using|given|using
+                |func|proc|method|type|class|crate
                 |impl|enum|module|struct|field
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
@@ -2274,7 +2278,7 @@ repository:
                 |for|loop|while|goto|move
                 |try|throw|catch|finally|switch
                 |match|case|pass|def
-                |break|continue|redo|retry
+                |break|skip|redo|retry
                 |return|yield|await|scope
                 |import|export|intern|extern
                 |debug|assert|check
@@ -2436,10 +2440,10 @@ repository:
           (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
           \b
             (?: # keywords
-              [io]n|of|as|is|new|delete
+              [io]n|of|as|is|new|del
               |unset|ref|and|x?or|not
-              |var|val|let|const|func
-              |proc|method|type|class|crate
+              |var|val|let|const|given|using|given|using
+              |func|proc|method|type|class|crate
               |impl|enum|module|struct|field
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
@@ -2448,7 +2452,7 @@ repository:
               |for|loop|while|goto|move
               |try|throw|catch|finally|switch
               |match|case|pass|def
-              |break|continue|redo|retry
+              |break|skip|redo|retry
               |return|yield|await|scope
               |import|export|intern|extern
               |debug|assert|check
@@ -3066,10 +3070,10 @@ repository:
           (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
           \b
             (?: # keywords
-              [io]n|of|as|is|new|delete
+              [io]n|of|as|is|new|del
               |unset|ref|and|x?or|not
-              |var|val|let|const|func
-              |proc|method|type|class|crate
+              |var|val|let|const|given|using|given|using
+              |func|proc|method|type|class|crate
               |impl|enum|module|struct|field
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
@@ -3078,7 +3082,7 @@ repository:
               |for|loop|while|goto|move
               |try|throw|catch|finally|switch
               |match|case|pass|def
-              |break|continue|redo|retry
+              |break|skip|redo|retry
               |return|yield|await|scope
               |import|export|intern|extern
               |debug|assert|check
@@ -4165,8 +4169,8 @@ repository:
             (?:[?!:]:=?|[?!]?\.=?)? < ['"`({\[\w]
           | # macro calls
             ! \#? [({]
-          | # strings
-            \w*[\\$#%]*['"] | `\s*(?=\N)
+          | # strings and symbols
+            (?:\w*|[\\$#%]*)['"] | `\s*(?=\N) | :[\p{Pc}\p{L}]\w*
         )
       )
     captures:
@@ -4183,10 +4187,10 @@ repository:
             (?!
               (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
               (?: # keywords
-                [io]n|of|as|is|new|delete
+                [io]n|of|as|is|new|del
                 |unset|ref|and|x?or|not
-                |var|val|let|const|func
-                |proc|method|type|class|crate
+                |var|val|let|const|given|using|given|using
+                |func|proc|method|type|class|crate
                 |impl|enum|module|struct|field
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
@@ -4195,7 +4199,7 @@ repository:
                 |for|loop|while|goto|move
                 |try|throw|catch|finally|switch
                 |match|case|pass|def
-                |break|continue|redo|retry
+                |break|skip|redo|retry
                 |return|yield|await|scope
                 |import|export|intern|extern
                 |debug|assert|check
@@ -4212,7 +4216,6 @@ repository:
           )
           \b
           (?=
-            \s*
             (?: # function application, composition and piping
                 (?: [$@] | <\|{1,3} | <[+-]) ['"`({\[\w\s]
               | # C-style function call
@@ -4222,7 +4225,7 @@ repository:
               | # macro calls
                 ! \#? [({]
               | # strings
-                \w*[\\$#%]*['"] | `\s*(?=\N)
+                (?:\w*|[\\$#%]*)['"] | `\s*(?=\N) | :[\p{Pc}\p{L}]\w*
             )
           )
         captures:
@@ -4241,10 +4244,10 @@ repository:
             (?!
               (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
               (?: # keywords
-                [io]n|of|as|is|new|delete
+                [io]n|of|as|is|new|del
                 |unset|ref|and|x?or|not
-                |var|val|let|const|func
-                |proc|method|type|class|crate
+                |var|val|let|const|given|using|given|using
+                |func|proc|method|type|class|crate
                 |impl|enum|module|struct|field
                 |union|iter|macro|query|elem
                 |object|realm|trait|style|script
@@ -4253,7 +4256,7 @@ repository:
                 |for|loop|while|goto|move
                 |try|throw|catch|finally|switch
                 |match|case|pass|def
-                |break|continue|redo|retry
+                |break|skip|redo|retry
                 |return|yield|await|scope
                 |import|export|intern|extern
                 |debug|assert|check
@@ -4447,8 +4450,8 @@ repository:
               | [(|]\. \s # uncurried function
               | (?:^|[,;'"({\[)}\]|\s])
                 \b (?:
-                  var|val|let|const|func
-                  |proc|method|type|class|crate
+                  var|val|let|const|given|using|given|using
+                  |func|proc|method|type|class|crate
                   |impl|enum|module|struct|field
                   |union|iter|macro|query|elem
                   |object|realm|trait|style|script|as
@@ -4487,8 +4490,8 @@ repository:
               | [(|]\. \s # uncurried function
               | (?:^|[,;'"({\[)}\]|\s])
                 \b (?:
-                  var|val|let|const|func
-                  |proc|method|type|class|crate
+                  var|val|let|const|given|using|given|using
+                  |func|proc|method|type|class|crate
                   |impl|enum|module|struct|field
                   |union|iter|macro|query|elem
                   |object|realm|trait|style|script|as
@@ -4527,8 +4530,8 @@ repository:
               | [(|]\. \s # uncurried function
               | (?:^|[,;'"({\[)}\]|\s])
                 \b (?:
-                  var|val|let|const|func
-                  |proc|method|type|class|crate
+                  var|val|let|const|given|using|given|using
+                  |func|proc|method|type|class|crate
                   |impl|enum|module|struct|field
                   |union|iter|macro|query|elem
                   |object|realm|trait|style|script|as
@@ -4567,8 +4570,8 @@ repository:
               | [(|]\. \s # uncurried function
               | (?:^|[,;'"({\[)}\]|\s])
                 \b (?:
-                  var|val|let|const|func
-                  |proc|method|type|class|crate
+                  var|val|let|const|given|using|given|using
+                  |func|proc|method|type|class|crate
                   |impl|enum|module|struct|field
                   |union|iter|macro|query|elem
                   |object|realm|trait|style|script|as
@@ -4607,8 +4610,8 @@ repository:
               | [(|]\. \s # uncurried function
               | (?:^|[,;'"({\[)}\]|\s])
                 \b (?:
-                  var|val|let|const|func
-                  |proc|method|type|class|crate
+                  var|val|let|const|given|using|given|using
+                  |func|proc|method|type|class|crate
                   |impl|enum|module|struct|field
                   |union|iter|macro|query|elem
                   |object|realm|trait|style|script|as
@@ -4647,8 +4650,8 @@ repository:
               | [(|]\. \s # uncurried function
               | (?:^|[,;'"({\[)}\]|\s])
                 \b (?:
-                  var|val|let|const|func
-                  |proc|method|type|class|crate
+                  var|val|let|const|given|using|given|using
+                  |func|proc|method|type|class|crate
                   |impl|enum|module|struct|field
                   |union|iter|macro|query|elem
                   |object|realm|trait|style|script|as
@@ -4702,7 +4705,8 @@ repository:
           )
           (?:\d\w*)
         name: variable.other.index.hitori
-      - comment: |
+      - &variable-name
+        comment: |
           Four types of variables:
           - _lead_underscore
           - UPPERCASE
@@ -5249,7 +5253,7 @@ repository:
               (?:
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
-                |post|[gs]et|put|delete|req|opt|delegate
+                |post|[gs]et|put|del|req|opt
                 |safe|unsafe|virtual|sealed|abs|friend|enemy
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
@@ -5265,8 +5269,8 @@ repository:
       (?=
         \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b
         (?:
-          var|val|let|const|func
-          |proc|method|type|class|crate
+          var|val|let|const|given|using|given|using
+          |func|proc|method|type|class|crate
           |impl|enum|module|struct|field
           |union|iter|macro|query|elem
           |object|realm|trait|style|script
@@ -5288,7 +5292,7 @@ repository:
           (?:
             pub|priv|prot|final|readonly|override
             |global|local|intern|extern|mut|immut
-            |post|[gs]et|put|delete|req|opt|delegate
+            |post|[gs]et|put|del|req|opt
             |safe|unsafe|virtual|sealed|abs|friend|enemy
           )
           \b
@@ -5322,14 +5326,14 @@ repository:
     patterns:
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(declare)\b\s*
         name: keyword.other.declare.hitori
-      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(var|val|let|const)\b\s*
+      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(var|val|let|const|given|using)\b\s*
         name: storage.type.hitori
       - match: |
           (?x)
           \s*
             (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
             (
-              func|proc|method|type|class|crate
+              func|func|proc|method|type|class|crate
               |impl|enum|module|struct|field
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
@@ -5351,7 +5355,7 @@ repository:
         name: keyword.control.switch.hitori
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(match)\b\s*
         name: keyword.control.match.hitori
-      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(break|continue|redo|retry|return|await|scope|yield|goto|move|pass)\b\s*
+      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(break|skip|redo|retry|return|await|scope|yield|goto|move|pass)\b\s*
         name: keyword.control.flow.hitori
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(import|export|intern|extern)\b\s*
         name: keyword.control.module.hitori
@@ -5371,8 +5375,6 @@ repository:
         name: keyword.operator.expression.is.hitori
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(delete)\b\s*
         name: keyword.operator.expression.delete.hitori
-      - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(to|till|thru|by)\b\s*
-        name: keyword.operator.expression.range.hitori
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(unset)\b\s*
         name: keyword.operator.expression.void.hitori
       - match: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(and|x?or|not)\b\s*
@@ -5391,7 +5393,7 @@ repository:
 
   control-expression:
     applyEndPatternLast: true
-    begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(break|continue|redo|retry|scope|goto|move|pass)\b\s*
+    begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(break|skip|redo|retry|scope|goto|move|pass)\b\s*
     end: (?=)|$
     beginCaptures:
       1: {name: keyword.control.flow.hitori}
@@ -5710,7 +5712,7 @@ repository:
 
       variable:
         applyEndPatternLast: true
-        begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(var|val|let|const)\b\s*
+        begin: \s*(?<!(?:(?<!\.)\.|[?!:]:)=?)\b(var|val|let|const|given|using)\b\s*
         end: (?=)|$
         beginCaptures:
           1: {name: storage.type.variable.hitori}
@@ -5991,7 +5993,7 @@ repository:
               (?: # Modifier keywords
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
-                |post|[gs]et|put|delete|req|opt|delegate
+                |post|[gs]et|put|del|req|opt
                 |safe|unsafe|virtual|sealed|abs|friend|enemy
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
@@ -6040,7 +6042,7 @@ repository:
               (?: # Modifier keywords
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
-                |post|[gs]et|put|delete|req|opt|delegate
+                |post|[gs]et|put|del|req|opt
                 |safe|unsafe|virtual|sealed|abs|friend|enemy
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
@@ -6087,7 +6089,7 @@ repository:
               (?: # Modifier keywords
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
-                |post|[gs]et|put|delete|req|opt|delegate
+                |post|[gs]et|put|del|req|opt
                 |safe|unsafe|virtual|sealed|abs|friend|enemy
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
@@ -6136,7 +6138,7 @@ repository:
               (?: # Modifier keywords
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
-                |post|[gs]et|put|delete|req|opt|delegate
+                |post|[gs]et|put|del|req|opt
                 |safe|unsafe|virtual|sealed|abs|friend|enemy
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
@@ -6183,10 +6185,10 @@ repository:
           (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
           \b
             (?: # keywords
-              [io]n|of|as|is|new|delete
+              [io]n|of|as|is|new|del
               |unset|ref|and|x?or|not
-              |var|val|let|const|func
-              |proc|method|type|class|crate
+              |var|val|let|const|given|using|given|using
+              |func|proc|method|type|class|crate
               |impl|enum|module|struct|field
               |union|iter|macro|query|elem
               |object|realm|trait|style|script
@@ -6195,7 +6197,7 @@ repository:
               |for|loop|while|goto|move
               |try|throw|catch|finally|switch
               |match|case|pass|def
-              |break|continue|redo|retry
+              |break|skip|redo|retry
               |return|yield|await|scope
               |import|export|intern|extern
               |debug|assert|check
@@ -6615,7 +6617,7 @@ repository:
               (?: # Modifier keywords
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
-                |post|[gs]et|put|delete|req|opt|delegate
+                |post|[gs]et|put|del|req|opt
                 |safe|unsafe|virtual|sealed|abs|friend|enemy
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
@@ -6664,7 +6666,7 @@ repository:
               (?: # Modifier keywords
                 pub|priv|prot|final|readonly|override
                 |global|local|intern|extern|mut|immut
-                |post|[gs]et|put|delete|req|opt|delegate
+                |post|[gs]et|put|del|req|opt
                 |safe|unsafe|virtual|sealed|abs|friend|enemy
                 |pure|impure|early|late|covar|contra
                 |in|out|inout|inplace|ref|defer|a?sync
@@ -6835,7 +6837,7 @@ repository:
             (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
             \b
               (?: # destructuring keywords
-                var|val|let|const|case
+                var|val|let|const|given|using|case
               )
             \b
             (?:$|[,;'"({\[)}\]\s]) # beside a delimiter or space
@@ -6860,7 +6862,7 @@ repository:
             (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
             \b
               (?: # expression keywords
-                [io]n|of|as|is|new|delete
+                [io]n|of|as|is|new|del
                 |unset|ref|and|x?or|not
               )
             \b
@@ -6884,7 +6886,7 @@ repository:
             (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
             \b
               (?: # expression keywords
-                [io]n|of|as|is|new|delete
+                [io]n|of|as|is|new|del
                 |unset|ref|and|x?or|not
               )
             \b
@@ -6910,7 +6912,6 @@ repository:
               | (?:^|[,;'"`)}\]\w\s]|\\.)\|
               | ^\s*\|
             )
-            \s*
           )
           (\#\{)\s*
         end: \s*(\})
@@ -6927,7 +6928,6 @@ repository:
               | (?:^|[,;'"`)}\]\w\s]|\\.)\|
               | ^\s*\|
             )
-            \s*
           )
           (\{)\s*
         end: \s*(\})
@@ -7013,7 +7013,7 @@ repository:
             (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
             \b
               (?: # destructuring keywords
-                var|val|let|const|case
+                var|val|let|const|given|using|case
               )
             \b
             (?:$|[,;'"({\[)}\]\s]) # beside a delimiter or space
@@ -7031,7 +7031,7 @@ repository:
       - begin: |
           (?x)
           (?<= # literal
-              (?: [\w'"`)}\]] | \\.) >* !? \s*
+              (?: [\w'"`)}\]] | \\.) >* !?
             | [^.]\.=?|[?!:]:=?
           )
           (\#?\()\s*
@@ -7048,6 +7048,7 @@ repository:
         captures:
           1: {name: punctuation.definition.tuple.hitori}
         patterns:
+          - include: '#s-expression'
           - include: $self
       - begin: (\()\s*
         end: \s*(\))
@@ -7055,6 +7056,7 @@ repository:
         captures:
           1: {name: punctuation.definition.expression.hitori}
         patterns:
+          - include: '#s-expression'
           - include: $self
 
   square-brackets:
@@ -7071,7 +7073,7 @@ repository:
             (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
             \b
               (?: # destructuring keywords
-                var|val|let|const|case
+                var|val|let|const|given|using|case
               )
             \b
             (?:$|[,;'"({\[)}\]\s]) # beside a delimiter or space
@@ -7092,7 +7094,7 @@ repository:
             (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
             \b
               (?: # destructuring keywords
-                [io]n|of|as|is|new|delete
+                [io]n|of|as|is|new|del
                 |unset|ref|and|x?or|not
               )
             \b
@@ -7113,7 +7115,7 @@ repository:
             (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
             \b
               (?: # destructuring keywords
-                [io]n|of|as|is|new|delete
+                [io]n|of|as|is|new|del
                 |unset|ref|and|x?or|not
               )
             \b
@@ -7131,7 +7133,7 @@ repository:
       - begin: |
           (?x)
           (?<= # literal
-              (?: [\w'"`)}\]] | \\.) \s*
+              (?: [\w'"`)}\]] | \\.)
             | [^.]\.=?|[?!:]:=?
           )
           (\#?\[)\s*
@@ -7140,6 +7142,8 @@ repository:
         captures:
           1: {name: punctuation.definition.attribute-selector.hitori}
         patterns:
+          - include: '#message'
+          - include: '#punctuation'
           - include: $self
       - begin: (\#\[)\s*
         end: \s*(\])
@@ -7147,6 +7151,7 @@ repository:
         captures:
           1: {name: punctuation.definition.sequence.hitori}
         patterns:
+          - include: '#message'
           - include: '#punctuation'
           - include: $self
       - begin: (\[)\s*
@@ -7155,8 +7160,249 @@ repository:
         captures:
           1: {name: punctuation.definition.array.hitori}
         patterns:
+          - include: '#message'
           - include: '#punctuation'
           - include: $self
+
+  # Sub-expressions
+  s-expression:
+    patterns:
+      - include: '#function-calls'
+      - include: '#literals'
+      - match: |
+          (?x)
+          (?<=\()
+          \s*
+          ( # Function name
+            \b
+            # ignore all keywords
+            (?!
+              (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
+              (?: # keywords
+                [io]n|of|as|is|new|del
+                |unset|ref|and|x?or|not
+                |var|val|let|const|given|using|given|using
+                |func|proc|method|type|class|crate
+                |impl|enum|module|struct|field
+                |union|iter|macro|query|elem
+                |object|realm|trait|style|script
+                |go|defer|do|with|from|where
+                |if|else|then|for|while|loop
+                |for|loop|while|goto|move
+                |try|throw|catch|finally|switch
+                |match|case|pass|def
+                |break|skip|redo|retry
+                |return|yield|await|scope
+                |import|export|intern|extern
+                |debug|assert|check
+              )
+              \b
+            )
+            (?:
+              \b
+              [\p{Pc}\p{L}]\w* # identifier
+              \b
+              (?:[!?]?\.=?|[?!:]:=?) # qualified name separator
+            )*
+            [\p{Pc}\p{L}]\w* # last part of identifier
+            \b
+          )
+          \s*
+          (?= 
+              [({\[\w] # opening brackets
+            | (?:\w*|[\\$#%]*)['"] | `\s*(?=\N) # string literals 
+            | :[\p{Pc}\p{L}]\w* # symbol literals
+          )
+        name: meta.function-call.hitori
+        captures:
+          1:
+            patterns:
+              - include: '#function-names'
+              - include: '#accessor-operators'
+      - include: $self
+
+  # Objective-C-style messages
+  message:
+    patterns:
+      - include: '#function-calls'
+      - applyEndPatternLast: true
+        begin: |
+          (?x)
+          (?<= # literal
+            (?: 
+                [\w'"`)}\]] # literals and closing brackets
+              | [?!:]:[\p{Pc}\p{L}]\w* # identifiers
+              | [?!][\p{Pc}\p{L}]\w* # identifiers
+              | \\. # escape sequences
+            ) 
+            \s*
+          )
+          \s*
+          ([?!:]:|[?!])?
+          ( # Message name
+            \b
+            # ignore all keywords
+            (?!
+              (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
+              (?: # keywords
+                [io]n|of|as|is|new|del
+                |unset|ref|and|x?or|not
+                |var|val|let|const|given|using|given|using
+                |func|proc|method|type|class|crate
+                |impl|enum|module|struct|field
+                |union|iter|macro|query|elem
+                |object|realm|trait|style|script
+                |go|defer|do|with|from|where
+                |if|else|then|for|while|loop
+                |for|loop|while|goto|move
+                |try|throw|catch|finally|switch
+                |match|case|pass|def
+                |break|skip|redo|retry
+                |return|yield|await|scope
+                |import|export|intern|extern
+                |debug|assert|check
+              )
+              \b
+            )
+            \b
+            [\p{Pc}\p{L}]\w* # identifier
+            \b
+          )
+          (:)
+        end: (?=)|$
+        name: meta.message.hitori
+        beginCaptures:
+          1:
+            patterns:
+              - match: |
+                  (?x)
+                  (?:
+                    ( # 1: optional accessor
+                      \?:?
+                    ) |
+                    ( # 2: assertion/call operator
+                      !:?
+                    ) |
+                    ( # 3: accessor operator
+                      ::
+                    )
+                  )
+                captures:
+                  1: {name: keyword.operator.optional.hitori}
+                  2: {name: keyword.operator.assert.hitori}
+                  3: {name: keyword.operator.accessor.hitori}
+          2:
+            patterns:
+              - match: |
+                  (?x)
+                  (?: # Regular variables
+                    # Leading underscore
+                    (\p{Pc}+\w*\b(?!\p{Pc}+))
+                  | # Train case
+                    ([\p{L}&&\P{Ll}][\w&&\P{Ll}]*)
+                  | # Pascal case
+                    ((?:[\p{Pc}\p{L}&&\P{Ll}][\w&&\P{Lu}]*)+)
+                  | # Camel or kebab case
+                    ([\p{Pc}\p{L}]\w*)
+                  )
+                captures:
+                  1:
+                    patterns: *builtin-names
+                    name: entity.name.tag.hitori
+                  2:
+                    patterns: *builtin-names
+                    name: entity.name.tag.hitori support.class.component.hitori
+                  3:
+                    patterns: *builtin-names
+                    name: entity.name.class.builtin.hitori
+                  4:
+                    patterns: *builtin-names
+                    name: entity.name.function.method.hitori
+          3: {name: punctuation.separator.arguments.hitori}
+        patterns:
+          - include: '#brackets'
+      - match: |
+          (?x)
+          (?<= # literal
+            (?: 
+                [\w'"`)}\]] # literals and closing brackets
+              | [?!:]:[\p{Pc}\p{L}]\w* # identifiers
+              | [?!][\p{Pc}\p{L}]\w* # identifiers
+              | \\. # escape sequences
+            ) 
+            \s*
+          )
+          \s*
+          ([?!:]:|[?!])?
+          ( # Message name
+            \b
+            # ignore all keywords
+            (?!
+              (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
+              (?: # keywords
+                [io]n|of|as|is|new|del
+                |unset|ref|and|x?or|not
+                |var|val|let|const|given|using|given|using
+                |func|proc|method|type|class|crate
+                |impl|enum|module|struct|field
+                |union|iter|macro|query|elem
+                |object|realm|trait|style|script
+                |go|defer|do|with|from|where
+                |if|else|then|for|while|loop
+                |for|loop|while|goto|move
+                |try|throw|catch|finally|switch
+                |match|case|pass|def
+                |break|skip|redo|retry
+                |return|yield|await|scope
+                |import|export|intern|extern
+                |debug|assert|check
+              )
+              \b
+            )
+            \b
+            [\p{Pc}\p{L}]\w* # identifier
+            \b
+          )
+        name: meta.message.hitori
+        captures:
+          1:
+            patterns:
+              - match: |
+                  (?x)
+                  (?:
+                    ( # 1: optional accessor
+                      \?:?
+                    ) |
+                    ( # 2: assertion/call operator
+                      !:?
+                    ) |
+                    ( # 3: accessor operator
+                      ::
+                    )
+                  )
+                captures:
+                  1: {name: keyword.operator.optional.hitori}
+                  2: {name: keyword.operator.assert.hitori}
+                  3: {name: keyword.operator.accessor.hitori}
+          2:
+            patterns:
+              - match: |
+                  (?x)
+                  (?: # Regular variables
+                    # Leading underscore
+                    (\p{Pc}+\w*\b(?!\p{Pc}+))
+                  | # Train case
+                    ([\p{L}&&\P{Ll}][\w&&\P{Ll}]*)
+                  | # Pascal case
+                    ((?:[\p{Pc}\p{L}&&\P{Ll}][\w&&\P{Lu}]*)+)
+                  | # Camel or kebab case
+                    ([\p{Pc}\p{L}]\w*)
+                  )
+                captures:
+                  1: {name: variable.other.property.dynamic.hitori}
+                  2: {name: variable.other.constant.property.hitori}
+                  3: {name: variable.other.property.stat.hitori}
+                  4: {name: variable.other.property.hitori}
 
   # Support
 
@@ -7261,3 +7507,6 @@ repository:
       - comment: magic functions
         match: \s*\b\p{Pc}+([\p{Pc}\p{L}]\w*)+\p{Pc}+\b\s*
         name: support.function.magic.hitori
+      - comment: built-in functions (extensive)
+        match: \s*\b(\p{Lu}[\w&&\P{Lu}]*)+\b\s*
+        name: support.function.builtin.hitori
