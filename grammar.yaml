@@ -26,48 +26,48 @@ important: |
 
 todo: |
   - [ ] Rework inline Markdown syntax. Refer to Texy, Textile, AsciiDoc
-        and cousins for inspiration. Reimplement with these extensions:
-        - [ ] Citations
-        - [x] Deleted and inserted text ~~deleted~~ ++inserted++
-        - [x] Superscript ^super^
-        - [x] Subscript ~sub~
-        - [x] Highlighted text ==highlight==
-        - [x] Redacted text ||redacted||
-        - [ ] Spans !!.custom.classes span!!
-        - [ ] Selectors and anchors
-        - [ ] Code blocks
-        - [ ] Definition blocks
-        - [ ] Tables
-        - [ ] Headings and subheadings
+    and cousins for inspiration. Reimplement with these extensions:
+    - [ ] Citations 
+    - [x] Deleted and inserted text ~~deleted~~ ++inserted++
+    - [x] Superscript ^super^
+    - [x] Subscript ~sub~
+    - [x] Highlighted text ==highlight==
+    - [x] Redacted text ||redacted||
+    - [ ] Spans !!.custom.classes span!!
+    - [ ] Selectors and anchors #anchor .class
+    - [ ] Code blocks 
+    - [ ] Definition blocks ::: 
+    - [ ] Tables
+    - [ ] Headings and subheadings
   - [ ] Plan and implement all the built-in modules, classes, objects, constants
-        functions and properties for Hitori's standard library.
-        This would all be done in a separate PR and once the grammar is completely
-        finished.
+    functions and properties for Hitori's standard library.
+    This would all be done in a separate PR and once the grammar is completely
+    finished.
   - [ ] Multi-base numeric literals (up to base 64). Digits will be 0-9, a-z, 
-        lowercase Icelandic thorn, lowercase eth, A-Z, uppercase Icelandic thorn.
+    lowercase Icelandic thorn, lowercase eth, A-Z, uppercase Icelandic thorn.
   - [ ] Add new parameter binding/destructuring syntax for:
-        - [ ] Strings
-        - [ ] Regular expressions
-        - [ ] Arrays
-        - [ ] Sets
-        - [ ] Maps and objects
-        - [ ] Tuples
-        - [ ] Function arguments
-        - [ ] Variables
+    - [ ] Strings
+    - [ ] Regular expressions
+    - [ ] Arrays
+    - [ ] Sets
+    - [ ] Maps and objects
+    - [ ] Tuples
+    - [ ] Function arguments
+    - [ ] Variables
   - [ ] Rework function call syntax to be more consistent and terser.
-        Inspired by Haskell.
+    Inspired by Haskell.
   - [ ] Rework import/export/module syntax to be terse, drawing inspiration 
-        from JavaScript ES6 modules, with changes such as:
-          - glob file path matching (import path/**/*.hitori)
-          - named imports/exports (import module{a, b, c})
-          - default imports/exports (import module)
-          - renaming imports/exports (import module{a: x, b: y})
-          - show/hide mechanism (import module{a,b - c,d})
-          - glob-style pattern matching (import module{a*, b?, c{1,2}})
+    from JavaScript ES6 modules, with changes such as:
+      - glob file path matching (import path/**/*.hitori)
+      - named imports/exports (import module{a, b, c})
+      - default imports/exports (import module)
+      - renaming imports/exports (import module{a: x, b: y})
+      - show/hide mechanism (import module{a,b - c,d})
+      - glob-style pattern matching (import module{a*, b?, c{1,2}})
   - [ ] Fix and expand regex syntax and highlighting:
-        - [ ] Add and expand quantifiers and range highlighting
-        - [ ] Add support for fuzzy matching (edits, insertions, deletions, etc.)
-        - [ ] Improve highlighting for regexes with flags
+    - [ ] Add and expand quantifiers and range highlighting
+    - [ ] Add support for fuzzy matching (edits, insertions, deletions, etc.)
+    - [ ] Improve highlighting for regexes with flags
 
 changelog: |
   A major rewrite is underway. This language's syntax would be terser
