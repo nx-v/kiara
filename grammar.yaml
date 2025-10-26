@@ -3403,7 +3403,7 @@ repository:
             | (\#q[0-3]+)
             | (\#s[0-5]+)
             | (\#o[0-7]+)
-            | ((?i:\#z[\d\u218a\u218babetx]+))
+            | (\#z(?i:[\d\u218a\u218babetx]+))
             | (\#x\h+)
             | ([a-zA-Z][a-zA-Z0-9]+)
             | ((?:\\.|[^({\[)}\]\s;])+?)
@@ -3415,9 +3415,9 @@ repository:
           3: {name: constant.character.escape.binary.hitori}
           4: {name: constant.character.escape.quaternary.hitori}
           5: {name: constant.character.escape.senary.hitori}
-          6: {name: constant.character.escape.duodecimal.hitori}
-          7: {name: constant.character.escape.hexadecimal.hitori}
-          8: {name: constant.character.escape.octal.hitori}
+          6: {name: constant.character.escape.octal.hitori}
+          7: {name: constant.character.escape.duodecimal.hitori}
+          8: {name: constant.character.escape.hexadecimal.hitori}
           9: {name: constant.character.entity.named.hitori}
           10: {name: constant.character.entity.hitori}
           11: {name: punctuation.definition.entity.hitori}
