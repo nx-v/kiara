@@ -5717,7 +5717,7 @@ repository:
           \s*
           (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
             (
-              \b (?:Sort|order) \b \s*
+              \b (?:sort|order|then) \b \s*
               \b (?:asc|desc)? \b \s*
               \b (?:by|with)?
             )
@@ -7094,7 +7094,7 @@ repository:
           (?x)
           (?<=
             (?:
-                (?:^|[\s\p{P}\p{S}]):\|\s+\|
+                (?:^|[\s\p{P}\p{S}]):\|\s*\| # beside a lambda pipe
               | (?:^|[,;'"`)}\]\w\s]|\\.)\|
               | ^\s*\|
             )
@@ -7110,7 +7110,7 @@ repository:
           (?x)
           (?<=
             (?:
-                (?:^|[\s\p{P}\p{S}]):\|\s+\|
+                (?:^|[\s\p{P}\p{S}]):\|\s*\| # beside a lambda pipe
               | (?:^|[,;'"`)}\]\w\s]|\\.)\|
               | ^\s*\|
             )
