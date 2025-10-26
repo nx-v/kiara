@@ -4506,7 +4506,7 @@ repository:
         name: entity.name.class.builtin.hitori
       4:
         patterns: *builtin-names
-        name: entity.name.function.method.hitori
+        name: entity.name.function.member.hitori
       5:
         patterns: *builtin-names
         name: entity.name.function.tagged-template.hitori
@@ -4586,7 +4586,7 @@ repository:
             name: entity.name.class.builtin.hitori
           4:
             patterns: *builtin-names
-            name: entity.name.function.method.hitori
+            name: entity.name.function.member.hitori
           5:
             patterns: *builtin-names
             name: entity.name.function.tagged-template.hitori
@@ -5717,7 +5717,7 @@ repository:
           \s*
           (?<!(?:(?<!\.)\.|[?!:]:)=?)\b
             (
-              \b (?:sort|order) \b \s*
+              \b (?:Sort|order) \b \s*
               \b (?:asc|desc)? \b \s*
               \b (?:by|with)?
             )
@@ -7503,7 +7503,7 @@ repository:
                     name: entity.name.class.builtin.hitori
                   4:
                     patterns: *builtin-names
-                    name: entity.name.function.method.hitori
+                    name: entity.name.function.member.hitori
           3: {name: punctuation.separator.arguments.hitori}
         patterns:
           - include: '#brackets'
@@ -7596,7 +7596,7 @@ repository:
     patterns:
       - match: (?x)\b(additiveSymbols|alignContent|alignItems|alignSelf|all|animation|animationDelay|animationDirection|animationDuration|animationFillMode|animationIterationCount|animationName|animationPlayState|animationTimingFunction|backdropFilter|backfaceVisibility|background|backgroundAttachment|backgroundBlendMode|backgroundClip|backgroundColor|backgroundImage|backgroundOrigin|backgroundPosition|backgroundPosition[XY]|backgroundRepeat|backgroundSize|bleed|blockSize|border|borderBlockEnd|borderBlockEndColor|borderBlockEndStyle|borderBlockEndWidth|borderBlockStart|borderBlockStartColor|borderBlockStartStyle|borderBlockStartWidth|borderBottom|borderBottomColor|borderBottomLeftRadius|borderBottomRightRadius|borderBottomStyle|borderBottomWidth|borderCollapse|borderColor|borderEndEndRadius|borderEndStartRadius|borderImage|borderImageOutset|borderImageRepeat|borderImageSlice|borderImageSource|borderImageWidth|borderInlineEnd|borderInlineEndColor|borderInlineEndStyle|borderInlineEndWidth|borderInlineStart|borderInlineStartColor|borderInlineStartStyle|borderInlineStartWidth|borderLeft|borderLeftColor|borderLeftStyle|borderLeftWidth|borderRadius|borderRight|borderRightColor|borderRightStyle|borderRightWidth|borderSpacing|borderStartEndRadius|borderStartStartRadius|borderStyle|borderTop|borderTopColor|borderTopLeftRadius|borderTopRightRadius|borderTopStyle|borderTopWidth|borderWidth|bottom|boxDecorationBreak|boxShadow|boxSizing|breakAfter|breakBefore|breakInside|captionSide|caretColor|clear|clip|clipPath|clipRule|color|colorAdjust|colorInterpolationFilters|columnCount|columnFill|columnGap|columnRule|columnRuleColor|columnRuleStyle|columnRuleWidth|columnSpan|columnWidth|columns|contain|content|counterIncrement|counterReset|cursor|direction|display|emptyCells|enableBackground|fallback|fill|fillOpacity|fillRule|filter|flex|flexBasis|flexDirection|flexFlow|flexGrow|flexShrink|flexWrap|float|floodColor|floodOpacity|font|fontDisplay|fontFamily|fontFeatureSettings|fontKerning|fontLanguageOverride|fontOpticalSizing|fontSize|fontSizeAdjust|fontStretch|fontStyle|fontSynthesis|fontVariant|fontVariantAlternates|fontVariantCaps|fontVariantEastAsian|fontVariantLigatures|fontVariantNumeric|fontVariantPosition|fontVariationSettings|fontWeight|gap|glyphOrientationHorizontal|glyphOrientationVertical|grid|gridArea|gridAutoColumns|gridAutoFlow|gridAutoRows|gridColumn|gridColumnEnd|gridColumnGap|gridColumnStart|gridGap|gridRow|gridRowEnd|gridRowGap|gridRowStart|gridTemplate|gridTemplateAreas|gridTemplateColumns|gridTemplateRows|hangingPunctuation|height|hyphens|imageOrientation|imageRendering|imageResolution|imeMode|initialLetter|initialLetterAlign|inlineSize|inset|insetBlock|insetBlockEnd|insetBlockStart|insetInline|insetInlineEnd|insetInlineStart|isolation|justifyContent|justifyItems|justifySelf|kerning|left|letterSpacing|lightingColor|lineBreak|lineClamp|lineHeight|listStyle|listStyleImage|listStylePosition|listStyleType|margin|marginBlockEnd|marginBlockStart|marginBottom|marginInlineEnd|marginInlineStart|marginLeft|marginRight|marginTop|markerEnd|markerMid|markerStart|marks|mask|maskBorder|maskBorderMode|maskBorderOutset|maskBorderRepeat|maskBorderSlice|maskBorderSource|maskBorderWidth|maskClip|maskComposite|maskImage|maskMode|maskOrigin|maskPosition|maskRepeat|maskSize|maskType|maxBlockSize|maxHeight|maxInlineSize|maxLines|maxWidth|maxZoom|minBlockSize|minHeight|minInlineSize|minWidth|minZoom|mixBlendMode|negative|objectFit|objectPosition|offset|offsetAnchor|offsetDistance|offsetPath|offsetPosition|offsetRotation|opacity|order|orientation|orphans|outline|outlineColor|outlineOffset|outlineStyle|outlineWidth|overflow|overflowAnchor|overflowBlock|overflowInline|overflowWrap|overflow-[xy]|overscrollBehavior|overscrollBehaviorBlock|overscrollBehaviorInline|overscrollBehavior-[xy]|pad|padding|paddingBlockEnd|paddingBlockStart|paddingBottom|paddingInlineEnd|paddingInlineStart|paddingLeft|paddingRight|paddingTop|pageBreakAfter|pageBreakBefore|pageBreakInside|paintOrder|perspective|perspectiveOrigin|placeContent|placeItems|placeSelf|pointerEvents|position|prefix|quotes|range|resize|right|rotate|rowGap|rubyAlign|rubyMerge|rubyPosition|scale|scrollBehavior|scrollMargin|scrollMarginBlock|scrollMarginBlockEnd|scrollMarginBlockStart|scrollMarginBottom|scrollMarginInline|scrollMarginInlineEnd|scrollMarginInlineStart|scrollMarginLeft|scrollMarginRight|scrollMarginTop|scrollPadding|scrollPaddingBlock|scrollPaddingBlockEnd|scrollPaddingBlockStart|scrollPaddingBottom|scrollPaddingInline|scrollPaddingInlineEnd|scrollPaddingInlineStart|scrollPaddingLeft|scrollPaddingRight|scrollPaddingTop|scrollSnapAlign|scrollSnapCoordinate|scrollSnapDestination|scrollSnapStop|scrollSnapType|scrollbarColor|scrollbarGutter|scrollbarWidth|shapeImageThreshold|shapeMargin|shapeOutside|shapeRendering|size|speakAs|src|stopColor|stopOpacity|stroke|strokeDashArray|strokeDashOffset|strokeLineCap|strokeLineJoin|strokeMiterLimit|strokeOpacity|strokeWidth|suffix|symbols|system|tabSize|tableLayout|textAlign|textAlignLast|textAnchor|textCombineUpright|textDecoration|textDecorationColor|textDecorationLine|textDecorationSkip|textDecorationSkipInk|textDecorationStyle|textEmphasis|textEmphasisColor|textEmphasisPosition|textEmphasisStyle|textIndent|textJustify|textOrientation|textOverflow|textRendering|textShadow|textSizeAdjust|textTransform|textUnderlinePosition|top|touchAction|transform|transformBox|transformOrigin|transformStyle|transition|transitionDelay|transitionDuration|transitionProperty|transitionTimingFunction|translate|unicodeBidi|unicodeRange|userSelect|userZoom|verticalAlign|visibility|whiteSpace|widows|width|willChange|wordBreak|wordSpacing|wordWrap|writingMode|zIndex|zoom|alignmentBaseline|baselineShift|clipRule|colorInterpolation|colorInterpolationFilters|colorProfile|colorRendering|cx|cy|dominantBaseline|enableBackground|fill|fillOpacity|fillRule|floodColor|floodOpacity|glyphOrientationHorizontal|glyphOrientationVertical|height|kerning|lightingColor|markerEnd|markerMid|markerStart|r|rx|ry|shapeRendering|stopColor|stopOpacity|stroke|strokeDashArray|strokeDashOffset|strokeLineCap|strokeLineJoin|strokeMiterLimit|strokeOpacity|strokeWidth|textAnchor|width|x|y|adjust|after|align|alignLast|alignment|alignmentAdjust|appearance|attachment|azimuth|backgroundBreak|balance|baseline|before|bidi|binding|bookmark|bookmarkLabel|bookmarkLevel|bookmarkTarget|borderLength|bottomColor|bottomLeftRadius|bottomRightRadius|bottomStyle|bottomWidth|box|boxAlign|boxDirection|boxFlex|boxFlexGroup|boxLines|boxOrdinalGroup|boxOrient|boxPack|break|character|collapse|column|columnBreakAfter|columnBreakBefore|count|counter|crop|cue|cueAfter|cueBefore|decoration|decorationBreak|delay|displayModel|displayRole|down|drop|dropInitialAfterAdjust|dropInitialAfterAlign|dropInitialBeforeAdjust|dropInitialBeforeAlign|dropInitialSize|dropInitialValue|duration|elevation|emphasis|family|fit|fitPosition|flexGroup|floatOffset|gap|gridColumns|gridRows|hangingPunctuation|header|hyphenate|hyphenateAfter|hyphenateBefore|hyphenateCharacter|hyphenateLines|hyphenateResource|icon|image|increment|indent|index|initialAfterAdjust|initialAfterAlign|initialBeforeAdjust|initialBeforeAlign|initialSize|initialValue|inlineBoxAlign|iterationCount|justify|label|leftColor|leftStyle|leftWidth|length|level|line|lineStacking|lineStackingRuby|lineStackingShift|lineStackingStrategy|lines|list|mark|markAfter|markBefore|marks|marquee|marqueeDirection|marqueePlayCount|marqueeSpeed|marqueeStyle|max|min|model|moveTo|name|nav|navDown|navIndex|navLeft|navRight|navUp|new|numeral|offset|ordinalGroup|orient|origin|overflowStyle|overhang|pack|page|pagePolicy|pause|pauseAfter|pauseBefore|phonemes|pitch|pitchRange|playCount|playDuring|playState|point|presentation|presentationLevel|profile|property|punctuation|punctuationTrim|radius|rate|renderingIntent|repeat|replace|reset|resolution|resource|respondTo|rest|restAfter|restBefore|richness|rightColor|rightStyle|rightWidth|role|rotation|rotationPoint|rows|ruby|rubyOverhang|rubySpan|rule|ruleColor|ruleStyle|ruleWidth|shadow|size|sizeAdjust|sizing|space|spaceCollapse|spacing|span|speak|speakHeader|speakNumeral|speakPunctuation|speech|speechRate|speed|stacking|stackingRuby|stackingShift|stackingStrategy|stress|stretch|stringSet|style|styleImage|stylePosition|styleType|target|targetName|targetNew|targetPosition|text|textHeight|textJustify|textOutline|textReplace|textWrap|timingFunction|topColor|topLeftRadius|topRightRadius|topStyle|topWidth|trim|unicode|up|userSelect|variant|voice|voiceBalance|voiceDuration|voiceFamily|voicePitch|voicePitchRange|voiceRate|voiceStress|voiceVolume|volume|weight|white|whiteSpaceCollapse|word|wrap)\b
         name: support.type.property-name.css.hitori
-      - match: (?x)\b(?:ah|apple|atsc|epub|hp|khtml|moz|ms|o|rim|ro|tc|wap|webkit|xv|mso|prince)(?:[\p{Pc}\p{L}&&\P{Ll}][\w&&\P{Lu}]*)+ \b
+      - match: (?x)\b(?:ah|apple|atsc|epub|hp|khtml|moz|ms|o|rim|ro|tc|wap|webkit|xv|mso|prince)(?:[\p{Pc}\p{L}&&\P{Ll}][\w&&\P{Lu}]*)+\b
         name: support.type.vendored.property-name.css.hitori
 
   css-value-names:
@@ -7686,8 +7686,8 @@ repository:
 
   support-functions:
     comment: |
-      Names for core Hitori standard library functions (~2000+ functions)
-      Organized by semantic category for maintainability
+      Names for general support functions in Hitori standard library
+      organized by naming conventions for maintainability
     patterns:
       - comment: predicate functions
         match: \s*\b(i|ha)s(\p{Lu}[\w&&\P{Lu}]*)+\b\s*
@@ -7701,656 +7701,99 @@ repository:
       - match: \s*\b[gs]et(\p{Lu}[\w&&\P{Lu}]*)+\b\s*
         comment: accessor functions
         name: support.function.accessor.hitori
-      # - include: '#support-functions-core'
-      # - include: '#support-functions-math'
-      # - include: '#support-functions-string'
-      # - include: '#support-functions-collections'
-      # - include: '#support-functions-io'
-      # - include: '#support-functions-system'
-      # - include: '#support-functions-async'
-      # - include: '#support-functions-network'
-      # - include: '#support-functions-datetime'
-      # - include: '#support-functions-filesystem'
-      # - include: '#support-functions-regex'
-      # - include: '#support-functions-serialization'
-      # - include: '#support-functions-conversion'
-      # - include: '#support-functions-reflection'
-      # - include: '#support-functions-iterators'
-      # - include: '#support-functions-functional'
-      # - include: '#support-functions-algorithms'
-      # - include: '#support-functions-crypto'
-      # - include: '#support-functions-testing'
-      # - include: '#support-functions-graphics'
-      # - include: '#support-functions-audio'
-      # - include: '#support-functions-database'
-      # - include: '#support-functions-logging'
-      # - include: '#support-functions-compression'
-      # - include: '#support-functions-errors'
-      # - include: '#support-functions-ml-ai'
-      # - include: '#support-functions-data-science'
-      # - include: '#support-functions-web'
-      # - include: '#support-functions-image'
-      # - include: '#support-functions-audio-processing'
-      # - include: '#support-functions-video'
-      # - include: '#support-functions-graphics-3d'
-      # - include: '#support-functions-physics'
+      - match: \s*\b(add|append|insert|remove|delete|clear|push|pop|enqueue|dequeue|shift|unshift)(\p{Lu}[\w&&\P{Lu}]*)*\b\s*
+        comment: mutator functions
+        name: support.function.mutator.hitori
+      - match: \s*\b(create|build|make|new|init|initialize|construct|setup)(\p{Lu}[\w&&\P{Lu}]*)*\b\s*
+        comment: constructor functions
+        name: support.function.constructor.hitori
+      - match: \s*\b(update|set|reset|clear|refresh|reload|rebuild|reinitialize|reconstruct)(\p{Lu}[\w&&\P{Lu}]*)*\b\s*
+        comment: updater functions
+        name: support.function.updater.hitori
+      - match: \s*\b(get|fetch|retrieve|load|find|search|lookup|query|read)(\p{Lu}[\w&&\P{Lu}]*)*\b\s*
+        comment: retriever functions
+        name: support.function.retriever.hitori
+      - match: \s*\b(calc(ulate)?|compute|determine|measure|evaluate|process|transform|convert)(\p{Lu}[\w&&\P{Lu}]*)*\b\s*
+        comment: processor functions
+        name: support.function.processor.hitori
+      - match: \s*\b(handle|manage|control|administer|orchestrate|coordinate)(\p{Lu}[\w&&\P{Lu}]*)*\b\s*
+        comment: manager functions
+        name: support.function.manager.hitori
+      - match: \s*\b(send|receive|transmit|broadcast|communicate|connect|disconnect)(\p{Lu}[\w&&\P{Lu}]*)*\b\s*
+        comment: communicator functions
+        name: support.function.communicator.hitori
+      - match: \s*\b(log|trace|debug|info|warn(ing)?|error|fatal|report|audit)(\p{Lu}[\w&&\P{Lu}]*)*\b\s*
+        comment: logger functions
+        name: support.function.logger.hitori
+      - include: '#support-functions-core'
 
   support-functions-core:
-    comment: Core utility functions (expanded to 300+)
+    comment: core utility + stdlib + extended functional sets across major langs and hitori core.
     match: |
-      (?x)\b(
-        len|length|size|sizeof|byteSize|bitSize|count|countAll|countElements|cardinality|magnitude
-        |dimensionality|rank|shape|extent|capacity|maxSize|reservedSize|empty|isEmpty|isNotEmpty
-        |isBlank|isNotBlank|isPresent|isAbsent|hasElements|hasContent|hasData|isVacant|isPopulated
-        |type|typeof|typeOf|typeName|typeId|typeInfo|typeSignature|typeDef|typeAlias|kindOf|classOf
-        |className|instanceOf|prototypeOf|constructorOf|baseType|superType|subType|primitiveType
-        |compositeType|isType|isSameType|isCompatible|isConvertible|canCast|repr|represent|str
-        |string|toString|toRepr|stringify|format|pretty|prettyPrint|display|show|render|asString
-        |asText|hash|hashCode|hashValue|hash32|hash64|hash128|hashMurmur|hashFnv|hashSip|hashXxh
-        |fingerprint|checksum|digest|clone|cloneDeep|deepClone|shallowClone|copy|copyOf|deepCopy
-        |shallowCopy|duplicate|replicate|snapshot|freeze|freezeDeep|frozenCopy|immutableCopy
-        |equals|equal|eq|deepEquals|shallowEquals|strictEquals|looseEquals|referenceEquals
-        |valueEquals|structuralEquals|semanticEquals|compare|compareTo|compareWith|deepCompare
-        |lexCompare|numericCompare|naturalCompare|collate|id|objectId|uniqueId|identity
-        |identityHash|address|pointer|reference|handle|descriptor|isNull|isNil|isNone|isNothing
-        |isUndefined|isVoid|isDefined|exists|isSome|isJust|isSomething|hasValue|isPresent
-        |isAbsent|isMissing|isSet|isUnset|assert|assertTrue|assertFalse|assertEqual|assertEquals
-        |assertNotEqual|assertNotEquals|assertSame|assertNotSame|assertType|assertInstanceOf
-        |assertNull|assertNotNull|assertDefined|assertUndefined|assertEmpty|assertNotEmpty
-        |assertThrows|assertNotThrows|assertMatch|assertContains|assertIn|assertRange
-        |assertPositive|assertNegative|assertZero|assertNonZero|expect|require|ensure|check
-        |verify|validate|invariant|precondition|postcondition|debug|debugPrint|debugLog
-        |debugDump|debugInfo|trace|traceLog|traceback|stackTrace|callStack|inspect|examine|probe
-        |dump|dumpAll|dumpObject|dumpMemory|dumpState|snapshot|profile|benchmark|measure|time
-        |timeIt|clock|freeze|freezeDeep|seal|sealDeep|lock|lockDeep|unlock|isFrozen|isSealed
-        |isLocked|isImmutable|isMutable|makeImmutable|makeMutable|const|constant|noop|noOp|pass
-        |skip|ignore|todo|notImplemented|unreachable|impossible|panic|panicIf|abort|abortIf|exit
-        |exitWith|quit|quitWith|terminate|halt|die|version|versionInfo|versionString|versionNumber
-        |versionMajor|versionMinor|versionPatch|buildInfo|buildNumber|buildDate|gitHash|gitBranch
-        |alloc|allocate|free|deallocate|reserve|release|retain|gc|garbageCollect|compact|defrag
-        |memUsage|memoryUsage|heapSize|stackSize|refCount|weakRef|strongRef
-      )\b
-    name: support.function.utility.hitori
-
-  support-functions-math:
-    comment: Mathematical and numeric functions
-    match: |
-      (?x)\b(
-        abs|neg|sign|signum|ceil|floor|round|trunc|truncate|frac|fraction
-        |mod|remainder|divmod|quotient|gcd|lcm|factorial|choose|binomial|permute|permutation
-        |sqrt|cbrt|pow|exp|exp2|exp10|expm1|log|log2|log10|log1p|ln|logb
-        |sin|cos|tan|asin|acos|atan|atan2|sinh|cosh|tanh|asinh|acosh|atanh
-        |sinc|cosc|sec|csc|cot|asec|acsc|acot
-        |sech|csch|coth|asech|acsch|acoth
-        |clamp|clip|wrap|saturate|snap|quantize|roundTo|floorTo|ceilTo
-        |min|max|minmax|minBy|maxBy|argmin|argmax
-        |lerp|mix|smoothstep|smootherstep|inverseLerp|remap|map|mapRange
-        |sum|product|mean|average|avg|median|mode|variance|var|stddev|std|stdev
-        |covariance|cov|correlation|corr|quantile|percentile|iqr|mad|skewness|kurtosis
-        |rand|random|randInt|randomInt|randRange|randomRange|randFloat|randomFloat
-        |randBool|randomBool|randChoice|choice|sample|shuffle|seed|setSeed|randomSeed
-        |gamma|lgamma|beta|erf|erfc|bessel|besselJ|besselY|zeta|dirichlet
-        |pi|tau|e|phi|goldenRatio|sqrt2|sqrt3|ln2|ln10|inf|infinity|nan|epsilon
-        |bitAnd|bitOr|bitXor|bitNot|bitShiftLeft|bitShiftRight|bitRotateLeft|bitRotateRight
-        |popcount|countBits|leadingZeros|trailingZeros|isPowerOfTwo|nextPowerOfTwo|prevPowerOfTwo
-      )\b
-    name: support.function.math.hitori
-
-  support-functions-string:
-    comment: String manipulation and text processing functions
-    match: |
-      (?x)\b(
-        upper|lower|capitalize|title|titleCase|camelCase|snakeCase|kebabCase
-        |pascalCase|constantCase|swapCase|toggleCase
-        |trim|strip|ltrim|lstrip|rtrim|rstrip|trimStart|trimEnd|trimLeft|trimRight
-        |trimChars|stripChars
-        |pad|padLeft|padRight|padStart|padEnd|center|ljust|rjust|zfill
-        |find|findLast|indexOf|lastIndexOf|search|match|matchAll|contains|includes
-        |startsWith|endsWith|hasPrefix|hasSuffix
-        |replace|replaceAll|replaceFirst|replaceLast|replaceAt|insert|insertAt
-        |remove|removeAt|delete|deleteAt
-        |split|splitAt|splitLines|splitWords|splitChars|join|concat|concatenate
-        |repeat|replicate
-        |substring|substr|slice|left|right|mid|take|takeLast|drop|dropLast
-        |truncate|ellipsis
-        |charAt|charCodeAt|fromCharCode|codePoint|codePointAt|fromCodePoint
-        |chars|characters|graphemes|bytes
-        |normalize|normalizeNFC|normalizeNFD|normalizeNFKC|normalizeNFKD
-        |toUnicode|fromUnicode|unicodeLength|isAscii|isUnicode|isLatin
-        |isAlpha|isAlphanumeric|isDigit|isNumeric|isWhitespace|isSpace
-        |isLower|isUpper|isTitle|isPrintable|isIdentifier
-        |format|printf|sprintf|interpolate|template|substitute|expand
-        |indent|dedent|wrap|wrapText|unwrap|align|justify
-        |compare|compareIgnoreCase|equals|equalsIgnoreCase
-        |similarity|levenshtein|hammingDistance|jaroWinkler
-        |encode|decode|encodeUtf8|decodeUtf8|encodeBase64|decodeBase64
-        |encodeHex|decodeHex|encodeUrl|decodeUrl|encodeHtml|decodeHtml
-        |escape|unescape|escapeRegex|escapeHtml|escapeXml|escapeJson
-        |md5|sha1|sha256|sha512|crc32|murmur|fnv
-        |isEmail|isUrl|isIp|isIpv4|isIpv6|isUuid|isJson|isXml|isHtml
-        |transliterate|romanize|toRomaji|toHiragana|toKatakana
-        |toHitori|fromHitori|syllabify|mora|isVowel|isConsonant
-        |phoneme|graphemeToPhoneme
-      )\b
-    name: support.function.string.hitori
-
-  support-functions-collections:
-    comment: Collection and data structure operations
-    match: |
-      (?x)\b(
-        append|prepend|push|pop|shift|unshift|insert|insertAt|remove|removeAt
-        |delete|deleteAt|clear|extend|concat|concatenate
-        |get|getAt|set|setAt|first|last|head|tail|init|rest|nth|at
-        |slice|take|takeLast|takeWhile|drop|dropLast|dropWhile|sublist|segment
-        |find|findIndex|findLast|findLastIndex|indexOf|lastIndexOf
-        |contains|includes|has|exists|count|countBy
-        |filter|reject|keep|remove|partition|split|separate|filterMap|compact|filterNot
-        |map|mapWith|flatMap|flatMapWith|forEach|forEachIndexed|transform|apply
-        |reduce|fold|foldLeft|foldRight|reduceRight|scan|scanLeft|scanRight|accumulate
-        |sort|sorted|sortBy|sortedBy|sortWith|sortDesc|sortAsc|reverse|reversed
-        |shuffle|shuffled
-        |group|groupBy|chunk|chunkBy|batch|window|slide|partition|partitionBy
-        |unique|distinct|dedupe|dedup|union|intersect|intersection|difference|diff
-        |symmetricDifference|xor|isSubset|isSuperset|isDisjoint
-        |zip|zipWith|unzip|pairs|enumerate|indexed
-        |flatten|flattenDeep|flattenDepth|flat|flatDeep
-        |join|joinWith|intercalate|intersperse
-        |all|any|none|every|some|notAny|notAll
-        |min|max|minmax|minBy|maxBy
-        |sum|product|mean|average|median|mode
-        |range|rangeStep|rangeInclusive|repeat|replicate|cycle|iterate|generate
-        |keys|values|entries|items|pairs|fromEntries|fromPairs|toMap|toDict
-        |merge|mergeWith|update|updateWith|mapKeys|mapValues|filterKeys|filterValues
-        |hasKey|hasValue|getOrElse|getOrDefault
-        |add|addAll|remove|removeAll|toggle
-        |chunks|windows|sliding|pairs|triples|tuples
-        |permutations|combinations|cartesianProduct|product|cross
-        |length|size|isEmpty|isNotEmpty|copy|clone|deepCopy|deepClone
-        |frequencies|histogram|tally|sample|sampleSize|nth|random|choice
-      )\b
-    name: support.function.collection.hitori
-
-  support-functions-io:
-    comment: Input/output and file operations
-    match: |
-      (?x)\b(
-        print|println|printf|printErr|eprintln|eprint|input|readLine|read|readAll
-        |write|writeLine|flush
-        |open|close|readFile|writeFile|appendFile|readText|writeText|readLines
-        |writeLines|readBytes|writeBytes|readBinary|writeBinary
-        |exists|isFile|isDir|isDirectory|isSymlink|isReadable|isWritable|isExecutable
-        |size|fileSize|modified|created|accessed|stat|metadata
-        |ls|listDir|readDir|listFiles|walk|walkDir|glob|find|findFiles
-        |mkdir|mkdirs|createDir|rmdir|removeDir|rm|remove|delete|deleteFile|deleteDir
-        |join|joinPath|basename|dirname|filename|extension|ext|stem
-        |normalize|normalizePath|absolute|absolutePath|relative|relativePath
-        |resolve|resolvePath
-        |copy|copyFile|move|moveFile|rename|renameFile|link|symlink|readLink|realpath
-        |cwd|pwd|chdir|cd|home|homeDir|tmp|tmpDir|tempFile|tempDir
-        |stream|streamLines|streamBytes|pipe|tee|buffer|buffered|unbuffered
-      )\b
-    name: support.function.io.hitori
-
-  support-functions-system:
-    comment: System and environment functions
-    match: |
-      (?x)\b(
-        env|getEnv|setEnv|unsetEnv|hasEnv|environ|envVars
-        |exec|execute|run|spawn|system|call|shell|command|exit|quit|abort|kill|signal
-        |args|argv|argc|getArgs|parseArgs
-        |time|now|clock|timestamp|unixTime|sleep|usleep|msleep|delay|wait
-        |platform|os|arch|architecture|hostname|username|user|uid|gid|pid|ppid
-        |cpuCount|cpuInfo|memoryInfo|diskInfo
-        |signal|raise|alarm|registerSignal|ignoreSignal
-        |isatty|isTty|terminalSize|termSize|columns|rows|clear|clearScreen
-      )\b
-    name: support.function.system.hitori
-
-  support-functions-async:
-    comment: Asynchronous and concurrency functions
-    match: |
-      (?x)\b(
-        async|await|asyncFn|awaitAll|awaitAny|awaitRace
-        |promise|future|resolve|reject|then|catch|finally|all|allSettled|any|race
-        |spawn|task|createTask|runTask|cancelTask|taskResult|taskStatus
-        |channel|send|receive|recv|trySend|tryRecv|close|select
-        |mutex|lock|unlock|tryLock|withLock|semaphore|acquire|release
-        |rwlock|readLock|writeLock
-        |atomic|atomicAdd|atomicSub|atomicLoad|atomicStore|atomicExchange|atomicCompareExchange
-        |schedule|scheduleAt|scheduleAfter|scheduleInterval|debounce|throttle
-        |defer|immediate|nextTick|setInterval|setTimeout|clearInterval|clearTimeout
-      )\b
-    name: support.function.async.hitori
-
-  support-functions-network:
-    comment: Network and HTTP functions
-    match: |
-      (?x)\b(
-        get|post|put|delete|patch|head|options|fetch|request|download|upload
-        |serve|listen|handler|route|router|middleware|sendResponse|sendJson
-        |sendFile|redirect
-        |parseRequest|parseResponse|parseHeaders|parseBody|parseQuery|parseForm
-        |parseCookies|setHeader|getHeader|setCookie|getCookie
-        |socket|connect|bind|listen|accept|send|receive|recv|close|shutdown
-        |tcpConnect|tcpListen|udpBind|udpSend|udpRecv
-        |wsConnect|wsListen|wsSend|wsReceive|wsClose
-        |resolve|lookup|getHostByName|getHostByAddr|reverseLookup
-        |parseUrl|buildUrl|encodeUrl|decodeUrl|parseQuery|buildQuery|joinUrl
-      )\b
-    name: support.function.network.hitori
-
-  support-functions-datetime:
-    comment: Date and time functions
-    match: |
-      (?x)\b(
-        now|today|tomorrow|yesterday|utcNow|localNow
-        |date|time|datetime|timestamp|fromTimestamp|fromUnix|fromMillis|fromIso|fromRfc3339
-        |format|formatDate|formatTime|formatDatetime|strftime|toIso|toRfc3339
-        |toUnix|toMillis
-        |parse|parseDate|parseTime|parseDatetime|strptime|fromString
-        |year|month|day|hour|minute|second|millisecond|microsecond|nanosecond
-        |weekday|dayOfWeek|dayOfYear|week|weekOfYear|quarter
-        |addYears|addMonths|addWeeks|addDays|addHours|addMinutes|addSeconds
-        |subYears|subMonths|subWeeks|subDays|subHours|subMinutes|subSeconds
-        |diff|diffDays|diffHours|diffMinutes|diffSeconds
-        |isBefore|isAfter|isBetween|isSame|isEqual|compare
-        |startOfYear|startOfMonth|startOfWeek|startOfDay|startOfHour
-        |endOfYear|endOfMonth|endOfWeek|endOfDay|endOfHour
-        |timezone|tz|toUtc|toLocal|toTimezone|utcOffset|isDst
-        |duration|durationDays|durationHours|durationMinutes|durationSeconds
-        |elapsed|since|until
-        |isLeapYear|daysInMonth|daysInYear|weeksInYear|isWeekend|isWeekday|isHoliday
-      )\b
-    name: support.function.datetime.hitori
-
-  support-functions-filesystem:
-    comment: Filesystem-specific operations
-    match: |
-      (?x)\b(
-        readFile|writeFile|appendFile|copyFile|moveFile|deleteFile|renameFile
-        |touchFile|truncateFile
-        |readDir|createDir|removeDir|copyDir|moveDir|renameDir|walkDir|listDir
-        |stat|lstat|exists|isFile|isDir|isSymlink|size|mtime|ctime|atime
-        |permissions|owner|group
-        |join|split|basename|dirname|extension|stem|normalize|absolute|relative
-        |resolve|expandUser|expandVars
-        |symlink|hardlink|readlink|isSymlink|realpath|canonical
-        |chmod|chown|chgrp|setPermissions|getPermissions|isReadable|isWritable|isExecutable
-        |tempFile|tempDir|makeTempFile|makeTempDir
-        |watch|watchFile|watchDir|onFileChange|onDirChange
-      )\b
-    name: support.function.filesystem.hitori
-
-  support-functions-regex:
-    comment: Regular expression and pattern matching functions
-    match: |
-      (?x)\b(
-        compile|regex|pattern|re
-        |match|matchAll|search|findAll|test|isMatch|fullMatch
-        |find|findAll|findFirst|findLast|scan|scanAll
-        |replace|replaceAll|replaceFirst|replaceLast|sub|subn
-        |split|splitMax|splitKeep
-        |groups|captures|namedGroups|group|capture
-        |isValid|pattern|flags|groupCount
-        |escape|quote|unescape
-      )\b
-    name: support.function.regex.hitori
-
-  support-functions-serialization:
-    comment: Serialization and data format functions
-    match: |
-      (?x)\b(
-        parseJson|stringifyJson|toJson|fromJson|jsonEncode|jsonDecode|prettyJson
-        |minifyJson|validateJson
-        |parseYaml|stringifyYaml|toYaml|fromYaml|yamlEncode|yamlDecode|validateYaml
-        |parseXml|stringifyXml|toXml|fromXml|xmlEncode|xmlDecode|validateXml
-        |parseToml|stringifyToml|toToml|fromToml|tomlEncode|tomlDecode
-        |parseCsv|stringifyCsv|toCsv|fromCsv|csvReader|csvWriter
-        |serialize|deserialize|encode|decode|pack|unpack|marshal|unmarshal
-        |msgpackEncode|msgpackDecode
-        |protobufEncode|protobufDecode
-      )\b
-    name: support.function.serialization.hitori
-
-  support-functions-conversion:
-    comment: Type conversion and casting functions
-    match: |
-      (?x)\b(
-        toInt|toInteger|toFloat|toDouble|toBool|toBoolean|toStr|toString|toChar|toNumber
-        |toList|toArray|toSet|toMap|toDict|toTuple|toSeq|toVector
-        |parseInt|parseFloat|parseBool|parseNumber|parseHex|parseOct|parseBin
-        |fromInt|fromFloat|fromBool|fromChar|fromNumber
-        |toBase64|fromBase64|toHex|fromHex|toOct|fromOct|toBinary|fromBinary
-        |toBytes|fromBytes|toBytesUtf8|fromBytesUtf8|toBytesAscii|fromBytesAscii
-        |toJson|fromJson|toYaml|fromYaml|toXml|fromXml|toCsv|fromCsv
-      )\b
-    name: support.function.conversion.hitori
-
-  support-functions-reflection:
-    comment: Reflection and introspection functions
-    match: |
-      (?x)\b(
-        type|typeof|typeName|typeId|isType|isInstance|isSubclass|superclass|subclasses
-        |hasAttr|getAttr|setAttr|delAttr|attrs|attributes|dir|members
-        |methods|hasMethods|getMethod|callMethod|invokeMethod
-        |properties|hasProperty|getProperty|setProperty
-        |callable|isCallable|call|apply|invoke
-        |module|package|imports|import|reload
-        |globals|locals|vars|scope
-        |help|doc|docstring|signature|annotations
-      )\b
-    name: support.function.reflection.hitori
-
-  support-functions-iterators:
-    comment: Iterator and generator functions
-    match: |
-      (?x)\b(
-        iter|iterator|iterate|generate|range|repeat|cycle|count
-        |next|collect|toList|toArray|consume|exhaust
-        |map|filter|flatMap|flatten|chain|concat|zip|enumerate|indexed
-        |reduce|fold|scan|accumulate
-        |take|takeWhile|drop|dropWhile|slice|skip|limit
-        |chunk|chunkBy|group|groupBy|partition|window|pairwise
-        |all|any|none|find|findIndex|contains
-        |peekable|peek|spy|tee|cache|memoize
-      )\b
-    name: support.function.iterator.hitori
-
-  support-functions-functional:
-    comment: Functional programming utilities
-    match: |
-      (?x)\b(
-        compose|pipe|chain|flow|flowRight|sequence
-        |curry|curryN|uncurry|partial|partialRight|bind
-        |identity|id|const|constant|always|noop
-        |not|and|or|xor|complement|negate
-        |flip|swap|apply|call|tap|tryCatch|ifElse|when|unless|cond
-        |memoize|memoizeWith|once|cache
-      )\b
-    name: support.function.functional.hitori
-
-  support-functions-algorithms:
-    comment: Algorithm and data structure functions
-    match: |
-      (?x)\b(
-        quicksort|mergesort|heapsort|insertionsort|bubblesort|selectionsort
-        |timsort|radixsort|countingsort
-        |binarySearch|linearSearch|interpolationSearch|exponentialSearch|jumpSearch
-        |dijkstra|astar|bellmanFord|floydWarshall|bfs|dfs|topologicalSort|kruskal|prim
-        |inorder|preorder|postorder|levelorder|treeHeight|treeDepth
-        |kmp|boyerMoore|rabinKarp|longestCommonSubstring|longestCommonSubsequence
-        |editDistance|levenshtein
-        |fibonacci|knapsack|coinChange|longestIncreasingSubsequence
-        |hash|hashCode|murmur|fnv|crc32
-      )\b
-    name: support.function.algorithm.hitori
-
-  support-functions-crypto:
-    comment: Cryptography and security functions
-    match: |
-      (?x)\b(
-        md5|sha1|sha256|sha384|sha512|sha3|blake2|blake3
-        |hmac|hmacSha256|hmacSha512
-        |encrypt|decrypt|aesEncrypt|aesDecrypt|rsaEncrypt|rsaDecrypt
-        |sign|verify|signRsa|verifyRsa|signEcdsa|verifyEcdsa
-        |generateKey|generateKeyPair|generateRsaKey|generateEcdsaKey
-        |randomBytes|secureRandom|uuid|uuidv4|guid
-        |base64Encode|base64Decode|hexEncode|hexDecode
-      )\b
-    name: support.function.crypto.hitori
-
-  support-functions-testing:
-    comment: Testing framework functions
-    match: |
-      (?x)\b(
-        test|it|describe|suite|context
-        |assert|assertEqual|assertEquals|assertNotEqual|assertTrue|assertFalse
-        |assertNull|assertNotNull|assertThrows|assertNotThrows|assertType
-        |assertContains|assertMatch
-        |before|after|beforeEach|afterEach|setup|teardown
-        |mock|spy|stub|fake|mockFn
-        |run|runTests|runSuite|skip|only|pending
-      )\b
-    name: support.function.testing.hitori
-
-  support-functions-graphics:
-    comment: Graphics and UI functions
-    match: |
-      (?x)\b(
-        drawLine|drawRect|drawCircle|drawEllipse|drawPolygon|drawPath|fill|stroke
-        |rgb|rgba|hsl|hsla|hsv|hex|color
-        |translate|rotate|scale|transform|matrix
-        |canvas|context|clear|save|restore
-        |loadImage|drawImage|resizeImage|cropImage
-      )\b
-    name: support.function.graphics.hitori
-
-  support-functions-audio:
-    comment: Audio processing functions
-    match: |
-      (?x)\b(
-        play|pause|stop|resume|seek
-        |loadAudio|loadSound|createAudio
-        |volume|setVolume|duration|currentTime|isPlaying
-        |fade|fadeIn|fadeOut|loop|setLoop
-      )\b
-    name: support.function.audio.hitori
-
-  support-functions-database:
-    comment: Database operations
-    match: |
-      (?x)\b(
-        connect|disconnect|close|execute|query
-        |select|insert|update|delete|upsert
-        |begin|commit|rollback|transaction
-        |createTable|dropTable|alterTable|addColumn|dropColumn
-        |prepare|bind|executePrepared
-      )\b
-    name: support.function.database.hitori
-
-  support-functions-logging:
-    comment: Logging functions
-    match: |
-      (?x)\b(
-        log|debug|info|warn|warning|error|fatal|critical|trace
-        |setLevel|setHandler|addHandler|removeHandler|setFormatter
-        |getLogger|createLogger|rootLogger
-      )\b
-    name: support.function.logging.hitori
-
-  support-functions-compression:
-    comment: Compression and decompression functions
-    match: |
-      (?x)\b(
-        gzip|gunzip|gzipCompress|gzipDecompress
-        |compress|decompress|deflate|inflate
-        |bz2Compress|bz2Decompress|lzmaCompress|lzmaDecompress
-        |zipCompress|zipDecompress
-      )\b
-    name: support.function.compression.hitori
-
-  support-functions-errors:
-    comment: Error handling and Result/Option types
-    match: |
-      (?x)\b(
-        Ok|Err|Some|None|Result|Option
-        |isOk|isErr|isSome|isNone|unwrap|unwrapOr|unwrapOrElse|expect
-        |map|mapErr|andThen|orElse
-        |error|newError|throw|raise|panic
-      )\b
-    name: support.function.error.hitori
-
-  support-functions-ml-ai:
-    comment: Machine learning and AI functions
-    match: |
-      (?x)\b(
-        tensor|createTensor|newTensor|reshape|transpose|matmul|dotProduct|crossProduct|norm|normalize
-        |standardize|minMaxScale|batchNorm|layerNorm|softmax|sigmoid|tanh|relu|leakyRelu|elu|gelu
-        |swish|dropout|conv2d|maxPool|avgPool|flatten|dense|linear|embedding|attention|multiheadAttention
-        |transformer|lstm|gru|rnn|train|fit|predict|evaluate|score|accuracy|precision|recall|f1Score
-        |confusionMatrix|roc|auc|loss|mse|mae|crossEntropy|gradientDescent|adam|sgd|rmsprop|backprop
-        |forward|backward|optimizer|learningRate|epoch|batch|shuffle|split|kfold|crossValidate
-        |pipeline|preprocessor|scaler|encoder|oneHotEncode|labelEncode|pca|tsne|umap|kmeans|dbscan
-        |hierarchical|cluster|classify|regress|decisionTree|randomForest|gradientBoosting|svm
-        |naiveBayes|knn|logisticRegression|linearRegression|neuralNetwork|deepLearning|model
-        |saveModel|loadModel|checkpoint|earlyStop|regularize|l1|l2|elasticNet
-      )\b
-    name: support.function.ml.hitori
-
-  support-functions-data-science:
-    comment: Data science and analysis functions
-    match: |
-      (?x)\b(
-        dataframe|createDataframe|newDf|series|createSeries|column|row|index|select|filter|where
-        |groupby|aggregate|agg|pivot|melt|merge|join|concat|append|sort|sortValues|sortIndex|rank
-        |unique|nunique|valueCounts|describe|info|head|tail|sample|dropna|fillna|interpolate|replace
-        |apply|map|applymap|rolling|expanding|ewm|resample|shift|diff|pctChange|cumsum|cumprod
-        |cummax|cummin|plot|scatter|line|bar|hist|box|violin|heatmap|corr|cov|quantile|percentile
-        |zscore|outliers|missing|impute|transform|fit_transform|pipeline|feature|target|train_test_split
-        |cross_val_score|grid_search|random_search|hyperparameter|tune|optimize|visualize|explore
-        |clean|wrangle|etl|extract|load
-      )\b
-    name: support.function.datascience.hitori
-
-  support-functions-web:
-    comment: Web development and DOM manipulation functions
-    match: |
-      (?x)\b(
-        html|parseHtml|querySelector|querySelectorAll|getElementById|getElementsByClassName
-        |getElementsByTagName|createElement|createElementNS|createTextNode|createComment|createDocumentFragment
-        |appendChild|appendChildElement|removeChild|replaceChild|insertBefore|insertAfter|cloneNode
-        |setAttribute|setAttributeNS|getAttribute|getAttributeNS|removeAttribute|hasAttribute
-        |classList|addClass|removeClass|toggleClass|hasClass|containsClass|innerHTML|outerHTML
-        |innerText|outerText|textContent|value|getValue|setValue|src|href|alt|title|id|className
-        |tagName|nodeName|nodeType|nodeValue|parentNode|parentElement|childNodes|children|firstChild
-        |lastChild|nextSibling|previousSibling|nextElementSibling|previousElementSibling|matches
-        |closest|contains|compareDocumentPosition|isEqualNode|isSameNode|onclick|onchange|onsubmit
-        |addEventListener|removeEventListener|dispatchEvent|preventDefault|stopPropagation
-        |stopImmediatePropagation|eventTarget|eventType|eventPhase|bubbles|cancelable|defaultPrevented
-        |composedPath|fetch|fetchApi|ajax|ajaxRequest|xhr|xmlHttpRequest|createXhr|sendRequest
-        |getRequest|postRequest|putRequest|deleteRequest|patchRequest|headRequest|optionsRequest
-        |cors|corsPreflight|corsHeaders|cookie|getCookie|setCookie|deleteCookie|hasCookie|parseCookies
-        |localStorage|getLocalStorage|setLocalStorage|removeLocalStorage|clearLocalStorage
-        |localStorageLength|sessionStorage|getSessionStorage|setSessionStorage|removeSessionStorage
-        |clearSessionStorage|sessionStorageLength|formData|createFormData|appendFormData|getFormData
-        |hasFormData|deleteFormData|multipart|multipartForm|multipartData|upload|uploadFile
-        |uploadMultiple|download|downloadFile|downloadBlob|downloadUrl|websocket|createWebSocket
-        |openWebSocket|closeWebSocket|sendWebSocket|onWebSocketMessage|onWebSocketOpen|onWebSocketClose
-        |onWebSocketError|sse|serverSentEvents|createEventSource|eventSource|pushNotification
-        |requestNotification|showNotification|closeNotification|serviceWorker|registerServiceWorker
-        |unregisterServiceWorker|updateServiceWorker|cache|cacheStorage|openCache|putCache|matchCache
-        |deleteCache|keysCache|indexedDB|openIndexedDB|createObjectStore|deleteObjectStore|transaction
-        |addIndexedDB|getIndexedDB|putIndexedDB|deleteIndexedDB|cursorIndexedDB|webWorker|createWorker
-        |terminateWorker|postMessage|onMessage|sharedWorker|createSharedWorker|canvas|getCanvas
-        |getContext|canvas2d|canvasWebgl|canvasWebgpu|webgl|webgl2|webglContext|createWebglContext
-        |webassembly|wasm|wasmModule|wasmInstance|compileWasm|instantiateWasm|geolocation|getCurrentPosition
-        |watchPosition|clearWatch|notification|requestPermission|createNotification|mediaStream
-        |getUserMedia|getDisplayMedia|audioContext|createAudioContext|audioNode|mediaRecorder
-        |startRecording|stopRecording|webrtc|rtcPeerConnection|createPeerConnection|createOffer
-        |createAnswer|setLocalDescription|setRemoteDescription|addIceCandidate|dataChannel|createDataChannel
-        |sendDataChannel|bluetooth|bluetoothDevice|requestBluetoothDevice|usb|requestUsbDevice|nfc
-        |ndefReader|payment|paymentRequest|credential|credentials|webauthn|publicKeyCredential
-        |clipboard|readClipboard|writeClipboard|readText|writeText|drag|dragstart|dragover|dragenter
-        |dragleave|drop|dragend|dataTransfer|resize|resizeObserver|observe|unobserve|scroll|scrollTo
-        |scrollBy|scrollIntoView|scrollTop|scrollLeft|scrollHeight|scrollWidth|intersection
-        |intersectionObserver|createIntersectionObserver|mutation|mutationObserver|observeMutations
-        |performance|performanceNow|performanceMark|performanceMeasure|performanceObserver|observer
-        |createObserver
-      )\b
-    name: support.function.web.hitori
-
-  support-functions-image:
-    comment: Image processing and computer vision functions
-    match: |
-      (?x)\b(
-        loadImage|saveImage|createImage|newImage|imageFromFile|imageFromUrl|imageFromData|imageFromBuffer
-        |imageWidth|imageHeight|imageDimensions|imageSize|imageFormat|imageType|resize|resizeImage
-        |scale|scaleImage|scaleToFit|scaleToFill|crop|cropImage|cropCenter|cropRegion|rotate|rotateImage
-        |rotate90|rotate180|rotate270|flip|flipImage|flipHorizontal|flipVertical|mirror|transpose
-        |brightness|adjustBrightness|contrast|adjustContrast|saturation|adjustSaturation|hue|adjustHue
-        |gamma|gammaCorrect|exposure|temperature|tint|sharpen|blur|gaussianBlur|boxBlur|medianBlur
-        |bilateralFilter|edgeDetect|sobelFilter|cannyEdge|laplacian|threshold|binaryThreshold
-        |adaptiveThreshold|otsu|dilate|erode|morphology|opening|closing|gradient|morphGradient|tophat
-        |blackhat|grayscale|toGrayscale|rgbToGray|sepia|invert|invertColors|posterize|solarize
-        |histogram|equalizeHistogram|histogramStretch|normalize|normalizeImage|denoise|denoiseImage
-        |medianFilter|colorspace|rgb|rgba|hsv|hsl|lab|ycbcr|cmyk|convertColorspace|channel|extractChannel
-        |mergeChannels|splitChannels|alpha|alphaChannel|setAlpha|removeAlpha|transparency|composite
-        |blend|blendMode|overlay|multiply|screen|addImages|subtract|difference|mask|applyMask
-        |createMask|contour|findContours|drawContour|boundingBox|minAreaRect|convexHull|moments
-        |centroid|feature|featureDetect|sift|surf|orb|harris|corners|matchFeatures|homography
-        |perspectiveTransform|affineTransform|warp|unwarp|stitch|panorama|hdr|tonemap
-      )\b
-    name: support.function.image.hitori
-
-  support-functions-audio-processing:
-    comment: Audio processing and analysis functions
-    match: |
-      (?x)\b(
-        loadAudio|saveAudio|createAudio|audioFromFile|audioFromUrl|audioFromBuffer|sampleRate|channels
-        |duration|audioDuration|bitDepth|bitRate|audioFormat|audioCodec|resample|resampleAudio
-        |changeSampleRate|normalize|normalizeAudio|normalizeLevel|amplify|attenuate|gain|setGain
-        |fadeIn|fadeOut|crossfade|trim|trimAudio|trimSilence|pad|padAudio|padSilence|reverse
-        |reverseAudio|speed|changeSpeed|pitch|changePitch|timeStretch|tempo|changeTempo|echo|delay
-        |reverb|reverberate|chorus|flanger|phaser|distortion|overdrive|filter|lowpass|highpass
-        |bandpass|bandstop|notch|eq|equalizer|parametricEq|graphicEq|compressor|limiter|gate|noiseGate
-        |expander|normalize|loudness|lufs|rms|peak|peakLevel|waveform|plotWaveform|spectrogram
-        |plotSpectrogram|fft|ifft|stft|istft|mel|melSpectrogram|mfcc|chromagram|tonnetz|tempogram
-        |beatTrack|onsetDetect|tempoEstimate|keyDetect|chordDetect|pitchDetect|f0|fundamentalFrequency
-        |harmonics|harmonicProduct|autocorrelation|zeroCrossing|energy|spectralCentroid|spectralRolloff
-        |spectralFlux|spectralContrast|voiceActivityDetect|vad|silenceDetect|split|splitAudio|join
-        |joinAudio|mix|mixAudio|pan|setPan|stereo|mono|toStereo|toMono|downsample|upsample|interpolate
-        |decimate|quantize|dither|noise|addNoise|whiteNoise|pinkNoise|brownNoise
-      )\b
-    name: support.function.audioprocessing.hitori
-
-  support-functions-video:
-    comment: Video processing and manipulation functions
-    match: |
-      (?x)\b(
-        loadVideo|saveVideo|createVideo|videoFromFile|videoFromUrl|videoFromStream|width|videoWidth
-        |height|videoHeight|fps|frameRate|frameCount|totalFrames|duration|videoDuration|codec|videoCodec
-        |audioCodec|container|videoFormat|extractFrame|getFrame|frameAt|setFrame|extractFrames|saveFrame
-        |saveFrames|extractAudio|extractVideoTrack|extractAudioTrack|resize|resizeVideo|crop|cropVideo
-        |rotate|rotateVideo|flip|flipVideo|reverse|reverseVideo|speed|changeVideoSpeed|slow|fastForward
-        |trim|trimVideo|cut|cutVideo|split|splitVideo|join|joinVideos|concat|concatVideos|merge
-        |mergeVideos|overlay|overlayVideo|watermark|addWatermark|subtitle|addSubtitle|removeSubtitle
-        |transcribe|caption|filter|applyFilter|brightness|contrast|saturation|grayscale|sepia|blur
-        |sharpen|stabilize|denoise|denoiseVideo|colorCorrect|colorGrade|lut|applyLut|transition
-        |addTransition|fade|crossfade|dissolve|wipe|encode|encodeVideo|decode|decodeVideo|compress
-        |compressVideo|transcode|transcodeVideo|stream|streamVideo|record|recordVideo|capture
-        |screenCapture|thumbnail|generateThumbnail|preview|seek|seekTo
-      )\b
-    name: support.function.video.hitori
-
-  support-functions-graphics-3d:
-    comment: 3D graphics and rendering functions
-    match: |
-      (?x)\b(
-        mesh|createMesh|loadMesh|saveMesh|vertex|vertices|face|faces|normal|normals|uv|uvCoordinates
-        |material|createMaterial|texture|loadTexture|shader|createShader|compileShader|program
-        |shaderProgram|uniform|attribute|buffer|vertexBuffer|indexBuffer|frameBuffer|renderBuffer
-        |scene|createScene|camera|createCamera|perspectiveCamera|orthographicCamera|light|pointLight
-        |directionalLight|spotLight|ambientLight|render|renderScene|draw|drawMesh|transform|translate
-        |rotate|scale|matrix|transformMatrix|modelMatrix|viewMatrix|projectionMatrix|multiply
-        |matrixMultiply|inverse|inverseMatrix|transpose|transposeMatrix|raycast|raycasting|pick
-        |intersect|intersection|collide|collision|detectCollision|boundingBox|aabb|obb|sphere
-        |boundingSphere|frustum|frustumCulling|cull|backfaceCulling|depth|depthTest|depthBuffer
-        |stencil|stencilTest|blend|blending|alpha|alphaBlending|fog|shadow|shadowMap|ambientOcclusion
-        |ssao|reflect|reflection|refract|refraction|lighting|phong|blinn|pbr|physicallyBasedRendering
-      )\b
-    name: support.function.graphics3d.hitori
-
-  support-functions-physics:
-    comment: Physics simulation and dynamics functions
-    match: |
-      (?x)\b(
-        body|createBody|rigidbody|staticBody|dynamicBody|kinematicBody|mass|setMass|density|volume
-        |centerOfMass|inertia|momentOfInertia|velocity|setVelocity|linearVelocity|angularVelocity
-        |acceleration|force|applyForce|applyImpulse|torque|applyTorque|friction|restitution|bounce
-        |damping|linearDamping|angularDamping|gravity|setGravity|constraint|joint|hinge|slider|spring
-        |distanceJoint|fixed|weld|collider|boxCollider|sphereCollider|capsuleCollider|meshCollider
-        |compound|trigger|isTrigger|collision|onCollision|onCollisionEnter|onCollisionExit|overlap
-        |raycast|rayCast|linecast|spherecast|boxcast|simulate|step|timestep|fixedUpdate|integrate
-        |constraints|solveConstraints
-      )\b
-    name: support.function.physics.hitori
+      (?x)\s*\b(
+        # python core
+        print|input|len|type|id|isinstance|hasattr|getattr|setattr|delattr|dir|sorted|reversed|enumerate|range|zip|map|filter|reduce|all|any|min|max|sum|abs|round|pow|divmod|eval|exec|format|hash|help|is|ord|chr|bin|oct|hex|slice|super|vars|globals|locals|callable|compile|memoryview|next|object|property|repr|staticmethod|classmethod|size|length|count|append|extend|insert|remove|pop|clear|copy|update|keys|values|items|get|setdefault|fromkeys|join|split|replace|find|index|upper|lower|strip|lstrip|rstrip|startswith|endswith|formatmap|capitalize|title|swapcase|isdigit|isalpha|isalnum|isnumeric|isdecimal|isspace|iter|reversed|ziplongest|chain|accumulate|groupby|permutations|combinations|combinations_replacement|
+        # string ops
+        upper|lower|title|capitalize|swapcase|trim|strip|replace|find|split|join|startswith|endswith|substring|substr|reverse|stringify|escape|unescape|padleft|padright|format|encode|decode|charat|charcodeat|concat|match|repeat|template|truncate|
+        # collections + iterators
+        map|filter|reduce|fold|flatten|groupby|sort|unique|chain|zip|enumerate|collect|insert|remove|pop|push|extend|concat|merge|update|difference|intersection|union|isdisjoint|copy|deepcopy|clear|stack|queue|deque|defaultdict|counter|namedtuple|dataclass|append|prepend|slice|splice|find|index|count|length|size|keys|values|items|get|set|has|contains|insert|delete|reverse|rotate|shuffle|sort|sorted|reverse|toarray|tolist|todict|toset|fromarray|fromlist|fromdict|fromset|lookup|observe|subscribe|iterate|next|peek|foreach|nextvalue|hasnext|haskey|hasvalue|lookupkey|lookupvalue|observekey|observevalue|publish|unpublish|join|split|group|partition|keyby|valueby|lookupby|keyof|valueof|
+        # io + file
+        open|close|read|write|seek|flush|tell|truncate|isatty|readline|readlines|writelines|input|print|load|save|dump|append|pipe|redirect|tee|buffer|stream|stdout|stderr|stdin|
+        # system
+        exit|quit|abort|system|exec|execv|execvp|fork|wait|waitpid|getpid|getppid|getuid|getgid|setuid|setgid|getenv|setenv|unsetenv|pwd|cd|ls|ps|kill|sleep|time|clock|gettimeofday|uname|hostname|whoami|uptime|platform|machine|version|architecture|cpu_count|getpriority|setpriority|daemonize|
+        # async
+        async|await|future|promise|then|catch|finally|resolve|reject|coroutine|task|eventloop|run_until_complete|gather|as_completed|sleep|timeout|defer|schedule|
+        # network
+        socket|connect|bind|listen|accept|send|recv|sendto|recvfrom|shutdown|getaddrinfo|gethostname|gethostbyname|getpeername|setsockopt|getsockopt|httprequest|httpresponse|download|upload|post|get|put|delete|fetch|openurl|parseurl|quote|unquote|ping|resolve|dnslookup|urlencode|urldecode|websocket|handshake|proxy|sendfile|
+        # datetime
+        now|today|utcnow|fromtimestamp|totimestamp|strftime|strptime|sleep|time|clock|gettime|localtime|gmtime|mktime|asctime|ctime|timezone|tzoffset|timedelta|addtime|subtime|parseiso|formatdate|dateadd|datesub|dateparse|timestamp|year|month|day|hour|minute|second|microsecond|weekday|isoformat|fromisoformat|timeit|
+        # filesystem
+        open|close|read|write|seek|flush|rename|remove|mkdir|rmdir|chmod|chown|stat|lstat|access|exists|isfile|isdir|abspath|basename|dirname|joinpath|splitpath|expanduser|expandvars|walk|scandir|listdir|copy|move|link|unlink|symlink|realpath|touch|chdir|fstat|fsync|truncate|tempfile|mktemp|fdopen|
+        # regex
+        match|search|findall|finditer|split|sub|compile|escape|replace|group|fullmatch|scanner|tokenize|parse|scan|lex|syntax|ast|walk|visit|pattern|captures|replaceall|
+        # serialization
+        json|yaml|toml|pickle|marshal|unmarshal|dumps|loads|dump|load|save|serialize|deserialize|encode|decode|from_json|to_json|from_yaml|to_yaml|from_toml|to_toml|savefile|readfile|
+        # conversion
+        int|float|str|bool|complex|bytes|bytearray|ord|chr|hex|oct|bin|repr|ascii|format|toint|tofloat|tostring|tobytes|tolist|todict|tonumpy|topandas|tocsv|fromcsv|tojson|fromjson|
+        # reflection
+        getattr|setattr|hasattr|delattr|dir|vars|locals|globals|callable|isinstance|issubclass|type|id|repr|help|super|inspect|signature|getmembers|getmodule|getsource|getdoc|getfile|getclasstree|getargspec|getfullargspec|arguments|walk|typeof|varscope|scopechain|fields|methods|props|kindof|ownedattr|walkattrs|attrs|objvars|objfields|objmethods|objprops|self|classof|
+        # functional
+        map|filter|reduce|fold|lambda|partial|compose|curry|uncurry|identity|constant|apply|pipe|chain|zip|unzip|flatmap|foreach|every|some|none|find|findindex|groupby|partition|take|drop|takewhile|dropwhile|memoize|throttle|debounce|
+        # algorithms
+        sort|sorted|search|binarysearch|quicksort|mergesort|heapsort|bubblesort|insertionsort|selectionsort|shuffle|randomize|min|max|argmin|argmax|sum|product|accumulate|scan|permute|combinations|permutations|
+        # crypto
+        md5|sha1|sha224|sha256|sha384|sha512|sha3|shake128|shake256|hmac|blake2b|blake2s|pbkdf2|scrypt|bcrypt|argon2|aes|rsa|dsa|ecdsa|sign|verify|encrypt|decrypt|encode|decode|b64encode|b64decode|hexencode|hexdecode|urandom|randbytes|keygen|hash|digest|hexdigest|salt|cipher|decipher|seal|unseal|mac|pad|unpad|xor|nonce|iv|derivekey|cert|loadpem|savepem|
+        # testing
+        assert|expect|check|verify|test|suite|case|mock|stub|spy|patch|fixture|setup|teardown|unittest|pytest|benchmark|fuzz|coverage|assertequal|assertraises|asserttrue|assertfalse|
+        # graphics
+        draw|render|fill|stroke|translate|rotate|scale|pushmatrix|popmatrix|beginpath|closepath|moveto|lineto|curveto|rect|ellipse|arc|image|pixel|getpixel|setpixel|blend|loadimage|saveimage|filter|grayscale|blur|invert|threshold|resize|crop|flip|mirror|gamma|contrast|brightness|saturation|rotateimage|drawtext|drawline|drawrect|drawcircle|drawellipse|drawpolygon|clear|updatecanvas|createcanvas|getcontext|setcontext|renderframe|endframe|waitframe|exportimage|zoom|pan|tilt|orbit|light|shadow|texture|material|shader|depthtest|cullface|zbuffer|antialiasing|gammacorrection|shadows|
+        # audio
+        play|pause|stop|record|volume|pan|mix|fadein|fadeout|loadsound|savesound|readwav|writewav|fft|ifft|spectrogram|resample|normalize|compress|equalize|filter|echo|reverb|
+        # database
+        connect|disconnect|cursor|execute|commit|rollback|fetchone|fetchall|fetchmany|query|insert|update|delete|select|join|where|orderby|limit|transaction|begin|end|prepare|bind|closecursor|opendb|closedb|loaddb|savedb|readrow|writerow|migratedb|createdb|dropdb|backupdb|restoredb|index|schema|column|table|vacuum|
+        # logging
+        log|debug|info|warn|warning|error|fatal|critical|trace|exception|configure|logger|formatter|handler|filter|addhandler|removehandler|setlevel|
+        # compression
+        zip|unzip|tar|untar|gzip|gunzip|bz2|bzip2|lzma|xz|compress|decompress|pack|unpack|archive|extract|bundle|encodezip|decodezip|deflate|inflate|rar|unrar|zlib|snappy|brotli|
+        # errors
+        raise|throw|try|except|catch|finally|error|panic|fail|assert|trap|recover|onerror|retry|logerror|warnerror|
+        # ml + ai
+        fit|predict|train|evaluate|score|compile|transform|inversetransform|fittransform|loadmodel|savemodel|sequential|model|dense|conv2d|flatten|relu|sigmoid|softmax|dropout|batchnorm|tensor|variable|grad|autograd|backward|optimizer|loss|criterion|forward|backward|dataloader|dataset|trainonbatch|predictonbatch|fitgenerator|argmax|argmin|reshape|flatten|squeeze|unsqueeze|stack|concat|expanddims|permute|transpose|lstm|gru|rnn|cnn|embedding|attention|layernorm|
+        # data science
+        dataframe|series|read_csv|read_excel|read_json|read_sql|to_csv|to_json|to_excel|groupby|pivot|melt|agg|apply|map|filter|sort_values|dropna|fillna|merge|join|concat|stack|unstack|describe|corr|cov|plot|hist|bar|scatter|heatmap|normalize|standardize|scale|
+        # web
+        fetch|ajax|get|post|put|delete|head|request|response|json|formdata|queryselector|getelementbyid|getelementsbyclass|getelementsbytag|addeventlistener|removeeventlistener|dispatchevent|preventdefault|stoppropagation|createelement|appendchild|removechild|replacechild|innerhtml|outerhtml|textcontent|classlist|style|encodeuri|decodeuri|encodeuricomponent|decodeuricomponent|settimeout|setinterval|cleartimeout|clearinterval|storage|cookie|session|localstorage|addclass|removeclass|toggleclass|
+        # css
+        color|background|margin|padding|border|font|text|display|position|top|bottom|left|right|width|height|maxwidth|minwidth|maxheight|minheight|float|clear|zindex|overflow|visibility|opacity|align|justify|flex|grid|animation|transition|boxshadow|textshadow|transform|rotate|scale|skew|translate|hex|rgb|rgba|hsl|hsla|vw|vh|em|rem|pt|pc|in|cm|mm|px|percent|auto|none|solid|dashed|dotted|double|groove|ridge|inset|outset|hidden|visible|scroll|clip|contain|cover|repeat|no-repeat|fixed|absolute|relative|sticky|static|flexbox|gridlayout|
+        # image
+        loadimage|saveimage|resize|crop|rotate|flip|mirror|grayscale|blur|sharpen|contrast|brightness|saturation|gamma|threshold|blend|compose|drawtext|watermark|histogram|resizecanvas|
+        # audio-processing
+        readwav|writewav|mp3encode|mp3decode|normalize|compress|expand|eq|reverb|chorus|delay|mix|fft|ifft|spectrogram|noisegate|denoise|
+        # video
+        loadvideo|savevideo|capture|frame|seekframe|readframe|writeframe|fps|resize|crop|rotate|merge|overlay|render|encode|decode|stream|compress|decompress|thumbnail|
+        # graphics-3d
+        mesh|vertex|normal|uv|texture|shader|render|draw|transform|translate|rotate|scale|projection|camera|light|ray|trace|loadobj|saveobj|loadfbx|savefbx|scene|material|bake|animate|interpolate|
+        # physics
+        force|mass|velocity|acceleration|momentum|impulse|friction|gravity|collision|simulate|integrate|step|energy|potential|kinetic|torque|spring|rigidbody|particle|fluid|field|attractor|repulsor|constraint|joint|solver|dynamics|kinematics|softbody|raycast|broadphase|narrowphase|contact|transform
+      )\b\s*
+    name: support.function.core.hitori
