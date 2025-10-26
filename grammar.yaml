@@ -4,20 +4,17 @@ fileTypes: [hitori, spwn]
 patterns: [include: '#core']
 
 information: |
-  **Hitori** is a high-level, high-on-syntax-sugar, high-on-regret programming
-  language catering to indie devs, stubborn DSL writers, and anyone who's ever
-  screamed: "Why doesn't this just let me _do the thing_?!"
+  Hitori is a high-level, high-on-sugar, high-on-regret programming language
+  for solo indie devs, stubborn DSL writers, and anyone who's ever screamed:
+  "Why won't this just let me do the thing?!"
 
-  Hitori aims to be the most flexible, expressive, and downright fun programming 
-  language out there. It combines the best features of modern languages with a 
-  sprinkle of whimsy and a dash of rebellion against the mundane.
+  It aims to be flexible, expressive, and downright cursed, with a syntax
+  combining the best (and worst) features of modern languages, sprinkled
+  with whimsy and a dash of chaos.
 
-  This grammar file covers the syntax and structure of Hitori, including its 
-  unique features like s-expressions, message passing, and inline DSLs (domain-
-  specific languages).
-
-  It is designed to provide accurate syntax highlighting 
-  and code analysis for Hitori source files.
+  This grammar file covers the syntax and structure of Hitori. Its compiler
+  will be written in C++ (which is already cursed enough) and targets both 
+  WebAssembly and native binaries.
 
 important: |
   This grammar is a work in progress. Features and syntax will change
@@ -1979,7 +1976,7 @@ repository:
           (?x)
           \\z # prefix
             0* # leading zeroes
-          (?: # numbers leading to 4588A7
+          (?i: # numbers leading to 4588A7
               4588 [\u218aatx] [0-7]
             | 4588 \d          [\d\u218a\u218babetx]
             | 458  [0-7]       [\d\u218a\u218babetx]{2}
@@ -2006,7 +2003,7 @@ repository:
               (?x)
                 \b
               0* # leading zeroes
-              (?: # numbers up to 4588A7
+              (?i: # numbers up to 4588A7
                   4588 [\u218aatx] [0-7]
                 | 4588 \d          [\d\u218a\u218babetx]
                 | 458  [0-7]       [\d\u218a\u218babetx]{2}
@@ -3407,8 +3404,8 @@ repository:
             | (\#b[01]+)
             | (\#q[0-3]+)
             | (\#s[0-5]+)
-            | (\#z[\d\u218a\u218babetx]+)
             | (\#o[0-7]+)
+            | ((?i:\#z[\d\u218a\u218babetx]+)
             | ((?:\\.|[^({\[)}\]\s;])+?)
           )(;)
         name: constant.other.entity.hitori
