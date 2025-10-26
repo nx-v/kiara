@@ -3405,7 +3405,7 @@ repository:
             | (\#q[0-3]+)
             | (\#s[0-5]+)
             | (\#o[0-7]+)
-            | ((?i:\#z[\d\u218a\u218babetx]+)
+            | ((?i:\#z[\d\u218a\u218babetx]+))
             | ((?:\\.|[^({\[)}\]\s;])+?)
           )(;)
         name: constant.other.entity.hitori
