@@ -3398,27 +3398,27 @@ repository:
       - match: |
           (?xi)
           (&)(?:
-              ([a-zA-Z][a-zA-Z0-9]+)
-            | (\#\d+)
-            | (\#x\h+)
+              (\#\d+)
             | (\#b[01]+)
             | (\#q[0-3]+)
             | (\#s[0-5]+)
             | (\#o[0-7]+)
             | ((?i:\#z[\d\u218a\u218babetx]+))
+            | (\#x\h+)
+            | ([a-zA-Z][a-zA-Z0-9]+)
             | ((?:\\.|[^({\[)}\]\s;])+?)
           )(;)
         name: constant.other.entity.hitori
         captures: &xml-entities
           1: {name: punctuation.definition.entity.hitori}
-          2: {name: constant.character.entity.named.hitori}
-          3: {name: constant.character.escape.decimal.hitori}
-          4: {name: constant.character.escape.hexadecimal.hitori}
-          5: {name: constant.character.escape.binary.hitori}
-          6: {name: constant.character.escape.quaternary.hitori}
-          7: {name: constant.character.escape.senary.hitori}
-          8: {name: constant.character.escape.duodecimal.hitori}
-          9: {name: constant.character.escape.octal.hitori}
+          2: {name: constant.character.escape.decimal.hitori}
+          3: {name: constant.character.escape.binary.hitori}
+          4: {name: constant.character.escape.quaternary.hitori}
+          5: {name: constant.character.escape.senary.hitori}
+          6: {name: constant.character.escape.duodecimal.hitori}
+          7: {name: constant.character.escape.hexadecimal.hitori}
+          8: {name: constant.character.escape.octal.hitori}
+          9: {name: constant.character.entity.named.hitori}
           10: {name: constant.character.entity.hitori}
           11: {name: punctuation.definition.entity.hitori}
       - match: '&(?=\w*;)'
