@@ -25,20 +25,20 @@ important: |
   and report any issues you encounter.
 
 todo: |
-  - [ ] Rework inline "Markdown" syntax. Refer to Texy, Textile, AsciiDoc
-      and cousins for inspiration. Reimplement Markdown syntax with these extensions:
-      - [ ] Citations
-      - [x] Deleted and inserted text ~~deleted~~ ++inserted++
-      - [x] Superscript ^super^
-      - [x] Subscript ~sub~
-      - [x] Highlighted text ==highlight==
-      - [x] Redacted text ||redacted||
-      - [ ] Spans
-      - [ ] Selectors and anchors
-      - [ ] Code blocks
-      - [ ] Definition blocks
-      - [ ] Tables
-      - [ ] Headings and subheadings
+  - [ ] Rework inline Markdown syntax. Refer to Texy, Textile, AsciiDoc
+        and cousins for inspiration. Reimplement with these extensions:
+        - [ ] Citations
+        - [x] Deleted and inserted text ~~deleted~~ ++inserted++
+        - [x] Superscript ^super^
+        - [x] Subscript ~sub~
+        - [x] Highlighted text ==highlight==
+        - [x] Redacted text ||redacted||
+        - [ ] Spans !!.custom.classes span!!
+        - [ ] Selectors and anchors
+        - [ ] Code blocks
+        - [ ] Definition blocks
+        - [ ] Tables
+        - [ ] Headings and subheadings
   - [ ] Plan and implement all the built-in modules, classes, objects, constants
         functions and properties for Hitori's standard library.
         This would all be done in a separate PR and once the grammar is completely
