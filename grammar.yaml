@@ -28,10 +28,11 @@ todo: |
   - [ ] Rework inline "Markdown" syntax. Refer to Texy, Textile, AsciiDoc
       and cousins for inspiration. Reimplement Markdown syntax with these extensions:
       - [ ] Citations
-      - [ ] Strike-through
-      - [ ] Deleted and inserted text
-      - [ ] Superscript
-      - [ ] Subscript
+      - [x] Deleted and inserted text ~~deleted~~ ++inserted++
+      - [x] Superscript ^super^
+      - [x] Subscript ~sub~
+      - [x] Highlighted text ==highlight==
+      - [x] Redacted text ||redacted||
       - [ ] Spans
       - [ ] Selectors and anchors
       - [ ] Code blocks
@@ -74,6 +75,7 @@ changelog: |
 
   New changes:
 
+  - Fixed syntax highlighting of code blocks beside lambda pipes.
   - Added base 4, 6 and 12 numeric literals. Except for base 14, all even
     bases up to 16 are now supported.
   - Overall now closely resembles Rust's. This includes keywords, comments,
@@ -3434,6 +3436,13 @@ repository:
       - include: '#bracket'
       - include: '#bold'
       - include: '#italic'
+      - include: '#underline'
+      - include: '#strikethrough'
+      - include: '#superscript'
+      - include: '#subscript'
+      - include: '#spoiler'
+      - include: '#highlight'
+      - include: '#string-content'
       - include: '#raw'
       - include: '#escape'
       - include: '#image-inline'
@@ -3497,20 +3506,261 @@ repository:
     end: (?<=\S)(\1)
     name: markup.bold.markdown
     patterns:
-      - include: '#string-content'
-      - include: '#escape'
       - include: '#ampersand'
       - include: '#bracket'
+      - include: '#italic'
+      - include: '#underline'
+      - include: '#strikethrough'
+      - include: '#superscript'
+      - include: '#subscript'
+      - include: '#spoiler'
+      - include: '#highlight'
+      - include: '#string-content'
       - include: '#raw'
+      - include: '#escape'
+      - include: '#image-inline'
+      - include: '#image-ref'
+      - include: '#link-email'
+      - include: '#link-inet'
+      - include: '#link-inline'
+      - include: '#link-ref'
+      - include: '#link-ref-literal'
+      - include: '#link-ref-shortcut'
+
+  italic:
+    begin: |
+      (?x) (?<open>(\*(?=\w)|(?<!\w)\*|(?<!\w)\b_))(?=\S) # Open
+      (?=
+        (
+          <[^>]*+> # HTML tags
+          | (?<raw>`+)([^`]|(?!(?<!`)\k<raw>(?!`))`)*+\k<raw>
+          # Raw
+          | \\[\\`*_{}\[\]() #.!+\->]?+ # Escapes
+          | \[
+          (
+              (?<square> # Named group
+                [^\[\]\\] # Match most chars
+                | \\. # Escaped chars
+                | \[ \g<square>*+ \] # Nested brackets
+              )*+
+            \]
+            (
+              ( # Reference Link
+                [ ]? # Optional space
+                \[[^\]]*+\] # Ref name
+              )
+              | ( # Inline Link
+                \( # Opening paren
+                  [ \t]*+ # Optional whitespace
+                  <?(.*?)>? # URL
+                  [ \t]*+ # Optional whitespace
+                  ( # Optional Title
+                    (?<title>['"])
+                    (.*?)
+                    \k<title>
+                  )?
+                \)
+              )
+            )
+          )
+          | \k<open>\k<open> # Must be bold closer
+          | (?!(?<=\S)\k<open>). # Everything besides
+          # style closer
+        )++
+        (?<=\S)(?=_\b|\*)\k<open> # Close
+      )
+    captures:
+      1: {name: punctuation.definition.italic.markdown}
+    end: (?<=\S)(\1)((?!\1)|(?=\1\1))
+    name: markup.italic.markdown
+    patterns:
+      - include: '#ampersand'
+      - include: '#bracket'
+      - include: '#bold'
+      - include: '#underline'
+      - include: '#strikethrough'
+      - include: '#superscript'
+      - include: '#subscript'
+      - include: '#spoiler'
+      - include: '#highlight'
+      - include: '#string-content'
+      - include: '#raw'
+      - include: '#escape'
+      - include: '#image-inline'
+      - include: '#image-ref'
+      - include: '#link-email'
+      - include: '#link-inet'
+      - include: '#link-inline'
+      - include: '#link-ref'
+      - include: '#link-ref-literal'
+      - include: '#link-ref-shortcut'
+
+  strikethrough:
+    begin: (~~)(?=\S)
+    captures:
+      1: {name: punctuation.definition.strikethrough.markdown}
+    end: (?<=\S)(~~)
+    name: markup.strikethrough.markdown
+    patterns:
+      - include: '#ampersand'
+      - include: '#bracket'
       - include: '#bold'
       - include: '#italic'
+      - include: '#underline'
+      - include: '#superscript'
+      - include: '#subscript'
+      - include: '#spoiler'
+      - include: '#highlight'
+      - include: '#string-content'
+      - include: '#raw'
+      - include: '#escape'
       - include: '#image-inline'
-      - include: '#link-inline'
-      - include: '#link-inet'
-      - include: '#link-email'
       - include: '#image-ref'
-      - include: '#link-ref-literal'
+      - include: '#link-email'
+      - include: '#link-inet'
+      - include: '#link-inline'
       - include: '#link-ref'
+      - include: '#link-ref-literal'
+      - include: '#link-ref-shortcut'
+
+  underline:
+    begin: (\+\+)(?=\S)
+    captures:
+      1: {name: punctuation.definition.underline.markdown}
+    end: (?<=\S)(\+\+)
+    name: markup.underline.markdown
+    patterns:
+      - include: '#ampersand'
+      - include: '#bracket'
+      - include: '#bold'
+      - include: '#italic'
+      - include: '#strikethrough'
+      - include: '#superscript'
+      - include: '#subscript'
+      - include: '#spoiler'
+      - include: '#highlight'
+      - include: '#string-content'
+      - include: '#raw'
+      - include: '#escape'
+      - include: '#image-inline'
+      - include: '#image-ref'
+      - include: '#link-email'
+      - include: '#link-inet'
+      - include: '#link-inline'
+      - include: '#link-ref'
+      - include: '#link-ref-literal'
+      - include: '#link-ref-shortcut'
+
+  spoiler:
+    begin: (\|\|)(?=\S)
+    captures:
+      1: {name: punctuation.definition.spoiler.markdown}
+    end: (?<=\S)(\|\|)
+    name: markup.spoiler.markdown
+    patterns:
+      - include: '#ampersand'
+      - include: '#bracket'
+      - include: '#bold'
+      - include: '#italic'
+      - include: '#underline'
+      - include: '#strikethrough'
+      - include: '#superscript'
+      - include: '#subscript'
+      - include: '#highlight'
+      - include: '#string-content'
+      - include: '#raw'
+      - include: '#escape'
+      - include: '#image-inline'
+      - include: '#image-ref'
+      - include: '#link-email'
+      - include: '#link-inet'
+      - include: '#link-inline'
+      - include: '#link-ref'
+      - include: '#link-ref-literal'
+      - include: '#link-ref-shortcut'
+
+  highlight:
+    begin: (==)(?=\S)
+    captures:
+      1: {name: punctuation.definition.highlight.markdown}
+    end: (?<=\S)(==)
+    name: markup.highlight.markdown
+    patterns:
+      - include: '#ampersand'
+      - include: '#bracket'
+      - include: '#bold'
+      - include: '#italic'
+      - include: '#underline'
+      - include: '#strikethrough'
+      - include: '#superscript'
+      - include: '#subscript'
+      - include: '#spoiler'
+      - include: '#string-content'
+      - include: '#raw'
+      - include: '#escape'
+      - include: '#image-inline'
+      - include: '#image-ref'
+      - include: '#link-email'
+      - include: '#link-inet'
+      - include: '#link-inline'
+      - include: '#link-ref'
+      - include: '#link-ref-literal'
+      - include: '#link-ref-shortcut'
+
+  superscript:
+    begin: (\^)(?=\S)
+    captures:
+      1: {name: punctuation.definition.superscript.markdown}
+    end: (?<=\S)(\^)
+    name: markup.superscript.markdown
+    patterns:
+      - include: '#ampersand'
+      - include: '#bracket'
+      - include: '#bold'
+      - include: '#italic'
+      - include: '#underline'
+      - include: '#strikethrough'
+      - include: '#subscript'
+      - include: '#spoiler'
+      - include: '#highlight'
+      - include: '#string-content'
+      - include: '#raw'
+      - include: '#escape'
+      - include: '#image-inline'
+      - include: '#image-ref'
+      - include: '#link-email'
+      - include: '#link-inet'
+      - include: '#link-inline'
+      - include: '#link-ref'
+      - include: '#link-ref-literal'
+      - include: '#link-ref-shortcut'
+
+  subscript:
+    begin: (~)(?=\S)
+    captures:
+      1: {name: punctuation.definition.subscript.markdown}
+    end: (?<=\S)(~)
+    name: markup.subscript.markdown
+    patterns:
+      - include: '#ampersand'
+      - include: '#bracket'
+      - include: '#bold'
+      - include: '#italic'
+      - include: '#underline'
+      - include: '#strikethrough'
+      - include: '#superscript'
+      - include: '#spoiler'
+      - include: '#highlight'
+      - include: '#string-content'
+      - include: '#raw'
+      - include: '#escape'
+      - include: '#image-inline'
+      - include: '#image-ref'
+      - include: '#link-email'
+      - include: '#link-inet'
+      - include: '#link-inline'
+      - include: '#link-ref'
+      - include: '#link-ref-literal'
       - include: '#link-ref-shortcut'
 
   bracket:
@@ -3519,7 +3769,7 @@ repository:
     name: meta.other.valid-bracket.markdown
 
   escape:
-    match: \\[-`*_#+.!({\[)}\]\\>]
+    match: \\[-`*_#+.!({\[)}\]\\>~|=]
     name: constant.character.escape.markdown
 
   image-inline:
@@ -3569,68 +3819,6 @@ repository:
     name: meta.image.reference.markdown
     patterns:
       - include: '#string-content'
-
-  italic:
-    begin: |
-      (?x) (?<open>(\*(?=\w)|(?<!\w)\*|(?<!\w)\b_))(?=\S) # Open
-      (?=
-        (
-          <[^>]*+> # HTML tags
-          | (?<raw>`+)([^`]|(?!(?<!`)\k<raw>(?!`))`)*+\k<raw>
-          # Raw
-          | \\[\\`*_{}\[\]() #.!+\->]?+ # Escapes
-          | \[
-          (
-              (?<square> # Named group
-                [^\[\]\\] # Match most chars
-                | \\. # Escaped chars
-                | \[ \g<square>*+ \] # Nested brackets
-              )*+
-            \]
-            (
-              ( # Reference Link
-                [ ]? # Optional space
-                \[[^\]]*+\] # Ref name
-              )
-              | ( # Inline Link
-                \( # Opening paren
-                  [ \t]*+ # Optional whitespace
-                  <?(.*?)>? # URL
-                  [ \t]*+ # Optional whitespace
-                  ( # Optional Title
-                    (?<title>['"])
-                    (.*?)
-                    \k<title>
-                  )?
-                \)
-              )
-            )
-          )
-          | \k<open>\k<open> # Must be bold closer
-          | (?!(?<=\S)\k<open>). # Everything besides
-          # style closer
-        )++
-        (?<=\S)(?=_\b|\*)\k<open> # Close
-      )
-    captures:
-      1: {name: punctuation.definition.italic.markdown}
-    end: (?<=\S)(\1)((?!\1)|(?=\1\1))
-    name: markup.italic.markdown
-    patterns:
-      - include: '#string-content'
-      - include: '#escape'
-      - include: '#ampersand'
-      - include: '#bracket'
-      - include: '#raw'
-      - include: '#bold'
-      - include: '#image-inline'
-      - include: '#link-inline'
-      - include: '#link-inet'
-      - include: '#link-email'
-      - include: '#image-ref'
-      - include: '#link-ref-literal'
-      - include: '#link-ref'
-      - include: '#link-ref-shortcut'
 
   link-email:
     captures:
@@ -7020,6 +7208,42 @@ repository:
       - begin: |
           (?x)
           (?<=
+            (?:
+                (?:^|[\s\p{P}\p{S}]):\|\s*\| # beside a lambda pipe
+              | (?:^|[,;'"`)}\]\w\s]|\\.)\|
+              | ^\s*\|
+            )
+          )
+          \s*
+          (\#\{)
+          \s*
+        end: \s*(\})
+        name: meta.brace.curly.hitori
+        captures:
+          1: {name: punctuation.section.class.hitori}
+        patterns:
+          - include: $self
+      - begin: |
+          (?x)
+          (?<=
+            (?:
+                (?:^|[\s\p{P}\p{S}]):\|\s*\| # beside a lambda pipe
+              | (?:^|[,;'"`)}\]\w\s]|\\.)\|
+              | ^\s*\|
+            )
+          )
+          \s*
+          (\{)
+          \s*
+        end: \s*(\})
+        name: meta.brace.curly.hitori
+        captures:
+          1: {name: punctuation.definition.block.hitori}
+        patterns:
+          - include: $self
+      - begin: |
+          (?x)
+          (?<=
             (?:^|[,;'"({\[)}\]\s]) # beside a delimiter or space
             \b
               (?: # destructuring keywords
@@ -7089,38 +7313,6 @@ repository:
           - include: '#punctuation'
           - include: '#object-value'
           - include: '#object-key'
-          - include: $self
-      - begin: |
-          (?x)
-          (?<=
-            (?:
-                (?:^|[\s\p{P}\p{S}]):\|\s*\| # beside a lambda pipe
-              | (?:^|[,;'"`)}\]\w\s]|\\.)\|
-              | ^\s*\|
-            )
-          )
-          (\#\{)\s*
-        end: \s*(\})
-        name: meta.brace.curly.hitori
-        captures:
-          1: {name: punctuation.section.class.hitori}
-        patterns:
-          - include: $self
-      - begin: |
-          (?x)
-          (?<=
-            (?:
-                (?:^|[\s\p{P}\p{S}]):\|\s*\| # beside a lambda pipe
-              | (?:^|[,;'"`)}\]\w\s]|\\.)\|
-              | ^\s*\|
-            )
-          )
-          (\{)\s*
-        end: \s*(\})
-        name: meta.brace.curly.hitori
-        captures:
-          1: {name: punctuation.definition.block.hitori}
-        patterns:
           - include: $self
       - begin: |
           (?x)
@@ -7395,9 +7587,10 @@ repository:
           )
           \s*
           (?= 
-              [({\[\w] # opening brackets
+              \s[({\[\w] # opening brackets
             | (?:\w*|[\\$#%]*)['"] | `\s*(?=\N) # string literals 
             | :[\p{Pc}\p{L}]\w* # symbol literals
+            | $ # end of line
           )
         name: meta.function-call.hitori
         captures:
