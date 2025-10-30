@@ -5228,11 +5228,11 @@ repository:
         ( # 23: range
           [>.]\.[.<] | \.\. | [=.]\.[.=]
         ) |
-        ( # 24: fat arrow
+        ( # 24: double arrow
             =+> # right side
           | <=+ # left side
         ) |
-        ( # 25: skinny arrow
+        ( # 25: single arrow
             -+> # right side
           | <-+ # left side
         ) |
@@ -5309,8 +5309,8 @@ repository:
       21: {name: keyword.operator.macro.hitori}
       22: {name: keyword.operator.assignment.hitori}
       23: {name: keyword.operator.range.hitori}
-      24: {name: keyword.operator.arrow.fat.hitori}
-      25: {name: keyword.operator.arrow.skinny.hitori}
+      24: {name: keyword.operator.arrow.double.hitori}
+      25: {name: keyword.operator.arrow.single.hitori}
       26: {name: keyword.operator.arrow.wavy.hitori}
       27: {name: keyword.operator.logical.custom.hitori}
       28: {name: keyword.operator.arithmetic.custom.hitori}
@@ -5403,11 +5403,11 @@ repository:
         ( # 23: range
           [>.]\.[.<] | \.\. | [=.]\.[.=]
         ) |
-        ( # 24: fat arrow
+        ( # 24: double arrow
             =+> # right side
           | <=+ # left side
         ) |
-        ( # 25: skinny arrow
+        ( # 25: single arrow
             -+> # right side
           | <-+ # left side
         ) |
@@ -5484,8 +5484,8 @@ repository:
       21: {name: keyword.operator.macro.hitori}
       22: {name: keyword.operator.assignment.hitori}
       23: {name: keyword.operator.range.hitori}
-      24: {name: keyword.operator.arrow.fat.hitori}
-      25: {name: keyword.operator.arrow.skinny.hitori}
+      24: {name: keyword.operator.arrow.double.hitori}
+      25: {name: keyword.operator.arrow.single.hitori}
       26: {name: keyword.operator.arrow.wavy.hitori}
       27: {name: keyword.operator.logical.custom.hitori}
       28: {name: keyword.operator.arithmetic.custom.hitori}
@@ -7912,7 +7912,7 @@ repository:
       - match: \s*\b(send|receive|transmit|broadcast|communicate|connect|disconnect)(\p{Lu}[\w&&\P{Lu}]*)*\b\s*
         comment: communicator functions
         name: support.function.communicator.hitori
-      - match: \s*\b(log|trace|debug|info|warn(ing)?|error|fatal|report|audit)(\p{Lu}[\w&&\P{Lu}]*)*\b\s*
+      - match: \s*\b(log|trace|debug|info|warn(ing)?|error|doubleal|report|audit)(\p{Lu}[\w&&\P{Lu}]*)*\b\s*
         comment: logger functions
         name: support.function.logger.hitori
       - include: '#support-functions-core'
@@ -7962,7 +7962,7 @@ repository:
         # database
         connect|disconnect|cursor|execute|commit|rollback|fetchone|fetchall|fetchmany|query|insert|update|delete|select|join|where|orderby|limit|transaction|begin|end|prepare|bind|closecursor|opendb|closedb|loaddb|savedb|readrow|writerow|migratedb|createdb|dropdb|backupdb|restoredb|index|schema|column|table|vacuum|
         # logging
-        log|debug|info|warn|warning|error|fatal|critical|trace|exception|configure|logger|formatter|handler|filter|addhandler|removehandler|setlevel|
+        log|debug|info|warn|warning|error|doubleal|critical|trace|exception|configure|logger|formatter|handler|filter|addhandler|removehandler|setlevel|
         # compression
         zip|unzip|tar|untar|gzip|gunzip|bz2|bzip2|lzma|xz|compress|decompress|pack|unpack|archive|extract|bundle|encodezip|decodezip|deflate|inflate|rar|unrar|zlib|snappy|brotli|
         # errors
